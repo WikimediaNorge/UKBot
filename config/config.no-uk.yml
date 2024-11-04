@@ -16,6 +16,7 @@ award_messages:
     winner_template: '{{UK vinner|år=%(year)s|uke=%(week)s|%(awards)s}}'
     participant_template: '{{UK deltaker|år=%(year)s|uke=%(week)s|%(awards)s}}'
     organizer_template: '{{UK arrangør|år=%(year)s|uke=%(week)s|%(awards)s|visuk=nei}}'
+    reminder_msg: 'Denne ukens konkurranse er «[[%(url)s|{{#invoke:Ukens konkurranse|navn|%(year)d|%(week)d}}]]». Bli med!'
 
 plot:
     datafile: 'plots/Nowp Ukens konkurranse %(year)d-%(week)02d.json'
