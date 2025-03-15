@@ -4,6 +4,11 @@ Bot for updating results in writing contests at Wikipedia, deployed at [ukbot.wm
  
 ## Getting Started
 
+Clone code from github
+
+	git clone https://github.com/WikimediaNorge/UKBot.git
+	cd UKBot
+
 Create a new Python3 virtualenv and activate it:
 
 	mkdir -p www/python/venv
@@ -46,6 +51,14 @@ or using the wrapper script:
 To test the webinterface locally:
 
 	FLASK_UWSGI_DEBUG=true uwsgi --ini uwsgi.dev.ini --python-autoreload 1 --master --http :5000
+
+To modify the code and test it locally, you'll need to install it as a pip package first, and then run it:
+
+	pip install .
+	ukbot --page Bruker:Danmichaelo/Sandkasse5 --simulate config/config.no-mk.yml
+
+
+
 
 ## Deployment
 
