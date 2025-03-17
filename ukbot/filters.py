@@ -721,10 +721,69 @@ class SparqlFilter(Filter):
         params = {
             'query': tpl.get_raw_param('query'),
             'sites': tpl.sites,
+            'tpl': tpl
         }
         return cls(**params)
 
-    def __init__(self, sites, query):
+    def get_competition_wikidata_ids(cls, tpl, target_lang):
+        """
+        Fetch Wikidata IDs for a competition from the toolforge API.
+
+        Args:
+            tpl: Template object containing page and time information
+            target_lang: Target language string
+
+        Returns:
+            list: Wikidata item IDs related to the competition
+        """
+
+        # Extract wiki information
+        site = tpl.page.site
+        src_wiki = site.host.split('.')[0]
+        target_wiki = target_lang.split('.')[0]
+        namespace_id = tpl.page.namespace
+
+        # Parse article name correctly based on namespace
+        full_title = tpl.page.name
+
+        # Remove namespace from article title
+        if ':' in full_title and namespace_id != 0:
+            article_name = full_title.split(':', 1)[1]
+        else:
+            article_name = full_title
+
+        # Build request parameters
+        params = {
+            "src": src_wiki,
+            "namespace": namespace_id,
+            "page": article_name,
+            "start": tpl.start.strftime("%Y%m%d%H%M%S"),
+            "end": tpl.end.strftime("%Y%m%d%H%M%S"),
+            "target": target_wiki
+        }
+
+        # Construct URL and make request
+        base_url = "https://fiwiki-tools.toolforge.org/get_wikidata_items_by_ukbot_competition.php"
+        url = f"{base_url}?{urllib.parse.urlencode(params)}"
+        print(f"Requesting: {url}")
+
+        try:
+            response = requests.get(url, timeout=30)
+            response.raise_for_status()  # Raise exception for non-200 status codes
+
+            data = response.json()
+            wikidata_items = data.get('wikidata_items', [])
+            print(f"Retrieved {len(wikidata_items)} Wikidata items")
+            return wikidata_items
+
+        except requests.exceptions.RequestException as e:
+            print(f"Error fetching data: {e}")
+            return []
+        except ValueError as e:
+            print(f"Error parsing JSON response: {e}")
+            return []
+
+    def __init__(self, sites, query, tpl):
         """
         Args:
             sites (SiteManager): References to the sites part of this contest
@@ -732,28 +791,33 @@ class SparqlFilter(Filter):
         """
         Filter.__init__(self, sites)
         self.query = query
+        self.tpl = tpl
         self.fetch()
 
     def do_query(self, querystring):
         logger.info('Running SPARQL query: %s', querystring)
         try:
-            response = requests_retry_session().get(
+            response = requests_retry_session().post(
                 'https://query.wikidata.org/sparql',
-                params={
+                data={
                     'query': querystring,
                 },
                 headers={
                     'accept': 'application/sparql-results+json',
                     'accept-encoding': 'gzip, deflate, br',
+                    'Content-Type': 'application/x-www-form-urlencoded',
                     'user-agent': 'UKBot/1.0, run by User:Danmichaelo',
                 }
             )
-        except Exception as ex:
-            logger.error('SPARQL query failed')
-            raise ex
-
-        if not response.ok:
-            raise IOError('SPARQL query returned status %s', response.status_code)
+            response.raise_for_status()  # raises HTTPError for 4xx/5xx responses
+        except requests.exceptions.RequestException as ex:
+            error_content = ''
+            if ex.response is not None:
+                error_content = ex.response.text
+                logger.error('SPARQL query (POST) failed with response: %s', error_content)
+            else:
+                logger.error('SPARQL query (POST) failed without response: %s', str(ex))
+            raise IOError(f'SPARQL query (POST) error: {str(ex)} | Response content: {error_content}') from ex
 
         expected_length = response.headers.get('Content-Length')
         if expected_length is not None and 'tell' in dir(response.raw):
@@ -778,7 +842,6 @@ class SparqlFilter(Filter):
 
     def fetch(self):
         logger.debug('SparqlFilter: %s', self.query)
-
         item_var = 'item'
 
         # Implementation notes:
@@ -803,16 +866,28 @@ class SparqlFilter(Filter):
         logger.info('SparqlFilter: Initialized with %d articles', len(self.page_keys))
 
     def add_linked_articles(self, site, item_var):
+        wikidata_items = self.get_competition_wikidata_ids(self.tpl, site)
+
+        # If possible wikidata_items is none then there is no need for SPARQL query
+        if not wikidata_items:
+            logger.info('Skipping SPARQL query for site %s as get_competition_wikidata_ids() returned no items', site)
+            return
+
+        formatted_items = ' '.join(f"wd:{item}" for item in wikidata_items)
+
         article_var = 'article19472065'  # "random string" to avoid matching anything in the subquery
         query = """
             SELECT ?%(article)s
             WHERE {
+              VALUES ?item { %(itemlist)s }
+
               { %(query)s }
               ?%(article)s schema:about ?%(item)s .
               ?%(article)s schema:isPartOf <https://%(site)s/> .
             }
         """ % {
             'item': item_var,
+            'itemlist': formatted_items,
             'article': article_var,
             'query': self.query,
             'site': site,

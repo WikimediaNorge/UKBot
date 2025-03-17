@@ -41,7 +41,10 @@ def sum_stats_by(values, key=None, user=None):
 
 class FilterTemplate(object):
 
-    def __init__(self, template, translations, sites):
+    def __init__(self, template, translations, sites, start, end, page):
+        self.start = start
+        self.end = end
+        self.page = page
         self.template = template
         self.sites = sites
         self.named_params_raw_values = {
@@ -214,7 +217,7 @@ class Contest(object):
         filter_template_config = config['templates']['filters']
         if filter_template_config['name'] in dp.templates:
             for template in dp.templates[filter_template_config['name']]:
-                filter_tpl = FilterTemplate(template, filter_template_config, self.sites)
+                filter_tpl = FilterTemplate(template, filter_template_config, self.sites, self.start, self.end, self.page)
 
                 if filter_tpl.type in ['new', 'existing', 'namespace']:
                     op = 'AND'
