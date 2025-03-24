@@ -120,3 +120,14 @@
   image: python3.11
   schedule: "55 23 * * *"
   emails: onfailure
+# es-estonia
+- name: es-estonia
+  command: ./jbs/run.sh es-estonia
+  image: python3.11
+  schedule: "13 * * * *"
+  emails: onfailure
+- name: upload-plot-es-estonia
+  command: ./jobs/upload.sh es-estonia
+  image: python3.11
+  schedule: "53 23 * * *"
+  emails: onfailure

@@ -1,0 +1,105 @@
+locale: [es_ES,en_US]
+rollbar_token: 88f5bd483f7348ea8b0564449c8d77cd
+server_timezone: UTC
+wiki_timezone: UTC
+homesite: es.wikipedia.org
+othersites:
+    - www.wikidata.org
+default_prefix: es
+wikidata_languages: ['es', 'en']
+contestPages:
+    participantsSection: 'Participantes'
+    footer: ""
+templates:
+    botinfo: UKB botinfo
+    status: UKB status
+    commonargs:
+        year: year
+        week: week
+        week2: week2
+        yes: yes
+        no: no
+    infobox:
+        name: UKB infotabla
+        status: status
+        start: inicio
+        end: final
+        organizer: organizer
+        winner: winner
+    suspended:
+        name: UKB participante eliminado
+    disqualified:
+        name: UKB participante descalificado
+    penalty:
+        name: UKB quitar puntos
+    bonus:
+        name: UK bonus
+    rule:
+        name: UKB puntos
+        new: nuevo
+        redirect: redirección
+        regexp: regexp
+        section: sección
+        qualified: calificado
+        contrib: edición
+        byte: byte
+        word: palabra
+        maxpoints: maxpoints
+        site: site
+        image: imagen
+        external_link: enlace externo
+        ref: referencia
+        templateremoval: eliminar plantilla
+        bytebonus: bytebonus
+        wordbonus: palabrabonus
+        alias: alias
+        own: self-uploaded
+        ownwork: own-work
+        maxinitialcount: límite inicial
+        wikidata: wikidata
+        properties: propiedades
+        labels: labels
+        aliases: aliases
+        descriptions: descriptions
+        description: description
+        require_reference: require_reference
+        all: todos
+    filters:
+        name: UKB criterio
+        params:
+            new:
+                name: nuevo
+                params:
+                    redirects: redirección
+            existing:
+                name: existía
+            template:
+                name: plantilla
+            bytes:
+                name: byte
+            category:
+                name: categoría
+                ignore_page: User:UKBot/ignored categories
+                params:
+                    ignore: excluír
+                    maxdepth: maxdepth
+            backlink:
+                name: linkado desde
+            forwardlink:
+                name: linka a
+            pages:
+                name: páginas
+            namespace:
+                name: espacio de nombres
+                params:
+                    site: site
+            sparql:
+                name: sparql # as in {{ ukb criterion | sparql }}
+                params:
+                    query: query # as in {{ ukb criterion | sparql | query=... }}
+ignore:
+    - Revertida una edición # MediaWiki:Revertpage/es
+    - 'Revertidas \d+ ediciones' # MediaWiki:Revertpage/es
+    - Deshecha la # MediaWiki:Undo-summary/es
+    - clientsitelink-update  # Wikidata: Page moved from .. to ..
+    - clientsitelink-remove  # Wikidata: Removed sitelink

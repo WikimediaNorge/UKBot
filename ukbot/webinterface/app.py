@@ -62,6 +62,11 @@ contest_setups = [
         "name": "Atari:Hezkuntza/Lehiaketak",
         "url": "https://eu.wikipedia.org/wiki/Atari:Hezkuntza/Lehiaketak",
     },
+    {
+        "id": "es-estonia",
+		"name": "Wikiconcurso Estonia",
+		"url": "https://es.wikipedia.org/wiki/Wikipedia:Wikiconcurso/Reto_de_Estonia",
+    },
 ]
 
 app = Flask(__name__, static_url_path='/static')
