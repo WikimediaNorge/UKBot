@@ -472,7 +472,16 @@ class Contest(object):
         x_ticks_major_size = 5
         x_ticks_minor_size = 0
 
-        if ndays == 7:
+        if ndays < 7:
+            # Tick marker every midnight
+            ax.set_xticks(xt, minor=False)
+            ax.set_xticklabels([], minor=False)
+
+            # Tick labels at the middle of every day
+            # Just a number if ndays < 7
+            ax.set_xticks(xt_mid, minor=True)
+            ax.set_xticklabels(list(range(1,ndays+1)), minor=True)
+        elif ndays == 7:
             # Tick marker every midnight
             ax.set_xticks(xt, minor=False)
             ax.set_xticklabels([], minor=False)
