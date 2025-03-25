@@ -43,6 +43,11 @@ class RefRule(Rule):
                 else:
                     s1 += 1
             del xml
+            # We look for {{sfn|xxxx|xxx}} templates
+            # and consider them equal to sources
+            allsfn = re.finditer(r'{{[Ss]fn(\|[^\|}]+)+}}',txt)
+            for sfn in allsfn:
+                s1 += 1
         except lxml.etree.XMLSyntaxError:
             s1 = 0
             r1 = 0
