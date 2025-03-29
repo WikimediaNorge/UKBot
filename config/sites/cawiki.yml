@@ -1,0 +1,134 @@
+locale: [ca_ES, ca_AD, ca_FR, ca_IT, ca_ES@valencia]
+rollbar_token: 88f5bd483f7348ea8b0564449c8d77cd
+server_timezone: UTC
+wiki_timezone: Europe/Andorra
+homesite: ca.wikipedia.org
+othersites:
+    - ca.wikiquote.org
+    - www.wikidata.org
+    - commons.wikimedia.org
+default_prefix: ca
+wikidata_languages: ['ca', 'en']
+contestPages:
+    resultsSection: Resultats
+    participantsSection: 'Participants'
+    footer: ""
+templates:
+    botinfo: ConcursVP botinfo
+    status: ConcursVP status
+    commonargs:
+        year: year
+        week: week
+        week2: week2
+        yes: yes
+        no: no
+    infobox:
+        name: ConcursVP infotaula
+        status: status
+        start: comença
+        end: acaba
+        organizer: organitzador
+        winner: guanyador
+    suspended:
+        name: ConcursVP usuari suspès
+    disqualified:
+        name: ConcursVP contribució desqualificada
+    penalty:
+        name: ConcursVP penalització
+    bonus:
+        name: ConcursVP bonificació
+    rule:
+        name: ConcursVP punts
+        new: nou
+        redirect: redirecció
+        regexp: regexp
+        section: secció
+        qualified: qualificada
+        contrib: edició
+        byte: byte
+        word: paraula
+        maxpoints: max
+        site: lloc
+        image: imatge
+        external_link: enllaç extern
+        ref: referència
+        templateremoval: treure plantilla
+        bytebonus: bytebonus
+        wordbonus: paraulabonus
+        alias: àlies
+        own: propi
+        ownwork: propi
+        maxinitialcount: initial limit
+        wikidata: wikidata
+        properties: propietats
+        labels: etiquetes
+        aliases: àlies
+        descriptions: descripcions
+        description: descripció
+        require_reference: calreferència
+        all: tot
+    filters:
+        name: ConcursVP criteri
+        params:
+            new:
+                name: nou
+                params:
+                    redirects: redirecció
+            existing:
+                name: existeix
+            template:
+                name: plantilla
+            bytes:
+                name: byte
+            category:
+                name: categoria
+                ignore_page: User:Threepbot/categories ignorades
+                params:
+                    ignore: ignore
+                    maxdepth: maxdepth
+            backlink:
+                name: backlink
+            forwardlink:
+                name: forwardlink
+            pages:
+                name: pàgines
+            namespace:
+                name: espai de noms
+                params:
+                    site: lloc
+            sparql:
+                name: sparql  # as in {{ ukb criterion | sparql }}
+                params:
+                    query: query    # as in {{ ukb criterion | sparql | query=... }}
+awards:
+    blava: { file: Article blue.svg, winner: true }
+    blau: { file: Article blue.svg, winner: true }
+    vermella: { file: Article red.svg, winner: true }
+    vermell: { file: Article red.svg, winner: true }
+    groga: { file: Article yellow.svg, organizer: true }
+    groc: { file: Article yellow.svg, organizer: true }
+    taronja: { file: Article orange.svg, winner: true }
+    carbassa: { file: Article orange.svg, winner: true }
+    verda: { file: Article green.svg }
+    verd: { file: Article green.svg }
+    grisa: { file: Article grey.svg }
+    gris: { file: Article grey.svg }
+    lilaclar: { file: Article MediumPurple.svg }
+    lila: { file: Article purple.svg }
+    marró: { file: Article brown.svg }
+awardstatus:
+    pagename: Usuari:Threepbot/Distribució de premis
+    wait: Esperant
+    send: Envia
+    sent: Enviat
+ignore:
+    - Tilbakestilte endring # MediaWiki:Revertpage/nb
+    - Attenderulla endring  # MediaWiki:Revertpage/nn
+    - rievdadusat sihkkojuvvui ja siidu  # MediaWiki:Revertpage/se
+    - Reverted edits by  # MediaWiki:Revertpage/en
+    - Fjerner revisjon # MediaWiki:Undo-summary/nb
+    - Rullar attende versjon # MediaWiki:Undo-summary/nn
+    - Undo revision # MediaWiki:Revertpage/en
+    - clientsitelink-update  # Wikidata: Page moved from .. to ..
+    - clientsitelink-remove  # Wikidata: Removed sitelink
+    - Revertides les edicions # MediaWiki:Revertpage/ca
