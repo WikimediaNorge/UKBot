@@ -3,8 +3,6 @@ rollbar_token: 88f5bd483f7348ea8b0564449c8d77cd
 server_timezone: UTC
 wiki_timezone: UTC
 homesite: es.wikipedia.org
-othersites:
-    - www.wikidata.org
 default_prefix: es
 wikidata_languages: ['es', 'en']
 contestPages:
@@ -49,9 +47,10 @@ templates:
         image: imagen
         external_link: enlace externo
         ref: referencia
-        templateremoval: eliminar plantilla
-        bytebonus: bytebonus
-        wordbonus: palabrabonus
+        templateremoval: eliminarplantilla
+        categoryremoval: eliminarcategoría
+        bytebonus: bonusbyte
+        wordbonus: bonuspalabra
         alias: alias
         own: self-uploaded
         ownwork: own-work

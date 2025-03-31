@@ -6,6 +6,7 @@
 LINGUAS = nb_NO \
 	ca_ES \
 	fi_FI \
+	es_ES \
 	eu_ES
 
 # Textdomain for our package.
