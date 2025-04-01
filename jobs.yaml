@@ -37,19 +37,6 @@
   schedule: "45 22 * * *"
   emails: onfailure
   mem: 2Gi
-# no-uk
-- name: no-uk
-  command: ./jobs/run.sh no-uk
-  image: python3.11
-  schedule: "5 * * * *"
-  emails: onfailure
-  mem: 2Gi
-- name: upload-plot-no-uk
-  command: ./jobs/upload.sh no-uk
-  image: python3.11
-  schedule: "30 23 * * *"
-  emails: onfailure
-  mem: 2Gi
 # fi
 - name: fi-vk
   command: ./jobs/run.sh fi-vk
