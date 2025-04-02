@@ -109,7 +109,7 @@
   emails: onfailure
 # es-estonia
 - name: es-estonia
-  command: ./jbs/run.sh es-estonia
+  command: ./jobs/run.sh es-estonia
   image: python3.11
   schedule: "13 * * * *"
   emails: onfailure

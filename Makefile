@@ -6,6 +6,7 @@
 LINGUAS = nb_NO \
 	ca_ES \
 	fi_FI \
+	gl_ES \
 	es_ES \
 	eu_ES
 
