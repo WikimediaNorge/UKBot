@@ -1,27 +1,28 @@
 # Norwegian Bokmål translation for UKBot
 # Copyright (C) 2013
 # This file is distributed under the same license as the UKBot package.
-# Dan Michael Heggø <danmichaelo@gmail.com>, 2013
 #
+# Dan Michael Heggø <danmichaelo@gmail.com>, 2013.
+# Jon Harald Søby <jhsoby@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: UKBot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-30 22:15+0200\n"
-"PO-Revision-Date: 2019-09-05 00:55+0200\n"
-"Last-Translator: Dan Michael O. Heggø <danmichaelo@gmail.com>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2025-04-02 15:46+0200\n"
+"PO-Revision-Date: 2025-03-29 13:18+0100\n"
+"Last-Translator: Jon Harald Søby <jhsoby@gmail.com>\n"
+"Language-Team: Norwegian Bokmal <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Lokalize 21.12.3\n"
 
 #: ukbot/contest.py:65
 #, python-format
 msgid "The filter name \"%s\" was not understood"
-msgstr ""
+msgstr "Filternavnet «%s» ble ikke forstått"
 
 #: ukbot/contest.py:155
 msgid "Couldn't find the list of participants!"
@@ -63,6 +64,8 @@ msgid ""
 "Failed to parse the %(template)s template: Did not find a site matching the "
 "site prefix %(prefix)s"
 msgstr ""
+"Kunne ikke tolke malen %(template)s: Fant ikke wiki som matcher prefikset "
+"%(prefix)s"
 
 #: ukbot/contest.py:354 ukbot/contest.py:394
 #, python-format
@@ -157,19 +160,19 @@ msgstr ""
 "%(enddate)s."
 
 #: ukbot/contest.py:960
-#, fuzzy, python-format
+#, python-format
 msgid "UKBot encountered the following problems with the page [[%s]]"
-msgstr "UKBot støtte på problemer med artikkelen [[:%s]]"
+msgstr "UKBot støtte på problemer med siden [[:%s]]"
 
 #: ukbot/contest.py:994
 #, python-format
 msgid "Results markers %(start_marker)s and %(end_marker)s not found"
-msgstr ""
+msgstr "Resultatmarkørene %(start_marker)s og %(end_marker)s ble ikke funnet"
 
 #: ukbot/contest.py:1005
 #, python-format
 msgid "No \"%(section_name)s\" section found."
-msgstr ""
+msgstr "Ingen seksjon med navn «%(section_name)s» funnet."
 
 #: ukbot/contest.py:1015
 msgid "Updating with final results, the contest is now closed."
@@ -211,18 +214,16 @@ msgstr[1] ""
 "%(articlecount)d {{subst:PLURAL:%(articlecount)d|artikkel|artikler}}"
 
 #: ukbot/contributions.py:187
-#, fuzzy
 msgid "{{Kolonner}}"
-msgstr "{{Kolonner}}\n"
+msgstr "{{Kolonner}}"
 
 #: ukbot/contributions.py:221
-#, fuzzy
 msgid "%d.%m, %H:%M"
 msgstr "%e. %B %Y, %H:%M"
 
 #: ukbot/contributions.py:229
 msgid "capped at max"
-msgstr ""
+msgstr "avgrenset til maks"
 
 #: ukbot/contributions.py:265
 msgid "Category hit"
@@ -253,18 +254,17 @@ msgid "<abbr class=\"newpage\" title=\"Wikidata item\">W</abbr>"
 msgstr "<abbr class=\"newpage\" title=\"Ny side\">N</abbr>"
 
 #: ukbot/filters.py:150
-#, fuzzy
 msgid "Too few arguments given to this template."
-msgstr "Ukjent argument gitt til {{ml|%(template)s}}: %(argument)s"
+msgstr "For få argumenter sendt til denne malen."
 
 #: ukbot/filters.py:198
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Could not analyze page %(article)s because the revision %(rev)d could not be "
 "parsed: %(error)s"
 msgstr ""
-"Kunne ikke analysere artikkelen %(article)s fordi en av revisjonene "
-"%(prevrev)d eller %(rev)d ikke kunne tolkes: %(error)s"
+"Kunne ikke analysere siden %(article)s fordi sideversjon %(rev)d ikke kunne "
+"tolkes: %(error)s"
 
 #: ukbot/filters.py:233
 msgid "Could not parse the catignore page"
@@ -272,23 +272,20 @@ msgstr "Klarte ikke å tolke catignore-siden"
 
 #: ukbot/filters.py:238
 msgid "No category values given!"
-msgstr ""
+msgstr "Ingen kategoriverdier gitt!"
 
 #: ukbot/filters.py:444
 msgid "Encountered an infinite category loop: "
 msgstr "Havnet i en endeløs kategoriløkke: "
 
 #: ukbot/filters.py:483
-#, fuzzy
 msgid "No byte limit (second argument) given"
-msgstr ""
-"Ingen bytegrense (andre argument) ble gitt til {{mlp|%(template)s|"
-"%(firstarg)s}}"
+msgstr "Ingen bytegrense (argument nr. 2) gitt"
 
 #: ukbot/filters.py:720
 #, python-format
 msgid "No \"%s\" parameter given"
-msgstr ""
+msgstr "Ingen parameter med navn «%s» gitt"
 
 #: ukbot/revision.py:132
 #, python-format
@@ -298,32 +295,33 @@ msgid ""
 "parent revision (%(parentid)s) of size %(size)d, possibly due to unclosed "
 "tags or templates in that revision."
 msgstr ""
-"Revisjon [//%(host)s/w/index.php?diff=prev&oldid=%(revid)s %(revid)s]: Ingen "
-"ord ble funnet i foreldrerevisjonen (%(parentid)s) med størrelse %(size)d. "
-"Dette kan skyldes uavsluttede tagger eller maler, som vil medføre at "
-"ordtellingen blir feil, men det kan også skyldes lagring av et arbeidsutkast."
+"Sideversjon [//%(host)s/w/index.php?diff=prev&oldid=%(revid)s %(revid)s]: "
+"Ingen ord ble funnet i foreldrerevisjonen (%(parentid)s) med størrelse "
+"%(size)d. Dette kan skyldes uavsluttede tagger eller maler, som vil medføre "
+"at ordtellingen blir feil, men det kan også skyldes lagring av et "
+"arbeidsutkast."
 
 #: ukbot/revision.py:142
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Revision [//%(host)s/w/index.php?diff=prev&oldid=%(revid)s %(revid)s]: The "
 "word count difference might be wrong, because the word count increase "
 "(%(words)d) is larger than the byte increase (%(bytes)d). Wrong word counts "
 "can occur for invalid wiki text."
 msgstr ""
-"Revisjon [//%(host)s/w/index.php?diff=prev&oldid=%(revid)s %(revid)s]: "
+"Sideversjon [//%(host)s/w/index.php?diff=prev&oldid=%(revid)s %(revid)s]: "
 "Økningen i antall ord (%(words)d) er større enn økningen i antall byte "
 "(%(bytes)d). Det bør sjekkes om ordtellingen er riktig."
 
 #: ukbot/sites.py:63
 #, python-format
 msgid "Page does not exist: [[%(pagename)s]]"
-msgstr ""
+msgstr "Siden finnes ikke: [[%(pagename)s]]"
 
 #: ukbot/sites.py:80
 #, python-format
 msgid "Could not found a site matching the prefix \"%(key)s\""
-msgstr ""
+msgstr "Kunne ikke finne en wiki som matcher prefikset «%(key)s»"
 
 #: ukbot/ukbot.py:169
 #, python-format
@@ -384,11 +382,11 @@ msgstr ""
 
 #: ukbot/rules/regexp.py:19
 msgid "regexp"
-msgstr ""
+msgstr "regulært uttrykk"
 
 #: ukbot/rules/regexp.py:44
 msgid "section"
-msgstr ""
+msgstr "seksjon"
 
 #: ukbot/rules/rule.py:76
 #, python-format
@@ -403,27 +401,27 @@ msgstr "fjerning av {{ml|%(template)s}}"
 #: ukbot/rules/wikidata.py:47
 #, python-format
 msgid "label (%(lang)s)"
-msgstr ""
+msgstr "etikett (%(lang)s)"
 
 #: ukbot/rules/wikidata.py:53
 #, python-format
 msgid "description (%(lang)s)"
-msgstr ""
+msgstr "beskrivelse (%(lang)s)"
 
 #: ukbot/rules/wikidata.py:59
 #, python-format
 msgid "alias (%(lang)s)"
-msgstr ""
+msgstr "alias (%(lang)s)"
 
 #: ukbot/rules/wikidata.py:72
 #, python-format
 msgid "%(property)s statement"
-msgstr ""
+msgstr "%(property)s-påstand"
 
 #: ukbot/rules/wikidata.py:73
 #, python-format
 msgid "%(count)d %(property)s statements"
-msgstr ""
+msgstr "%(count)d %(property)-{{subst:PLURAL:%(count)d|påstand|påstander}}"
 
 #: ukbot/rules/word.py:20
 #, python-format

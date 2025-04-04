@@ -1,10 +1,9 @@
-locale: [es_ES,en_US]
-rollbar_token: 88f5bd483f7348ea8b0564449c8d77cd
+locale: [gl_ES,en_US]
 server_timezone: UTC
 wiki_timezone: UTC
-homesite: es.wikipedia.org
-default_prefix: es
-wikidata_languages: ['es', 'en']
+homesite: gl.wikipedia.org
+default_prefix: gl
+wikidata_languages: ['gl', 'en']
 contestPages:
     participantsSection: 'Participantes'
     footer: ""
@@ -20,76 +19,76 @@ templates:
     infobox:
         name: UKB infotabla
         status: status
-        start: inicio
-        end: final
-        organizer: organizer
-        winner: winner
+        start: comezo
+        end: remate
+        organizer: organizador
+        winner: gañador
     suspended:
-        name: UKB participante eliminado
+        name: UKB usuario eliminado
     disqualified:
-        name: UKB participante descalificado
+        name: UKB usuario descualificado
     penalty:
-        name: UKB quitar puntos
+        name: UKB penalización
     bonus:
-        name: UK bonus
+        name: UK bonificación
     rule:
         name: UKB puntos
-        new: nuevo
+        new: novo
         redirect: redirección
         regexp: regexp
         section: sección
-        qualified: calificado
+        qualified: cualificado
         contrib: edición
         byte: byte
         word: palabra
-        maxpoints: maxpoints
-        site: site
-        image: imagen
-        external_link: enlace externo
+        maxpoints: max
+        site: sitio
+        image: imaxe
+        external_link: ligazón externa
         ref: referencia
-        templateremoval: eliminarplantilla
-        categoryremoval: eliminarcategoría
-        bytebonus: bonusbyte
+        templateremoval: eliminar modelo
+        categoryremoval: eliminar categoría
+        bytebonus: bytebonus
         wordbonus: bonuspalabra
-        alias: alias
-        own: self-uploaded
-        ownwork: own-work
+        alias: alcume
+        own: propio
+        ownwork: propio
         maxinitialcount: límite inicial
         wikidata: wikidata
         properties: propiedades
-        labels: labels
-        aliases: aliases
-        descriptions: descriptions
-        description: description
-        require_reference: require_reference
+        labels: etiquetas
+        aliases: alcumes
+        descriptions: descricións
+        description: descrición
+        require_reference: cómpren referencias
         all: todos
     filters:
         name: UKB criterio
         params:
             new:
-                name: nuevo
+                name: novo
                 params:
                     redirects: redirección
             existing:
                 name: existía
             template:
-                name: plantilla
+                name: modelo
             bytes:
                 name: byte
             category:
                 name: categoría
-                ignore_page: User:UKBot/ignored categories
+                ignore_page: User:UKBot/categorías ignoradas
                 params:
                     ignore: excluír
                     maxdepth: maxdepth
             backlink:
-                name: linkado desde
+                name: ligado dende
             forwardlink:
-                name: linka a
+                name: liga a
             pages:
-                name: páginas
+                name: páxinas
             namespace:
-                name: espacio de nombres
+                name: espazo de nomes
                 params:
                     site: site
             sparql:
@@ -97,8 +96,8 @@ templates:
                 params:
                     query: query # as in {{ ukb criterion | sparql | query=... }}
 ignore:
-    - Revertida una edición # MediaWiki:Revertpage/es
-    - 'Revertidas \d+ ediciones' # MediaWiki:Revertpage/es
-    - Deshecha la # MediaWiki:Undo-summary/es
+    - Revertida unha edición # MediaWiki:Revertpage/es
+    - 'Revertidas \d+ edicións' # MediaWiki:Revertpage/es
+    - Desfeita a # MediaWiki:Undo-summary/es
     - clientsitelink-update  # Wikidata: Page moved from .. to ..
     - clientsitelink-remove  # Wikidata: Removed sitelink

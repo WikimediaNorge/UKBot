@@ -33,11 +33,6 @@ contest_setups = [
         "url": "https://no.wikipedia.org/wiki/WP:FD!",
     },
     {
-        "id": "no-uk",
-        "name": "Ukens konkurranse",
-        "url": "https://no.wikipedia.org/wiki/WP:UK",
-    },
-    {
         "id": "fi-vk",
         "name": "Viikon kilpailu",
         "url": "https://fi.wikipedia.org/wiki/WP:VK",

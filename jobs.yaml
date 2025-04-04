@@ -37,19 +37,6 @@
   schedule: "45 22 * * *"
   emails: onfailure
   mem: 2Gi
-# no-uk
-- name: no-uk
-  command: ./jobs/run.sh no-uk
-  image: python3.11
-  schedule: "5 * * * *"
-  emails: onfailure
-  mem: 2Gi
-- name: upload-plot-no-uk
-  command: ./jobs/upload.sh no-uk
-  image: python3.11
-  schedule: "30 23 * * *"
-  emails: onfailure
-  mem: 2Gi
 # fi
 - name: fi-vk
   command: ./jobs/run.sh fi-vk
@@ -122,7 +109,7 @@
   emails: onfailure
 # es-estonia
 - name: es-estonia
-  command: ./jbs/run.sh es-estonia
+  command: ./jobs/run.sh es-estonia
   image: python3.11
   schedule: "13 * * * *"
   emails: onfailure
@@ -130,4 +117,15 @@
   command: ./jobs/upload.sh es-estonia
   image: python3.11
   schedule: "53 23 * * *"
+  emails: onfailure
+# gl-estonia
+- name: gl-estonia
+  command: ./jobs/run.sh gl-estonia
+  image: python3.11
+  schedule: "17 * * * *"
+  emails: onfailure
+- name: upload-plot-gl-estonia
+  command: ./jobs/upload.sh gl-estonia
+  image: python3.11
+  schedule: "54 23 * * *"
   emails: onfailure

@@ -1,0 +1,24 @@
+_extends: sites/cawiki.yml
+name: Concursos %(year)d-%(month)02d
+pages:
+    base: 'Viquiprojecte:Concursos/En curs'
+    default: 'Viquiprojecte:Concursos/%(year)d/%(month)02d'
+    redirect:
+      - 'Viquiprojecte:Concursos/Concurs'
+      - 'VP:CONC'
+plot:
+    datafile: plots/Concurs %(year)d-%(month)02d.json
+    figname: plots/Concurs %(year)d-%(month)02d.svg
+    description: |
+        == {{int:filedesc}} ==
+        {{Information
+        |Description    = {{ca|1=Resultats del concurs de la Viquipèdia en català [[:ca:%(pagename)s|%(year)s-%(month)s]]}}{{en|1=Results from the monthly article writing contest at the Catalan Wikipedia [[:ca:%(pagename)s|%(year)s-%(month)s]]}}
+        |Source         = {{own}}
+        |Date           = %(start)s
+        |Author         = [[User:Threepbot|Threepbot]] (using  [[User:UKBot|UKBot]]'s code)
+        }}
+
+        == {{int:license-header}} ==
+        {{PD-self}}
+
+        [[Category:Viquiconcursos de 2025]]

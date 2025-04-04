@@ -1,31 +1,30 @@
-# Finnish translation for UKBot
-# Copyright (C) 2013
-# This file is distributed under the same license as the UKBot package.
-# Gálaniitoluodda, 2013
-#
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Francisco Prieto <franciscoprietocuba at gmail dot com>, 2025.
 msgid ""
 msgstr ""
-"Project-Id-Version: UKBot\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-02 15:46+0200\n"
-"PO-Revision-Date: 2019-09-05 01:56+0200\n"
-"Last-Translator: Dan Michael O. Heggø <danmichaelo@gmail.com>\n"
-"Language-Team: \n"
-"Language: fi\n"
+"PO-Revision-Date: 2020-11-24 20:36+0100\n"
+"Last-Translator: Francisco Prieto <franciscoprietocuba at gmail dot com>\n"
+"Language-Team: Galician <kde-i18n-ca@kde.org>\n"
+"Language: gl_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.3\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 19.12.3\n"
 
 #: ukbot/contest.py:65
 #, python-format
 msgid "The filter name \"%s\" was not understood"
-msgstr ""
+msgstr "O nome de filtro \"%s\" non se entendeu"
 
 #: ukbot/contest.py:155
 msgid "Couldn't find the list of participants!"
-msgstr "Osallistujaluettelon löytäminen epäonnistui!"
+msgstr "Non se atopou a lista de participantes!"
 
 #: ukbot/contest.py:183
 #, python-format
@@ -33,31 +32,32 @@ msgid ""
 "There are no point rules defined for this contest. Point rules are defined "
 "by {{tl|%(template)s}}."
 msgstr ""
-"Tähän kilpailuun ei ole asetettu pistelaskusääntöjä. Säännöt merkitään näin: "
-"{{tl|%(template)s}}."
+"Non hai regras de puntos definidas para este concurso. As regras de puntos "
+"defínense con {{tl|%(template)s}}."
 
 #: ukbot/contest.py:228
-#, fuzzy, python-format
+#, python-format
 msgid "Could not parse {{tlx|%(template)s|%(firstarg)s}} template: %(err)s"
-msgstr "{{tl|%(template)s}}-mallineen ymmärtäminen epäonnistui."
+msgstr ""
+"Non se puido analizar o modelo {{tlx|%(template)s|%(firstarg)s}}: %(err)s"
 
 #: ukbot/contest.py:258
 #, python-format
 msgid "Unkown argument given to {{tl|%(template)s}}: %(argument)s"
-msgstr ""
-"Tuntematon argumentti on annettu kohteeseen {{tl|%(template)s}}: %(argument)s"
+msgstr "Argumento descoñecido pasado a {{tl|%(template)s}}: %(argumento)s"
 
 #: ukbot/contest.py:289
 #, python-format
 msgid "Couldn't parse the date given to the {{tl|%(template)s}} template."
-msgstr ""
-"{{tl|%(template)s}}-mallineeseen annettu päivämäärä ei tullut ymmärretyksi."
+msgstr "Non se puido entender a data que se deu ao modelo {{tl|%(template)s}}."
 
 #: ukbot/contest.py:322
 #, python-format
 msgid ""
 "Could not find the user %(user)s given to the {{tl|%(template)s}} template."
-msgstr "Käyttäjää %(user)s ri löytynyt {{tl|%(template)s}}-mallineesta."
+msgstr ""
+"Non se puido atopar o usuario %(user)s que se deu ao modelo {{tl|"
+"%(template)s}}."
 
 #: ukbot/contest.py:335 ukbot/contest.py:375
 #, python-format
@@ -65,48 +65,52 @@ msgid ""
 "Failed to parse the %(template)s template: Did not find a site matching the "
 "site prefix %(prefix)s"
 msgstr ""
+"Non se puido analizar o modelo %(template)s: non se atopou un site que "
+"concorde co prefixo que temos: %(prefix)s"
 
 #: ukbot/contest.py:354 ukbot/contest.py:394
 #, python-format
 msgid ""
 "Couldn't find the user %(user)s given to the {{tl|%(template)s}} template."
-msgstr "Ei löydetty käyttäjää %(user)s {{tl|%(template)s}}-mallineesta."
+msgstr ""
+"Non se puido atopar o usuario %(user)s que se pasou ao {{tl|%(template)s}} "
+"modelo."
 
 #: ukbot/contest.py:529
 msgid "Day"
-msgstr "Päivä"
+msgstr "Día"
 
 #: ukbot/contest.py:530
 msgid "Points"
-msgstr "Pisteet"
+msgstr "Puntos"
 
 #: ukbot/contest.py:533 ukbot/contest.py:748 ukbot/contest.py:935
 #: ukbot/contest.py:936 ukbot/contest.py:937
 msgid "%e. %B %Y, %H:%M"
-msgstr "%e. %Bta %Y kello %H.%M"
+msgstr "%e %B %Y, %H:%M"
 
 #: ukbot/contest.py:534
 #, python-format
 msgid "Updated %(date)s"
-msgstr "Päivitetty %(date)s"
+msgstr "Actualizado %(date)s"
 
 #: ukbot/contest.py:569
 #, python-format
 msgid "Weekly contest for week %(week)d"
-msgstr "Viikon %(week)d kilpailu"
+msgstr "Concurso semanal da semana %(week)d"
 
 #: ukbot/contest.py:571
 #, python-format
 msgid "Weekly contest for week %(startweek)d–%(endweek)d"
-msgstr "Viikkojen %(startweek)d–%(endweek)d kilpailu"
+msgstr "Concurso semanal da semana %(startweek)d–%(endweek)d"
 
 #: ukbot/contest.py:649
 msgid "Regards"
-msgstr "Terveisin"
+msgstr "Atentamente"
 
 #: ukbot/contest.py:649
 msgid "and"
-msgstr "ja"
+msgstr "e"
 
 #: ukbot/contest.py:679
 #, python-format
@@ -118,36 +122,38 @@ msgid ""
 "everything looks fine, [%(link)s click here] (and save) to indicate that I "
 "can send out the awards at first occasion."
 msgstr ""
-"Nyt sinun on tarkistettava tulokset. Mikäli [[%(page)s|kilpailusivun]] "
-"lopussa on virheilmoituksia, on sinun tarkistettava, että muokkauksista on "
-"saatu oikea määrä pisteitä. Katso myös onko keskustelusivulla kommentteja "
-"tai valituksia. Jos kaikki näyttää olevan kunnossa, paina [%(link)s tästä] "
-"(ja tallenna), niin rusetit lähetetään melko nopeasti."
+"Agora tes que comprobar se os resultados semellan correctos. Se hai mensaxes "
+"de erro ao final da [[%(page)s|páxina do concurso]], deberías comprobar que "
+"as achegas relacionadas recibiron o número correcto de puntos. Comproba "
+"tamén se hai comentarios ou queixas na páxina de conversa. Se todo ten boa "
+"pinta, [%(link)s fai clic aquí] (e garda) para sinalar que podo enviar os "
+"premios tan axiña como sexa posible."
 
 #: ukbot/contest.py:680
 msgid "Thanks, ~~~~"
-msgstr "Terveisin, ~~~~"
+msgstr "Grazas, ~~~~"
 
 #: ukbot/contest.py:691
 #, python-format
 msgid "Awards have been [%(link)s sent out]."
-msgstr "Rusetit on nyt [%(link)s jaettu]."
+msgstr "[%(link)s Enviáronse] os premios."
 
 #: ukbot/contest.py:880 ukbot/ukbot.py:148 ukbot/ukbot.py:151
 msgid "UKBot encountered a problem"
-msgstr "UKBot havaitsi ongelman"
+msgstr "UKBot atopou un problema"
 
 #: ukbot/contest.py:930
 msgid ""
 "This contest is closed – thanks to everyone who participated! Awards will be "
 "sent out as soon as the contest organizer has checked the results."
 msgstr ""
-"Tämä kilpailu on päättynyt – kiitos kaikille osallistuneille! Rusetit "
-"jaetaan heti kun kilpailun järjestäjä on tarkistanut tulokset."
+"Este concurso rematou – grazas a todas as persoas que participaron! Os "
+"premios enviaranse tan axiña como o organizador do concurso comprobe os "
+"resultados."
 
 #: ukbot/contest.py:932
 msgid "This contest is closed – thanks to everyone who participated!"
-msgstr "Tämä kilpailu on päättynyt – kiitos kaikille osallistuneille!"
+msgstr "Este concurso rematou – grazas a todas as persoas que participaron!"
 
 #: ukbot/contest.py:939
 #, python-format
@@ -155,138 +161,131 @@ msgid ""
 "Last updated %(lastupdate)s. The contest is open from %(startdate)s to "
 "%(enddate)s."
 msgstr ""
-"Päivitetty viimeksi %(lastupdate)s. Kilpailu on avoinna  %(startdate)s – "
-"%(enddate)s."
+"Última actualización %(lastupdate)s. O concurso está aberto dende "
+"%(startdate)s até %(enddate)s."
 
 #: ukbot/contest.py:960
-#, fuzzy, python-format
+#, python-format
 msgid "UKBot encountered the following problems with the page [[%s]]"
-msgstr "UKBot havaitsi seuraavat ongelmat artikkeliin [[:%s]] liittyen"
+msgstr "UKBot atopou os seguintes problemas coa páxina [[%s]]"
 
 #: ukbot/contest.py:994
 #, python-format
 msgid "Results markers %(start_marker)s and %(end_marker)s not found"
 msgstr ""
+"Os marcadores de resultados %(start_marker)s e %(end_marker)s non se atoparon"
 
 #: ukbot/contest.py:1005
 #, python-format
 msgid "No \"%(section_name)s\" section found."
-msgstr ""
+msgstr "Non se atopou a sección \"%(section_name)s\"."
 
 #: ukbot/contest.py:1015
 msgid "Updating with final results, the contest is now closed."
-msgstr "Lisätään lopulliset tulokset ja merkitään kilpailu päättyneeksi."
+msgstr "Actualizando cos resultados finais, o concurso rematou."
 
 #: ukbot/contest.py:1017
 msgid "Checking results and handing out awards"
-msgstr "Tarkistetaan tulokset ja jaetaan rusetit"
+msgstr "Comprobando os resultados e repartindo os premios"
 
 #: ukbot/contest.py:1019
 msgid "Updating"
-msgstr "Päivitetään"
+msgstr "Actualizando"
 
 #: ukbot/contest.py:1149
 #, python-format
 msgid "The weekly contest is: %(link)s"
-msgstr "Viikon kilpailu on: %(link)s"
+msgstr "O concurso semanal é: %(link)s"
 
 #: ukbot/contributions.py:164 ukbot/user.py:674
 msgid "suspended since"
-msgstr "suspendert siden"
+msgstr "suspendido dende"
 
 #: ukbot/contributions.py:164 ukbot/user.py:674
 msgid "%A, %H:%M"
-msgstr "%A kello %H.%M"
+msgstr "%A, %H:%M"
 
 #: ukbot/contributions.py:178 ukbot/user.py:679
 msgid "No qualifying contributions registered yet"
-msgstr "Hyväksyttyjä muokkauksia ei ole vielä rekisteröity"
+msgstr "Aínda non se rexistraron achegas cualificadas"
 
 #: ukbot/contributions.py:181
 #, python-format
 msgid "%d article"
 msgid_plural "%d articles"
-msgstr[0] "%d artikkeli"
-msgstr[1] "%d artikkelia"
+msgstr[0] "%d artigo"
+msgstr[1] "%d artigos"
 
 #: ukbot/contributions.py:187
 msgid "{{Kolonner}}"
-msgstr "{{Sarakkeet}}"
+msgstr "{{Columnas}}"
 
 #: ukbot/contributions.py:221
 msgid "%d.%m, %H:%M"
-msgstr "%e. %Bta %Y kello %H.%M"
+msgstr "%d.%m, %H:%M"
 
 #: ukbot/contributions.py:229
 msgid "capped at max"
-msgstr ""
+msgstr "limitado ao máximo"
 
 #: ukbot/contributions.py:265
 msgid "Category hit"
-msgstr "Luokkaosuma"
+msgstr "Coincidencia de categoría"
 
 #: ukbot/contributions.py:278
 #, fuzzy, python-format
 msgid "Total: %(bytecount)d bytes, %(wordcount)d words"
-msgstr ""
-"Yhteensä: {{formatnum:%(bytecount)d}} {{subst:PLURAL:%(bytecount)d|tavu|"
-"tavua}}, %(wordcount)d {{subst:PLURAL:%(wordcount)d|sana|sanaa}}"
+msgstr "Total: {{formatnum:%(bytecount)d}} bytes, %(wordcount)d palabras"
 
 #: ukbot/contributions.py:293
 msgid ""
 "<strong>Note:</strong> The contributions to this article are currently "
 "disqualified."
 msgstr ""
-"<strong>Huomio:</strong> Muokkaukset tähän artikkeliin on toistaiseksi "
-"hylätty."
+"<strong>Nota:</strong> As achegas a este artigo están descualificadas "
+"actualmente."
 
 #: ukbot/contributions.py:302
 msgid "<abbr class=\"newpage\" title=\"New page\">N</abbr>"
-msgstr "<abbr class=\"newpage\" title=\"Uusi sivu\">U</abbr>"
+msgstr "<abbr class=\"newpage\" title=\"New page\">N</abbr>"
 
 #: ukbot/contributions.py:305
-#, fuzzy
 msgid "<abbr class=\"newpage\" title=\"Wikidata item\">W</abbr>"
-msgstr "<abbr class=\"newpage\" title=\"Uusi sivu\">U</abbr>"
+msgstr "<abbr class=\"newpage\" title=\"Wikidata item\">W</abbr>"
 
 #: ukbot/filters.py:150
-#, fuzzy
 msgid "Too few arguments given to this template."
-msgstr ""
-"Tuntematon argumentti on annettu kohteeseen {{tl|%(template)s}}: %(argument)s"
+msgstr "Este modelo ten moi poucos argumentos."
 
 #: ukbot/filters.py:198
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Could not analyze page %(article)s because the revision %(rev)d could not be "
 "parsed: %(error)s"
 msgstr ""
-"Artikkelin %(article)s analysointi epäonnistui sillä versio %(prevrev)d tai "
-"%(rev)d ei tullut ymmärreyksi: %(error)s"
+"Non se puido analizar a páxina %(article)s porque a revisión %(rev)d non se "
+"puido entender: %(error)s"
 
 #: ukbot/filters.py:233
 msgid "Could not parse the catignore page"
-msgstr "Catignore-sivun sisältöä ei ymmärretty"
+msgstr "Non se puido entender a páxina catignore"
 
 #: ukbot/filters.py:238
 msgid "No category values given!"
-msgstr ""
+msgstr "Non se deron valores de categoría!"
 
 #: ukbot/filters.py:444
 msgid "Encountered an infinite category loop: "
-msgstr "Jumiutunut loputtomaan luokkasilmukkaan: "
+msgstr "Atopouse un bucle de categorías infinito:"
 
 #: ukbot/filters.py:483
-#, fuzzy
 msgid "No byte limit (second argument) given"
-msgstr ""
-"Tavurajaa (toinen argumentti) ei ole annettu kohteeseen {{tlx|%(template)s|"
-"%(firstarg)s}}"
+msgstr "Non se deu o límite de bytes (segundo argumento)"
 
 #: ukbot/filters.py:720
 #, python-format
 msgid "No \"%s\" parameter given"
-msgstr ""
+msgstr "Non se deu o parámetro \"%s\""
 
 #: ukbot/revision.py:132
 #, python-format
@@ -296,6 +295,10 @@ msgid ""
 "parent revision (%(parentid)s) of size %(size)d, possibly due to unclosed "
 "tags or templates in that revision."
 msgstr ""
+"Revisión [//%(host)s/w/index.php?diff=prev&oldid=%(revid)s %(revid)s]: a "
+"diferenza no número de palabras pode estar trabucada, porque non se atoparon "
+"palabras na revisión (%(parentid)s) de medida %(size)d, posiblemente porque "
+"que hai tags ou modelos mal pechados naquela revisión."
 
 #: ukbot/revision.py:142
 #, python-format
@@ -305,168 +308,120 @@ msgid ""
 "(%(words)d) is larger than the byte increase (%(bytes)d). Wrong word counts "
 "can occur for invalid wiki text."
 msgstr ""
+"Revisión [//%(host)s/w/index.php?diff=prev&oldid=%(revid)s %(revid)s]: a "
+"diferenza no número de palabras pode estar trabucada, porque o aumento "
+"(%(words)d) no número de palabras é meirande ca o aumento de bytes "
+"(%(bytes)d). Poden saír recontos incorrectos se o wikitexto non é válido."
 
 #: ukbot/sites.py:63
 #, python-format
 msgid "Page does not exist: [[%(pagename)s]]"
-msgstr ""
+msgstr "A páxina non existe: [[%(pagename)s]]"
 
 #: ukbot/sites.py:80
 #, python-format
 msgid "Could not found a site matching the prefix \"%(key)s\""
-msgstr ""
+msgstr "Non se atopou un site que concorde co prefixo \"%(key)s\""
 
 #: ukbot/ukbot.py:169
 #, python-format
 msgid "#REDIRECT [[%s]]"
-msgstr "#OHJAUS [[%s]]"
+msgstr "#REDIRECT [[%s]]"
 
 #: ukbot/ukbot.py:171
 #, python-format
 msgid "Redirecting to %s"
-msgstr "Ohjaus sivulle %s"
+msgstr "Redirixindo a %s"
 
 #: ukbot/user.py:681
 msgid "articles"
-msgstr ""
-"%(articlecount)d {{subst:PLURAL:%(articlecount)d|artikkeli|artikkelia}}"
+msgstr "artigos"
 
 #: ukbot/user.py:683
 msgid "{{Kolonner}}\n"
-msgstr "{{Sarakkeet}}\n"
+msgstr "{{Columnas}}\n"
 
 #: ukbot/rules/byte.py:20
 #, python-format
 msgid "%(bytes).f bytes"
-msgstr "%(bytes).f {{subst:PLURAL:%(bytes).f|tavu|tavua}}"
+msgstr "%(bytes).f bytes"
 
 #: ukbot/rules/contrib.py:16
 msgid "contribution"
-msgstr ""
+msgstr "achega"
 
 #: ukbot/rules/external_link.py:30
 msgid "links"
-msgstr "%(links).f {{subst:PLURAL:%(links).f|linkkit|linkkiä}}"
+msgstr "ligazóns"
 
 #: ukbot/rules/image.py:142
 msgid "images"
-msgstr "%(images).f {{subst:PLURAL:%(images).f|kuva|kuvaa}}"
+msgstr "imaxes"
 
 #: ukbot/rules/new.py:16
 msgid "new page"
-msgstr "uusi sivu"
+msgstr "páxina nova"
 
 #: ukbot/rules/qualified.py:22
 msgid "qualified"
-msgstr "hyväksytty"
+msgstr "cualificado"
 
 #: ukbot/rules/redirect.py:16
 msgid "redirect"
-msgstr "uudelleenohjaus"
+msgstr "redirección"
 
 #: ukbot/rules/ref.py:81
 msgid "references"
-msgstr ""
-"{{subst:PLURAL:%(num)d|Yksi lähde on lisätty|%(num)d lähdettä on lisätty}}"
+msgstr "referencias"
 
 #: ukbot/rules/ref.py:85
 msgid "reference pointers"
-msgstr ""
-"{{subst:PLURAL:%(num)d|Yksi viittaus jo olemassa olevaan lähteeseen|%(num)d "
-"viittausta jo olemassa oleviin lähteisiin}}"
+msgstr "punteiros de referencia"
 
 #: ukbot/rules/regexp.py:19
 msgid "regexp"
-msgstr ""
+msgstr "expresión regular"
 
 #: ukbot/rules/regexp.py:44
 msgid "section"
-msgstr ""
+msgstr "sección"
 
 #: ukbot/rules/rule.py:76
 #, python-format
 msgid "bonus %(words)d words"
-msgstr "bonus %(words)d {{subst:PLURAL:%(words)d|sana|sanaa}}"
+msgstr "%(words)d palabras extra"
 
 #: ukbot/rules/templateremoval.py:88
 #, python-format
 msgid "removal of {{tl|%(template)s}}"
-msgstr "mallineen {{tl|%(template)s}} poisto"
+msgstr "borrado de {{tl|%(template)s}}"
 
 #: ukbot/rules/wikidata.py:47
 #, python-format
 msgid "label (%(lang)s)"
-msgstr ""
+msgstr "etiqueta (%(lang)s)"
 
 #: ukbot/rules/wikidata.py:53
 #, python-format
 msgid "description (%(lang)s)"
-msgstr ""
+msgstr "descrición (%(lang)s)"
 
 #: ukbot/rules/wikidata.py:59
 #, python-format
 msgid "alias (%(lang)s)"
-msgstr ""
+msgstr "alcume (%(lang)s)"
 
 #: ukbot/rules/wikidata.py:72
 #, python-format
 msgid "%(property)s statement"
-msgstr ""
+msgstr "declaración de %(property)s"
 
 #: ukbot/rules/wikidata.py:73
 #, python-format
 msgid "%(count)d %(property)s statements"
-msgstr ""
+msgstr "%(count)d declaracións de %(property)s"
 
 #: ukbot/rules/word.py:20
 #, python-format
 msgid "%(words).f words"
-msgstr "%(words).f {{subst:PLURAL:%(words).f|sana|sanaa}}"
-
-#~ msgid "This contest is missing a {{tl|%(template)s}} template."
-#~ msgstr "Tästä kilpailusta puuttuu {{tl|%(template)s}}-malline."
-
-#~ msgid ""
-#~ "Did not find %(week)s+%(year)s or %(start)s+%(end)s in {{tl|"
-#~ "%(templates)s}}."
-#~ msgstr ""
-#~ "Kohteesta {{tl|%(templates)s}} ei ole löydetty %(week)s+%(year)s eikä "
-#~ "%(start)s+%(end)s."
-
-#~ msgid ""
-#~ "Note that the contest this week is [[%(url)s|{{%(template)s|"
-#~ "%(weekarg)s=%(week)s}}]]. Join in!"
-#~ msgstr ""
-#~ "Muista, että tämän viikon kilpailu on [[%(url)s|{{%(template)s|"
-#~ "%(weekarg)s=%(week)s}}]]. Onnea matkaan!"
-
-#~ msgid "max"
-#~ msgstr "maks"
-
-#~ msgid "added reference section"
-#~ msgstr "yksi viittaus jo olemassaolevaan lähteeseen"
-
-#~ msgid "bonus %(bytes).f bytes"
-#~ msgstr "bonus %(bytes).f {{subst:PLURAL:%(bytes).f|tavu|tavua}}"
-
-#~ msgid ""
-#~ "No template (second argument) given to {{tlx|%(template)s|%(firstarg)s}}"
-#~ msgstr ""
-#~ "Mallineita (toinen argumentti) ei ole annettu kohteeseen {{tlx|"
-#~ "%(template)s|%(firstarg)s}}"
-
-#~ msgid "No categories given to {{tlx|%(template)s|%(firstarg)s}}"
-#~ msgstr "Kohteeseen {{tlx|%(template)s|%(firstarg)s}} ei ole annettu luokkia"
-
-#, fuzzy
-#~ msgid ""
-#~ "No \"%(query)s\" parameter given to {{tlx|%(template)s|%(firstarg)s}}"
-#~ msgstr "Kohteeseen {{tlx|%(template)s|%(firstarg)s}} ei ole annettu luokkia"
-
-#~ msgid "Unknown argument given to {{tl|%(template)s}}: %(argument)s"
-#~ msgstr ""
-#~ "Tuntematon argumentti on annettu kohteeseen {{tl|%(template)s}}: "
-#~ "%(argument)s"
-
-#~ msgid "Found no \"%(section)s\" sections in the page \"%(page)s\""
-#~ msgstr "Ei löydettyjä \"%(section)s\"-osioita sivulla \"%(page)s\""
+msgstr "%(words).f palabras"

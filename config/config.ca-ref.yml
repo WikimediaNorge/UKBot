@@ -1,0 +1,26 @@
+_extends: sites/cawiki.yml
+contest_type: weekly
+name: Diumenge de les referències %(year)d-%(week)02d
+pages:
+    base: 'Viquiprojecte:Concursos/El diumenge de les referències'
+    default: 'Viquiprojecte:Concursos/El diumenge de les referències/Concurs %(year)d-%(week)02d'
+award_messages:
+    winner_template: '{{ConcursVP guanyador|any=%(year)d|setmana=%(week)02d|%(awards)s}}'
+    organizer_template: '{{ConcursVP organitzador|any=%(year)d|setmana=%(week)02d|%(awards)s}}'
+    reminder_msg: ''
+plot:
+    datafile: plots/Diumenge referències %(year)d-%(week)02d.json
+    figname: plots/Diumenge referències %(year)d-%(week)02d.svg
+    description: |
+        == {{int:filedesc}} ==
+        {{Information
+        |Description    = {{ca|1=Resultats del diumenge de les referències [[:ca:%(pagename)s|%(year)s-%(week)s]]}}{{en|1=Results from Reference Sunday at the Catalan Wikipedia [[:ca:%(pagename)s|%(year)s-%(week)s]]}}
+        |Source         = {{own}}
+        |Date           = %(start)s
+        |Author         = [[User:Threepbot|Threepbot]] (using  [[User:UKBot|UKBot]]'s code)
+        }}
+
+        == {{int:license-header}} ==
+        {{PD-self}}
+
+        [[Category:Diumenge de les referències de 2025]]

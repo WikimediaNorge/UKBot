@@ -4,7 +4,10 @@
 # Add more languages here!  Beware that this is a makefile snippet and
 # you have to adhere to make syntax.
 LINGUAS = nb_NO \
+	ca_ES \
 	fi_FI \
+	gl_ES \
+	es_ES \
 	eu_ES
 
 # Textdomain for our package.
