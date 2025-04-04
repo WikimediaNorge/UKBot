@@ -1,0 +1,21 @@
+_extends: sites/glwiki.yml
+name: Concurso Estonia
+pages:
+    base: 'Wikipedia:Wikiproxecto Estonia'
+    default: 'Wikipedia:Wikiproxecto Estonia'
+plot:
+    datafile: plots/Concursos %(year)d-%(month)02d.json
+    figname: plots/Concursos %(year)d-%(month)02d.svg
+    description: |
+        == {{int:filedesc}} ==
+        {{Information
+        |Description    = {{en|1=Results from the Estonia article writing contest for April 2025 at Galician Wikipedia: [[:es:%(pagename)s]]}}
+        |Source         = {{own}}
+        |Date           = %(start)s
+        |Author         = [[User:UKBot|UKBot]]
+        }}
+
+        == {{int:license-header}} ==
+        {{PD-self}}
+
+        [[Category:Wikipedia competitions]]

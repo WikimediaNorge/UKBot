@@ -118,3 +118,14 @@
   image: python3.11
   schedule: "53 23 * * *"
   emails: onfailure
+# gl-estonia
+- name: gl-estonia
+  command: ./jobs/run.sh gl-estonia
+  image: python3.11
+  schedule: "17 * * * *"
+  emails: onfailure
+- name: upload-plot-gl-estonia
+  command: ./jobs/upload.sh gl-estonia
+  image: python3.11
+  schedule: "54 23 * * *"
+  emails: onfailure
