@@ -77,7 +77,7 @@ class SiteManager(object):
             if site.match_prefix(key):
                 return site
         if raise_on_error:
-            raise InvalidContestPage(_('Could not find a site matching the prefix "%(key)s"') % {
+            raise InvalidContestPage(_('Could not found a site matching the prefix "%(key)s"') % {
                 'key': key
             })
 
