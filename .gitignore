@@ -22,7 +22,6 @@ pip-log.txt
 
 #Translations
 *.mo
-*.pot
 bot/locale
 
 #Other
