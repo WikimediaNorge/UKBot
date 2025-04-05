@@ -1,21 +1,21 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Joan Creus <joan.creusandreu at gmail dot com>, 2020.
+# SPDX-FileCopyrightText: 2025 Joan Creus <joan.creusandreu
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-02 15:46+0200\n"
-"PO-Revision-Date: 2020-11-24 20:36+0100\n"
-"Last-Translator: Joan Creus <joan.creusandreu at gmail dot com>\n"
+"PO-Revision-Date: 2025-04-04 17:56+0200\n"
+"Last-Translator: Joan Creus <joan.creusandreu@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 19.12.3\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #: ukbot/contest.py:65
 #, python-format
@@ -32,14 +32,14 @@ msgid ""
 "There are no point rules defined for this contest. Point rules are defined "
 "by {{tl|%(template)s}}."
 msgstr ""
-"No hi ha regles de punts definides per a aquest concurs. Les regles de punts "
-"es defineixen amb {{tl|%(template)s}}."
+"No hi ha regles de puntuació definides per aquest concurs. Les regles de"
+" punts es defineixen amb {{tl|%(template)s}}."
 
 #: ukbot/contest.py:228
 #, python-format
 msgid "Could not parse {{tlx|%(template)s|%(firstarg)s}} template: %(err)s"
 msgstr ""
-"No s'ha pogut analitzar la plantilla {{tlx|%(template)s|%(firstarg)s}}: "
+"No s'ha pogut interpretar la plantilla {{tlx|%(template)s|%(firstarg)s}}: "
 "%(err)s"
 
 #: ukbot/contest.py:258
@@ -51,16 +51,14 @@ msgstr "Argument desconegut passat a {{tl|%(template)s}}: %(argument)s"
 #, python-format
 msgid "Couldn't parse the date given to the {{tl|%(template)s}} template."
 msgstr ""
-"No s'ha pogut entendre la data que s'ha passat a la plantilla {{tl|"
-"%(template)s}}."
+"No s'ha pogut interpretar la data donada a la plantilla {{tl|%(template)s}}."
 
 #: ukbot/contest.py:322
 #, python-format
 msgid ""
 "Could not find the user %(user)s given to the {{tl|%(template)s}} template."
 msgstr ""
-"No s'ha pogut trobar l'usuari %(user)s que s'ha passat a la plantilla {{tl|"
-"%(template)s}}."
+"No s'ha trobat l'usuari %(user)s passat a la plantilla {{tl|%(template)s}}."
 
 #: ukbot/contest.py:335 ukbot/contest.py:375
 #, python-format
@@ -68,15 +66,15 @@ msgid ""
 "Failed to parse the %(template)s template: Did not find a site matching the "
 "site prefix %(prefix)s"
 msgstr ""
-"No s'ha pogut analitzar la plantilla %(template)s: no hem trobat un site que "
-"concordi amb el prefix que tenim: %(prefix)s"
+"No s'ha pogut analitzar la plantilla %(template)s: no s'ha trobat un lloc que"
+" concordi amb el prefix de lloc %(prefix)s"
 
 #: ukbot/contest.py:354 ukbot/contest.py:394
 #, python-format
 msgid ""
 "Couldn't find the user %(user)s given to the {{tl|%(template)s}} template."
 msgstr ""
-"Could not find the user %(user)s given to the {{tl|%(template)s}} template."
+"No s'ha trobat l'usuari %(user)s passat a la plantilla {{tl|%(template)s}}."
 
 #: ukbot/contest.py:529
 msgid "Day"
@@ -89,7 +87,7 @@ msgstr "Punts"
 #: ukbot/contest.py:533 ukbot/contest.py:748 ukbot/contest.py:935
 #: ukbot/contest.py:936 ukbot/contest.py:937
 msgid "%e. %B %Y, %H:%M"
-msgstr "%e %B %Y, %H:%M"
+msgstr "%e. %B %Y, %H:%M"
 
 #: ukbot/contest.py:534
 #, python-format
@@ -108,7 +106,7 @@ msgstr "Concurs setmanal de la setmana %(startweek)d–%(endweek)d"
 
 #: ukbot/contest.py:649
 msgid "Regards"
-msgstr "Atentament"
+msgstr "Salutacions"
 
 #: ukbot/contest.py:649
 msgid "and"
@@ -124,12 +122,12 @@ msgid ""
 "everything looks fine, [%(link)s click here] (and save) to indicate that I "
 "can send out the awards at first occasion."
 msgstr ""
-"Ara has de comprovar si els resultats semblen correctes. Si hi ha missatges "
-"d'error al final de la [[%(page)s|pàgina del concurs]], hauries de comprovar "
-"que les contribucions relacionades han rebut el nombre correcte de punts. "
-"Comprova també si hi ha comentaris o queixes a la pàgina de discussió. Si "
-"tot fa bona pinta, [%(link)s clica aquí] (i desa) per indicar que puc enviar "
-"els premis de seguida que pugui."
+"Ara caldria comprovar si el resultat sembla correcte. Si hi ha missatges"
+" d'error al final de la [[%(page)s|pàgina de concurs]], caldria comprovar si"
+" les contribucions relacionades amb aquest missatge han rebut el nombre de"
+" punts correcte. Comproveu també si hi ha comentaris o queixes a la pàgina de"
+" discussió. Si tot sembla que està bé, [%(link)s cliqueu aquí] (i deseu) per"
+" indicar que puc enviar els premis de seguida que pugui."
 
 #: ukbot/contest.py:680
 msgid "Thanks, ~~~~"
@@ -138,7 +136,7 @@ msgstr "Gràcies, ~~~~"
 #: ukbot/contest.py:691
 #, python-format
 msgid "Awards have been [%(link)s sent out]."
-msgstr "S'han [%(link)s enviat] els premis."
+msgstr "Els premis s'han [%(link)s enviat]."
 
 #: ukbot/contest.py:880 ukbot/ukbot.py:148 ukbot/ukbot.py:151
 msgid "UKBot encountered a problem"
@@ -149,9 +147,9 @@ msgid ""
 "This contest is closed – thanks to everyone who participated! Awards will be "
 "sent out as soon as the contest organizer has checked the results."
 msgstr ""
-"Aquest concurs està tancat – gràcies a tothom que hi ha participat! Els "
-"premis s'enviaran de seguida que l'organitzador del concurs n'hagi comprovat "
-"els resultats."
+"Aquest concurs està tancat – gràcies a tothom que hi ha participat! Els"
+" premis s'enviaran de seguida que l'organitzador del concurs hagi comprovat"
+" els resultats."
 
 #: ukbot/contest.py:932
 msgid "This contest is closed – thanks to everyone who participated!"
@@ -163,8 +161,9 @@ msgid ""
 "Last updated %(lastupdate)s. The contest is open from %(startdate)s to "
 "%(enddate)s."
 msgstr ""
-"Última actualització %(lastupdate)s. El concurs és obert des de "
-"%(startdate)s fins %(enddate)s."
+"Actualitzat per darrera vegada a %(lastupdate)s. El concurs està obert des de"
+" %(startdate)s fins "
+"%(enddate)s."
 
 #: ukbot/contest.py:960
 #, python-format
@@ -175,7 +174,7 @@ msgstr "UKBot ha trobat els següents problemes amb la pàgina [[%s]]"
 #, python-format
 msgid "Results markers %(start_marker)s and %(end_marker)s not found"
 msgstr ""
-"Els marcadors de resultats %(start_marker)s i %(end_marker)s no s'han trobat"
+"No s'han trobat els marcadors de resultats %(start_marker)s i %(end_marker)s"
 
 #: ukbot/contest.py:1005
 #, python-format
@@ -188,7 +187,7 @@ msgstr "Actualitzant amb els resultats finals, el concurs queda tancat."
 
 #: ukbot/contest.py:1017
 msgid "Checking results and handing out awards"
-msgstr "Comprovant els resultats i lliurant premis"
+msgstr "Comprovant els resultats i repartint premis"
 
 #: ukbot/contest.py:1019
 msgid "Updating"
@@ -197,7 +196,7 @@ msgstr "Actualitzant"
 #: ukbot/contest.py:1149
 #, python-format
 msgid "The weekly contest is: %(link)s"
-msgstr "El concurs setmanal és. %(link)s"
+msgstr "El concurs setmanal és: %(link)s"
 
 #: ukbot/contributions.py:164 ukbot/user.py:674
 msgid "suspended since"
@@ -232,12 +231,12 @@ msgstr "limitat al màxim"
 
 #: ukbot/contributions.py:265
 msgid "Category hit"
-msgstr "Coincidència de categoria"
+msgstr "Categoria trobada"
 
 #: ukbot/contributions.py:278
-#, fuzzy, python-format
+#, python-format
 msgid "Total: %(bytecount)d bytes, %(wordcount)d words"
-msgstr "Total: {{formatnum:%(bytecount)d}} bytes, %(wordcount)d paraules"
+msgstr "Total: %(bytecount)d bytes, %(wordcount)d paraules"
 
 #: ukbot/contributions.py:293
 msgid ""
@@ -257,7 +256,7 @@ msgstr "<abbr class=\"newpage\" title=\"Wikidata item\">W</abbr>"
 
 #: ukbot/filters.py:150
 msgid "Too few arguments given to this template."
-msgstr "Aquesta plantilla té massa pocs arguments."
+msgstr "Massa pocs arguments passats a aquesta plantilla."
 
 #: ukbot/filters.py:198
 #, python-format
@@ -265,20 +264,20 @@ msgid ""
 "Could not analyze page %(article)s because the revision %(rev)d could not be "
 "parsed: %(error)s"
 msgstr ""
-"No s'ha pogut analitzar la pàgina %(article)s perquè la revisió %(rev)d no "
-"s'ha pogut entendre: %(error)s"
+"No s'ha pogut analitzar la pàgina %(article)s perquè la revisió %(rev)d no"
+" s'ha pogut analitzar: %(error)s"
 
 #: ukbot/filters.py:233
 msgid "Could not parse the catignore page"
-msgstr "No s'ha pogut entendre la pàgina catignore"
+msgstr "No s'ha pogut interpretar la pàgina catignore"
 
 #: ukbot/filters.py:238
 msgid "No category values given!"
-msgstr "No s'han donat valors de categoria!"
+msgstr "No s'han donat valors a les categories!"
 
 #: ukbot/filters.py:444
 msgid "Encountered an infinite category loop: "
-msgstr "S'ha trobat un bucle de categories infinit:"
+msgstr "S'ha trobat un bucle infinit de categories:"
 
 #: ukbot/filters.py:483
 msgid "No byte limit (second argument) given"
@@ -297,11 +296,10 @@ msgid ""
 "parent revision (%(parentid)s) of size %(size)d, possibly due to unclosed "
 "tags or templates in that revision."
 msgstr ""
-"Revisió [//%(host)s/w/index.php?diff=prev&oldid=%(revid)s %(revid)s]: la "
-"diferència en el nombre de paraules pot estar equivocada, perquè no s'han "
-"trobat paraules a la revisió pare (%(parentid)s) de mida %(size)d, "
-"possiblement perquè hi hagi tags o plantilles mal tancades en aquella "
-"revisió."
+"Revisió [//%(host)s/w/index.php?diff=prev&oldid=%(revid)s %(revid)s]: La"
+" diferència de paraules podria estar malament perquè no s'han trobat paraules"
+" a la revisió anterior (%(parentid)s) de mida %(size)d, possiblement per"
+" culpa de tags o plantilles mal tancades en aquella revisió."
 
 #: ukbot/revision.py:142
 #, python-format
@@ -311,10 +309,10 @@ msgid ""
 "(%(words)d) is larger than the byte increase (%(bytes)d). Wrong word counts "
 "can occur for invalid wiki text."
 msgstr ""
-"Revisió [//%(host)s/w/index.php?diff=prev&oldid=%(revid)s %(revid)s]: la "
-"diferència en el nombre de paraules pot estar equivocada, perquè l'augment "
-"(%(words)d) en el nombre de paraules és més gran que l'augment de bytes "
-"(%(bytes)d). Poden sortir recomptes incorrectes si el viquitext no és vàlid."
+"Revisió [//%(host)s/w/index.php?diff=prev&oldid=%(revid)s %(revid)s]: La"
+" diferència de paraules podria estar malament perquè l'increment en nombre de"
+" paraules (%(words)d) és més gran que l'increment en bytes (%(bytes)d). Els"
+" errors en comptar paraules poden ser deguts a viquitext incorrecte."
 
 #: ukbot/sites.py:63
 #, python-format
@@ -367,7 +365,7 @@ msgstr "pàgina nova"
 
 #: ukbot/rules/qualified.py:22
 msgid "qualified"
-msgstr "qualificat"
+msgstr "qualificada"
 
 #: ukbot/rules/redirect.py:16
 msgid "redirect"
@@ -379,7 +377,7 @@ msgstr "referències"
 
 #: ukbot/rules/ref.py:85
 msgid "reference pointers"
-msgstr "punters de referència"
+msgstr "punters a referència"
 
 #: ukbot/rules/regexp.py:19
 msgid "regexp"
@@ -392,12 +390,12 @@ msgstr "secció"
 #: ukbot/rules/rule.py:76
 #, python-format
 msgid "bonus %(words)d words"
-msgstr "%(words)d paraules bonificades"
+msgstr "bonificació %(words)d paraules"
 
 #: ukbot/rules/templateremoval.py:88
 #, python-format
 msgid "removal of {{tl|%(template)s}}"
-msgstr "esborrament de {{tl|%(template)s}}"
+msgstr "treure {{tl|%(template)s}}"
 
 #: ukbot/rules/wikidata.py:47
 #, python-format
@@ -428,3 +426,4 @@ msgstr "%(count)d declaracions de %(property)s"
 #, python-format
 msgid "%(words).f words"
 msgstr "%(words).f paraules"
+
