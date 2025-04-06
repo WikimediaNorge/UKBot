@@ -49,17 +49,17 @@
   schedule: "45 22 * * *"
   emails: onfailure
 # fi-pln
-#- name: fi-pln
-#  command: ./jobs/run.sh fi-pln2021
-#  image: python3.11
-#  schedule: "1 * * * *"
-#  emails: onfailure
-#  mem: 2Gi
-#- name: upload-plot-fi-pln
-#  command: ./jobs/upload.sh fi-pln2021
-#  image: python3.11
-#  schedule: "45 22 * * *"
-#  emails: onfailure
+- name: fi-pln
+  command: ./jobs/run.sh fi-pln2021
+  image: python3.11
+  schedule: "1 * * * *"
+  emails: onfailure
+  mem: 2Gi
+- name: upload-plot-fi-pln
+  command: ./jobs/upload.sh fi-pln2021
+  image: python3.11
+  schedule: "45 22 * * *"
+  emails: onfailure
 # fi-hl
 - name: fi-hl
   command: ./jobs/run.sh fi-hl
