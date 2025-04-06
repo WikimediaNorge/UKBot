@@ -20,6 +20,11 @@ STATE_NORMAL = 'normal'
 STATE_ENDING = 'ending'
 STATE_CLOSING = 'closing'
 
+def i18n(*args):
+	"""Returns a string that uses Module:UKB's getMessage function on-wiki"""
+	if len(args) == 0:
+		raise ValueError('At least one argument (message key) must be given')
+	return '{{subst:#invoke:UKB|getMessage|%s}}'.format('|'.join(args))
 
 # Singleton
 class Localization:
