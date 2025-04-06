@@ -320,7 +320,7 @@ msgstr "A páxina non existe: [[%(pagename)s]]"
 
 #: ukbot/sites.py:80
 #, python-format
-msgid "Could not found a site matching the prefix \"%(key)s\""
+msgid "Could not find a site matching the prefix \"%(key)s\""
 msgstr "Non se atopou un site que concorde co prefixo \"%(key)s\""
 
 #: ukbot/ukbot.py:169

@@ -288,7 +288,7 @@ msgstr ""
 
 #: ukbot/sites.py:80
 #, python-format
-msgid "Could not found a site matching the prefix \"%(key)s\""
+msgid "Could not find a site matching the prefix \"%(key)s\""
 msgstr ""
 
 #: ukbot/ukbot.py:169
