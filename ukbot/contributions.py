@@ -2,7 +2,7 @@
 # vim: fenc=utf-8 et sw=4 ts=4 sts=4 ai
 import logging
 import weakref
-from .common import _, ngettext
+from .common import i18n, fetch_parsed_i18n
 
 logger = logging.getLogger(__name__)
 
@@ -161,30 +161,21 @@ class UserContributions(object):
 
         suspended = ''
         if self.user().suspended_since is not None:
-            suspended = ', ' + _('suspended since') + ' %s' % self.user().suspended_since.strftime(_('%A, %H:%M'))
+            suspended = ', ' + i18n('bot-suspended-since', i18n('bot-format-date-time', self.user().suspended_since.strftime('%Y-%m-%dT%H:%M:%S')))
 
-        user_prefix = homesite.namespaces[2]
-
-        out = '=== %s [[%s:%s|%s]] (%.f p%s) ===\n' % (
-            award_icon,
-            user_prefix,
-            self.user().name,
-            self.user().name,
-            self.sum(),
-            suspended
-        )
+        out = '=== %s %s ===' % ( award_icon, i18n('bot-results-user-heading', '[[{{subst:ns:2}}:%s|%s]]' % (self.user().name, self.user().name), self.sum(), suspended))
 
         if len(entries) == 0:
-            out += "''%s''" % _('No qualifying contributions registered yet')
+            out += "''%s''" % i18n('bot-no-contributions-yet')
         else:
             sum_bytes = sum([item['value'] for item in self.user().count_bytes_per_site()])
-            out += ngettext('%d article', '%d articles', len(entries)) % len(entries)
+            out += i18n('bot-article-number', len(entries))
             out += ', '
             out += '{{formatnum:%.2f}} kB' % (sum_bytes / 1000.)
             out += '\n'
 
         if len(entries) > 10:
-            out += _('{{Kolonner}}') + '\n'
+            out += _('{{Kolonner}}') + '\n' # FIXME
 
         out += '\n'.join(entries)
         out += '\n\n'
@@ -218,7 +209,7 @@ class UserContributions(object):
         if len(revision_contribs) == 0:
             return None
 
-        formatted = '[[%s|%s]]: ' % (revision.get_link(homesite), revision.wiki_tz.strftime(_('%d.%m, %H:%M')))
+        formatted = '[[%s|%s]]: ' % (revision.get_link(homesite), i18n('bot-date-time-format-short', revision.wiki_tz.strftime('%Y-%m-%dT%H:%M:%S')))
 
         # Make a formatted string on this form:
         # 10.0 p (ny side) + 9.7 p (967 byte) + 5.4 p (54 ord) + 10.0 p (2 kilder)
@@ -226,16 +217,16 @@ class UserContributions(object):
         for contribution in revision_contribs:
             desc = contribution.description
             if contribution.capped:
-                desc += ', ' + _('capped at max')
-            contrib_points.append('%.1f p (%s)' % (contribution.points, desc))
+                desc += ', ' + i18n('bot-capped-at-max')
+            contrib_points.append(i18n('bot-points-short', '%.1f' % contribution.points, desc))
         formatted += ' + '.join(contrib_points)
         
         # Add deductions, if any
         for deduction in revision.point_deductions:
             if deduction[0] > 0:
-                formatted += ' <span style="color:red">− %.1f p (%s)</span>' % (deduction[0], deduction[1])
+                formatted += ' <span style="color:red;">− %s</span>' % i18n('bot-points-short', '%.1f' % deduction[0], deduction[1])
             else:
-                formatted += ' <span style="color:green">+ %.1f p (%s)</span>' % (- deduction[0], deduction[1])
+                formatted += ' <span style="color:green;">+ %s</span>' % i18n('bot-points-short', '%.1f' % deduction[0], deduction[1])
 
         # Strikeout if revision was in suspended period
         if self.user().suspended_since is not None and revision.utc > self.user().suspended_since:
@@ -262,7 +253,7 @@ class UserContributions(object):
         tooltip_text = ''
         try:
             cat_path = [x.split(':')[-1] for x in article.cat_path]
-            tooltip_text = "''" + _('Category hit') + "'': " + ' &gt; '.join(cat_path) + '<br>'
+            tooltip_text = "''" + i18n('bot-category-hit') + "'': " + ' &gt; '.join(cat_path) + '<br>'
         except AttributeError:
             pass
         tooltip_text += '<br>'.join(revisions_formatted)
@@ -274,11 +265,8 @@ class UserContributions(object):
         #     titletxt += '<div style="border-top:1px solid #CCC">\'\'' + _('Notes') + ':\'\'<br>%s</div>' % '<br>'.join(pds)
 
         if article.words > 0:
-            tooltip_text += '<div style="border-top:1px solid #CCC">%s.</div>' % (
-                _('Total: %(bytecount)d bytes, %(wordcount)d words') % {
-                    'bytecount': article.bytes,
-                    'wordcount': article.words
-                }
+            tooltip_text += '<div style="border-top:1px solid #CCC">%s.</div>' % ( # FIXME inline styling
+                i18n('bot-byte-word-count', article.bytes, article.words)
             )
 
         if article.name in self.labels:
@@ -288,21 +276,21 @@ class UserContributions(object):
         else:
             formatted = '[[%s|%s]]' % (article.link(), article.name)
         if article.key in self.user().disqualified_articles:
-            formatted = '[[File:Qsicon Achtung.png|14px]] <s>' + formatted + '</s>'
-            tooltip_text += '<div style="border-top:1px solid red; background:#ffcccc;">%s</div>' % (
-                _('<strong>Note:</strong> The contributions to this article are currently disqualified.')
+            formatted = '[[File:Qsicon Achtung.png|14px]] <s>' + formatted + '</s>' # FIXME inline image
+            tooltip_text += '<div style="border-top:1px solid red; background:#ffcccc;">%s</div>' % ( # FIXME inline styling
+                i18n('bot-disqualified-note')
             )
         elif brutto != netto:
-            formatted = '[[File:Qsicon Achtung.png|14px]] ' + formatted
+            formatted = '[[File:Qsicon Achtung.png|14px]] ' + formatted # FIXME inline image
             # titletxt += '<div style="border-top:1px solid red; background:#ffcccc;"><strong>Merk:</strong>
             # En eller flere revisjoner er ikke talt med fordi de ble gjort mens brukeren var suspendert.
             # Hvis suspenderingen oppheves vil bidragene telle med.</div>'
 
         if article.new:
-            formatted += ' ' + _('<abbr class="newpage" title="New page">N</abbr>')
+            formatted += ' ' + i18n('bot-new-page-abbr')
 
         if article.site().host == 'www.wikidata.org':
-            formatted += ' ' + _('<abbr class="newpage" title="Wikidata item">W</abbr>')
+            formatted += ' ' + i18n('bot-wikidata-abbr')
 
         points = '%.1f p' % brutto
         if brutto != netto:

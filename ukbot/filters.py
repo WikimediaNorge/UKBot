@@ -13,7 +13,7 @@ from collections import OrderedDict
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 from mwtemplates.templateeditor2 import TemplateParseError
-from .common import _, InvalidContestPage
+from .common import InvalidContestPage, i18n
 from .site import WildcardPage
 
 from typing import List, Union, Optional
@@ -147,7 +147,7 @@ class TemplateFilter(Filter):
     @classmethod
     def make(cls, tpl, **kwargs):
         if len(tpl.anon_params) < 3:
-            raise RuntimeError(_('Too few arguments given to this template.'))
+            raise RuntimeError(i18n('bot-too-few-arguments'))
 
         params = {
             'sites': tpl.sites,
@@ -195,11 +195,7 @@ class TemplateFilter(Filter):
         except TemplateParseError as e:
             logger.warning('TemplateParser failed to parse %s', page.key)
             page.site().errors.append(
-                _('Could not analyze page %(article)s because the revision %(rev)d could not be parsed: %(error)s') % {
-                    'article': page.key,
-                    'rev': rev.parentid,
-                    'error': str(e),
-                }
+                i18n('bot-unable-to-analyze', page.key, rev.parentid, str(e))
             )
 
         if template_name is None:
@@ -230,12 +226,12 @@ class CatFilter(Filter):
             m = re.search(r'<pre>(.*?)</pre>', catignore_txt, flags=re.DOTALL)
             return m.group(1).strip().splitlines()
         except (IndexError, KeyError):
-            raise RuntimeError(_('Could not parse the catignore page'))
+            raise RuntimeError(i18n('bot-catignore-parse-error'))
 
     @classmethod
     def make(cls, tpl: 'FilterTemplate', **kwargs):
         if len(tpl.anon_params) < 3:
-            raise RuntimeError(_('No category values given!'))
+            raise RuntimeError(i18n('bot-no-category-values'))
 
         params = {
             'sites': tpl.sites,
@@ -441,7 +437,7 @@ class CatFilter(Filter):
                     )
                 except CategoryLoopError as err:
                     loop = ' → '.join(['[[:%s|]]' % c.replace('.wikipedia.org', '') for c in err.catpath])
-                    article.errors.append(_('Encountered an infinite category loop: ') + loop)
+                    article.errors.append(i18n('bot-category-loop', loop))
 
         dt = time.time() - t0
         logger.debug('CatFilter: Checked categories for %d articles in %.1f secs', len(articles), dt)
@@ -480,7 +476,7 @@ class ByteFilter(Filter):
     @classmethod
     def make(cls, tpl, sites, **kwargs):
         if len(tpl.anon_params) < 3:
-            raise RuntimeError(_('No byte limit (second argument) given'))
+            raise RuntimeError(i18n('bot-no-byte-limit'))
         params = {
             'sites': tpl.sites,
             'bytelimit': int(tpl.anon_params[2]),
@@ -717,7 +713,7 @@ class SparqlFilter(Filter):
     @classmethod
     def make(cls, tpl, cfg, **kwargs):
         if not tpl.has_param('query'):
-            raise RuntimeError(_('No "%s" parameter given') % cfg['params']['query'])
+            raise RuntimeError(i18n('bot-no-parameter', cfg['params']['query']))
         params = {
             'query': tpl.get_raw_param('query'),
             'sites': tpl.sites,

@@ -15,7 +15,7 @@ import pymysql
 from more_itertools import first
 
 from .contributions import UserContributions
-from .common import _
+from .common import i18n
 from .db import result_iterator
 from .util import unix_time
 from .article import Article
@@ -671,16 +671,14 @@ class User:
 
         suspended = ''
         if self.suspended_since is not None:
-            suspended = ', ' + _('suspended since') + ' %s' % self.suspended_since.strftime(_('%A, %H:%M'))
-        userprefix = self.contest().sites.homesite.namespaces[2]
-        out = '=== %s [[%s:%s|%s]] (%.f p%s) ===\n' % (ros, userprefix, self.name, self.name,
-                                                       self.contributions.sum(), suspended)
+            suspended = ', ' + i18n('bot-suspended-since', i18n('bot-date-time-format', self.suspended_since.strftime('%Y-%m-%dT%H:%M:%S')))
+        out = '=== %s %s ===' % (ros, i18n('bot-results-user-heading', '[[{{subst:ns:2}}:%s|%s]]'.format(self.name, self.name), self.contributinos.sum(), suspended))
         if len(entries) == 0:
-            out += "''" + _('No qualifying contributions registered yet') + "''"
+            out += "''" + i18n('bot-no-contributions-yet') + "''"
         else:
-            out += '%s, {{formatnum:%.2f}} kB\n' % (_('articles') % {'articlecount': len(entries)}, self.bytes / 1000.)
+            out += i18n('bot-articles-kb', len(entries), '%0.2f' % self.bytes / 1000.)
         if len(entries) > 10:
-            out += _('{{Kolonner}}\n')
+            out += _('{{Kolonner}}\n') # FIXME
         out += '\n'.join(entries)
         out += '\n\n'
 

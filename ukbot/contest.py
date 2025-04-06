@@ -17,7 +17,7 @@ import mwclient
 from mwtemplates import TemplateEditor
 
 from .rules import NewPageRule, ByteRule, WordRule, RefRule, ImageRule, TemplateRemovalRule, SectionRule
-from .common import _, STATE_ENDING, STATE_CLOSING, InvalidContestPage
+from .common import STATE_ENDING, STATE_CLOSING, InvalidContestPage, i18n, fetch_parsed_i18n
 from .rules import rule_classes
 from .filters import CatFilter, TemplateFilter, NewPageFilter, ExistingPageFilter, ByteFilter, SparqlFilter, \
     BackLinkFilter, ForwardLinkFilter, NamespaceFilter, PageFilter
@@ -62,7 +62,7 @@ class FilterTemplate(object):
             for k, v in translations['params'].items():
                 if v.get('name') == value:
                     return k
-            raise InvalidContestPage(_('The filter name "%s" was not understood') % value)
+            raise InvalidContestPage(i18n('bot-filter-misunderstood', value))
 
         self.type = get_type(self.anon_params[1].lower())
 
@@ -152,11 +152,11 @@ class Contest(object):
         lst = []
         m = re.search(r'==\s*%s\s*==' % self.config['contestPages']['participantsSection'], txt)
         if not m:
-            raise InvalidContestPage(_("Couldn't find the list of participants!"))
+            raise InvalidContestPage(i18n('bot-no-participant-list'))
         deltakerliste = txt[m.end():]
         m = re.search('==[^=]+==', deltakerliste)
         if not m:
-            raise InvalidContestPage('Fant ingen overskrift etter deltakerlisten!')
+            raise InvalidContestPage('Couldn\'t find any header following the list of participants!')
         deltakerliste = deltakerliste[:m.start()]
         for d in deltakerliste.split('\n'):
             q = re.search(r'\[\[(?:[^|\]]+):([^|\]]+)', d)
@@ -180,7 +180,7 @@ class Contest(object):
         dp = TemplateEditor(txt)
 
         if config['templates']['rule']['name'] not in dp.templates:
-            raise InvalidContestPage(_('There are no point rules defined for this contest. Point rules are defined by {{tl|%(template)s}}.') % {'template': config['templates']['rule']['name']})
+            raise InvalidContestPage(i18n('bot-no-rules', '{{subst:ns:}}:' + config['templates']['rule']['name']))
 
         #if not 'ukens konkurranse kriterium' in dp.templates.keys():
         #    raise InvalidContestPage('Denne konkurransen har ingen bidragskriterier. Kriterier defineres med {{tl|ukens konkurranse kriterium}}.')
@@ -225,12 +225,12 @@ class Contest(object):
                     filter_inst = filter_tpl.make(self)
                 except RuntimeError as exp:
                     raise InvalidContestPage(
-                        _('Could not parse {{tlx|%(template)s|%(firstarg)s}} template: %(err)s')
-                        % {
-                            'template': filter_template_config['name'],
-                            'firstarg': filter_tpl.anon_params[1],
-                            'err': str(exp)
-                        }
+                        i18n(
+                            'bot-no-parse',
+                            '{{subst:ns:10}}:' + filter_template_config['name'],
+                            filter_tpl.anon_params[1],
+                            str(exp)
+                        )
                     )
 
                 nfilters += 1
@@ -254,10 +254,7 @@ class Contest(object):
             try:
                 rule_cls = rule_classes_map[rule_name]
             except:
-                raise InvalidContestPage(
-                    _('Unkown argument given to {{tl|%(template)s}}: %(argument)s')
-                    % {'template': rulecfg['name'], 'argument': rule_name}
-                )
+                raise InvalidContestPage(i18n('bot-unknown-argument', '{{subst:ns:10}}:' + rulecfg['name'], rule_name))
 
             rule = rule_cls(self.sites, rule_template.parameters, rulecfg)
             rules.append(rule)
@@ -286,7 +283,7 @@ class Contest(object):
                 try:
                     sdate = self.wiki_tz.localize(datetime.strptime(cleanup_input(template.parameters[2].value), '%Y-%m-%d %H:%M'))
                 except ValueError:
-                    raise InvalidContestPage(_("Couldn't parse the date given to the {{tl|%(template)s}} template.") % sucfg['name'])
+                    raise InvalidContestPage(i18n('bot-unknown-date', '{{subst:ns:10}}:' + sucfg['name']))
 
                 #print 'Suspendert bruker:',uname,sdate
                 ufound = False
@@ -319,7 +316,7 @@ class Contest(object):
                                 u.disqualified_articles.append(article_key)
                                 ufound = True
                         if not ufound:
-                            raise InvalidContestPage(_('Could not find the user %(user)s given to the {{tl|%(template)s}} template.') % {'user': uname, 'template': dicfg['name']})
+                            raise InvalidContestPage(i18n('bot-unknown-user', uname, '{{subst:ns:10}}:' + dicfg['name']))
 
         pocfg = self.config['templates']['penalty']
         if pocfg['name'] in dp.templates:
@@ -332,10 +329,7 @@ class Contest(object):
 
                 site = self.sites.from_prefix(site_key)
                 if site is None:
-                    raise InvalidContestPage(_('Failed to parse the %(template)s template: Did not find a site matching the site prefix %(prefix)s') % {
-                        'template': pocfg['name'],
-                        'prefix': site_key,
-                    })
+                    raise InvalidContestPage(i18n('bot-parse-no-site', '{{subst:ns:10}}:' + pocfg['name'], site_key))
 
                 points = float(cleanup_input(templ.parameters[3].value).replace(',', '.'))
                 reason = cleanup_input(templ.parameters[4].value)
@@ -351,10 +345,7 @@ class Contest(object):
                         })
                         ufound = True
                 if not ufound:
-                    raise InvalidContestPage(_("Couldn't find the user %(user)s given to the {{tl|%(template)s}} template.") % {
-                        'user': uname,
-                        'template': pocfg['name'],
-                    })
+                    raise InvalidContestPage(i18n('bot-unknown-user', uname, '{{subst:ns:10}}:' + pocfg['name']))
 
         pocfg = self.config['templates']['bonus']
         if pocfg['name'] in dp.templates:
@@ -372,10 +363,7 @@ class Contest(object):
                         break
 
                 if site is None:
-                    raise InvalidContestPage(_('Failed to parse the %(template)s template: Did not find a site matching the site prefix %(prefix)s') % {
-                        'template': pocfg['name'],
-                        'prefix': site_key,
-                    })
+                    raise InvalidContestPage(i18n('bot-parse-no-site', '{{subst:ns:10}}:' + pocfg['name'], site_key))
 
                 points = float(cleanup_input(templ.parameters[3].value).replace(',', '.'))
                 reason = cleanup_input(templ.parameters[4].value)
@@ -391,10 +379,7 @@ class Contest(object):
                         })
                         ufound = True
                 if not ufound:
-                    raise InvalidContestPage(_("Couldn't find the user %(user)s given to the {{tl|%(template)s}} template.") % {
-                        'user': uname,
-                        'template': pocfg['name'],
-                    })
+                    raise InvalidContestPage(i18n('bot-unknown-user', uname, '{{subst:ns:10}}:' + pocfg['name']))
 
         return rules, filters
 
@@ -535,16 +520,13 @@ class Contest(object):
             ax.set_xlim(t0, xt[-1])
             ax.set_ylim(0, 1.05 * np.max(yall))
 
-            ax.set_xlabel(_('Day'))
-            ax.set_ylabel(_('Points'))
+            ax.set_xlabel(fetch_parsed_i18n('bot-day'))
+            ax.set_ylabel(fetch_parsed_i18n('bot-points'))
 
             now = self.server_tz.localize(datetime.now())
-            now2 = now.astimezone(self.wiki_tz).strftime(_('%e. %B %Y, %H:%M'))
-            ax_title = _('Updated %(date)s')
-
-            #print ax_title.encode('utf-8')
-            #print now2.encode('utf-8')
-            ax_title = ax_title % {'date': now2}
+            now2 = now.astimezone(self.wiki_tz).strftime('%Y-%m-%dT%H:%M:%S')
+            wikiformat_datetime = fetch_parsed_i18n('bot-date-time-format', now2)
+            ax_title = fetch_parsed_i18n('bot-updated-time', wikiformat_datetime)
             ax.set_title(ax_title)
 
             plt.legend()
@@ -575,9 +557,9 @@ class Contest(object):
     def format_heading(self):
         if self.config.get('contest_type') == 'weekly':
             if self.startweek == self.endweek:
-                return _('Weekly contest for week %(week)d') % {'week': self.startweek}
+                return i18n('bot-weekly-contest-single', self.startweek)
             else:
-                return _('Weekly contest for week %(startweek)d–%(endweek)d') % {'startweek': self.startweek, 'endweek': self.endweek}
+                return i18n('bot-weekly-contest-multiple', self.startweek, self.endweek)
         else:
             return self.config.get('name') % {'month': self.month, 'year': self.year}
 
@@ -587,6 +569,7 @@ class Contest(object):
         prefix = self.sites.homesite.namespaces[3]
         prefixed = prefix + ':' + username
 
+        # FIXME: Remove Flow specific code when Flow is completely removed from Wikimedia wikis
         res = self.sites.homesite.api(action='query', prop='flowinfo', titles=prefixed)
         pageinfo = list(res['query']['pages'].values())[0]
         flow_enabled = 'missing' not in pageinfo and 'enabled' in pageinfo['flowinfo']['flow']
@@ -655,7 +638,7 @@ class Contest(object):
                 'url': self.config['pages']['default'] % dateargs,
                 **dateargs,
             }
-            sig = _('Regards') + ' ' + ', '.join(['[[%s:%s|%s]]' % (userprefix, s, s) for s in self.ledere]) + ' ' + _('and') + ' ~~~~'
+            sig = i18n('bot-greeting', ', '.join(['[[%s:%s|%s]]' % (userprefix, s, s) for s in self.ledere]), '~~~~')
 
             if not simulate:
                 cur.execute('SELECT prize_id FROM prizes WHERE contest_id=%s AND site=%s AND user=%s', [contest_id, self.sites.homesite.key, result['name']])
@@ -685,8 +668,8 @@ class Contest(object):
             raise Exception('No organizer award found in config')
         for u in self.ledere:
             mld = self.format_msg('organizer_template', awards)
-            mld += _('Now you must check if the results look ok. If there are error messages at the bottom of the [[%(page)s|contest page]], you should check that the related contributions have been awarded the correct number of points. Also check if there are comments or complaints on the discussion page. If everything looks fine, [%(link)s click here] (and save) to indicate that I can send out the awards at first occasion.') % {'page': self.name, 'link': link}
-            sig = _('Thanks, ~~~~')
+            mld += i18n('bot-note-to-organizer', self.name, link)
+            sig = i18n('bot-thanks', '~~~~')
 
             logger.info('Delivering notification about ended contenst to the contest organizers')
             self.deliver_message(u, heading, mld, sig)
@@ -697,10 +680,10 @@ class Contest(object):
 
         args = {'prefix': self.sites.homesite.site['server'] + self.sites.homesite.site['script'], 'page': 'Special:Contributions'}
         link = '%(prefix)s?title=%(page)s&contribs=user&target=UKBot&namespace=3' % args
-        mld = '\n:' + _('Awards have been [%(link)s sent out].') % {'link': link}
+        mld = '\n:' + i18n('bot-awards-sent', link )
         for u in self.ledere:
             page = self.sites.homesite.pages['%s:%s' % (usertalkprefix, u)]
-            logger.info('Leverer kvittering til %s', page.name)
+            logger.info('Sending %s a deliver_receipt_to_leaders', page.name)
 
             # Find section number
             txt = page.text()
@@ -708,7 +691,7 @@ class Contest(object):
             try:
                 csection = sections.index(heading) + 1
             except ValueError:
-                logger.error('Fant ikke "%s" i "%s', heading, page.name)
+                logger.error('Couldn\'t find "%s" in "%s"', heading, page.name)
                 return
 
             # Append text to section
@@ -754,7 +737,7 @@ class Contest(object):
                 d = [self.sites.homesite.key, self.name, u.name, 'suspension', '']
                 cur.execute('SELECT id FROM notifications WHERE site=%s AND contest=%s AND user=%s AND class=%s AND args=%s', d)
                 if len(cur.fetchall()) == 0:
-                    msgs.append('Du er inntil videre suspendert fra konkurransen med virkning fra %s. Dette innebærer at dine bidrag gjort etter dette tidspunkt ikke teller i konkurransen, men alle bidrag blir registrert og skulle suspenderingen oppheves i løpet av konkurranseperioden vil også bidrag gjort i suspenderingsperioden telle med. Vi oppfordrer deg derfor til å arbeide med problemene som førte til suspenderingen slik at den kan oppheves.' % u.suspended_since.strftime(_('%e. %B %Y, %H:%M')))
+                    msgs.append('Du er inntil videre suspendert fra konkurransen med virkning fra %s. Dette innebærer at dine bidrag gjort etter dette tidspunkt ikke teller i konkurransen, men alle bidrag blir registrert og skulle suspenderingen oppheves i løpet av konkurranseperioden vil også bidrag gjort i suspenderingsperioden telle med. Vi oppfordrer deg derfor til å arbeide med problemene som førte til suspenderingen slik at den kan oppheves.' % u.suspended_since.strftime('%e. %B %Y, %H:%M'))
                     if not simulate:
                         cur.execute('INSERT INTO notifications (site, contest, user, class, args) VALUES (%s,%s,%s,%s,%s)', d)
             discs = []
@@ -886,7 +869,7 @@ class Contest(object):
                 if simulate:
                     logger.error(out)
                 else:
-                    self.page.save('dummy', summary=_('UKBot encountered a problem'), appendtext=out)
+                    self.page.save('dummy', summary=fetch_parsed_i18n('bot-problem-encountered'), appendtext=out)
                 raise
 
             del user
@@ -936,16 +919,16 @@ class Contest(object):
         now = self.server_tz.localize(datetime.now())
         if self.state == STATE_ENDING:
             # Konkurransen er nå avsluttet – takk til alle som deltok! Rosetter vil bli delt ut så snart konkurransearrangøren(e) har sjekket resultatene.
-            out += "''" + _('This contest is closed – thanks to everyone who participated! Awards will be sent out as soon as the contest organizer has checked the results.') + "''\n\n"
+            out += "''" + i18n('bot-contest-limbo') + "''\n\n"
         elif self.state == STATE_CLOSING:
-            out += "''" + _('This contest is closed – thanks to everyone who participated!') + "''\n\n"
+            out += "''" + i18n('bot-contest-closed') + "''\n\n"
         else:
             oargs = {
-                'lastupdate': now.astimezone(self.wiki_tz).strftime(_('%e. %B %Y, %H:%M')),
-                'startdate': self.start.strftime(_('%e. %B %Y, %H:%M')),
-                'enddate': self.end.strftime(_('%e. %B %Y, %H:%M'))
+                'lastupdate': now.astimezone(self.wiki_tz).strftime('%Y-%m-%dT%H:%M:%S'),
+                'startdate': self.start.strftime('%Y-%m-%dT%H:%M:%S'),
+                'enddate': self.end.strftime('%Y-%m-%dT%H:%M:%S')
             }
-            out += "''" + _('Last updated %(lastupdate)s. The contest is open from %(startdate)s to %(enddate)s.') % oargs + "''\n\n"
+            out += "''" + i18n('bot-contest-last-updated', i18n('bot-date-time-format', oargs['lastupdate']), i18n('bot-date-format', oargs['startdate']), i18n('bot-date-format', oargs['enddate'])) + "''\n\n" # FIXME
 
         for i, result in enumerate(results):
             awards = ''
@@ -966,7 +949,7 @@ class Contest(object):
             if len(err) > 8:
                 err = err[:8]
                 err.append('(...)')
-            errors.append('\n* ' + _('UKBot encountered the following problems with the page [[%s]]') % art + ''.join(['\n** %s' % e for e in err]))
+            errors.append('\n* ' + i18n('bot-page-problem', art ) + ''.join(['\n** %s' % e for e in err]))
 
         for site in self.sites.sites.values():
             for error in site.errors:
@@ -1000,10 +983,7 @@ class Contest(object):
 
             except StopIteration:
                 if 'resultsSection' not in config['contestPages']:
-                    raise InvalidContestPage(_('Results markers %(start_marker)s and %(end_marker)s not found') % {
-                        'start_marker': '<!-- Begin:ResultsSection -->',
-                        'end_marker': '<!-- End:ResultsSection -->',
-                    })
+                    raise InvalidContestPage(i18n('bot-result-markers-not-found', '&lt;!-- Begin:ResultsSection --&gt;', '&lt;!-- End:ResultsSection --&gt;' )
                 for s in re.finditer(r'^[\s]*==([^=]+)==[\s]*\n', txt, flags=re.M):
                     if s.group(1).strip() == config['contestPages']['resultsSection']:
                         secstart = s.end()
@@ -1011,9 +991,7 @@ class Contest(object):
                         secend = s.start()
                         break
             if secstart == -1:
-                raise InvalidContestPage(_('No "%(section_name)s" section found.') % {
-                    'section_name': config['contestPages']['resultsSection'],
-                })
+                raise InvalidContestPage(i18n('bot-no-named-section', config['contestPages']['resultsSection']))
             if secend == -1:
                 txt = txt[:secstart] + out
             else:
@@ -1021,11 +999,11 @@ class Contest(object):
 
             logger.info('Updating wiki')
             if self.state == STATE_ENDING:
-                self.page.save(txt, summary=_('Updating with final results, the contest is now closed.'))
+                self.page.save(txt, summary=fetch_parsed_i18n('bot-updating-results'))
             elif self.state == STATE_CLOSING:
-                self.page.save(txt, summary=_('Checking results and handing out awards'))
+                self.page.save(txt, summary=fetch_parsed_i18n('bot-checking-results'))
             else:
-                self.page.save(txt, summary=_('Updating'))
+                self.page.save(txt, summary=fetch_parsed_i18n('bot-updating'))
 
         if output != '':
             logger.info("Writing output to file")
@@ -1155,7 +1133,7 @@ class Contest(object):
                 txt2 = dp.wikitext()
                 if txt != txt2:
                     if not simulate:
-                        oppslagstavle.save(txt2, summary=_('The weekly contest is: %(link)s') % {'link': tema})
+                        oppslagstavle.save(txt2, summary=i18n('bot-weekly-contest-is', tema)
 
         # Make a nice plot
 

@@ -26,6 +26,25 @@ def i18n(*args):
 		raise ValueError('At least one argument (message key) must be given')
 	return '{{subst:#invoke:UKB|getMessage|%s}}'.format('|'.join(args))
 
+def fetch_parsed_i18n(*args):
+	"""Fetch and return the contents of an i18n message"""
+	# Dummy function for now
+	"""
+	Useful query:
+	{
+		"action": "parse",
+		"format": "json",
+		"title": "Bruker:UKBot",
+		"text": "{{subst:#invoke:UKB/sandkasse|getMessage|bot-day}}",
+		"prop": "text",
+		"pst": 1,
+		"onlypst": 1,
+		"disablelimitreport": 1,
+		"formatversion": "2"
+	}
+	"""
+	return '|'.join(args)
+
 # Singleton
 class Localization:
     class __Localization:

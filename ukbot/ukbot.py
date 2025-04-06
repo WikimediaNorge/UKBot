@@ -18,7 +18,7 @@ from mwtemplates import TemplateEditor
 import platform
 from dotenv import load_dotenv
 
-from .common import get_mem_usage, Localization, _, STATE_NORMAL, InvalidContestPage
+from .common import get_mem_usage, STATE_NORMAL, InvalidContestPage, i18n, fetch_parsed_i18n
 from .util import load_config
 from .contest import Contest
 from .contests import discover_contest_pages
@@ -110,8 +110,6 @@ def main():
     working_dir = os.path.realpath(os.getcwd())
     logger.info('Working dir: %s', working_dir)
 
-    Localization().init(config['locale'])
-
     mainstart = config['server_timezone'].localize(datetime.now())
     mainstart_s = time.time()
 
@@ -145,10 +143,10 @@ def main():
             if status_template in te.templates:
                 te.templates[status_template][0].parameters[1] = 'error'
                 te.templates[status_template][0].parameters[2] = error_msg
-                contest_page.save(te.wikitext(), summary=_('UKBot encountered a problem'))
+                contest_page.save(te.wikitext(), summary=fetch_parsed_i18n('bot-problem-encountered'))
             else:
                 out = '\n{{%s | error | %s }}' % (config['templates']['botinfo'], error_msg)
-                contest_page.save('dummy', summary=_('UKBot encountered a problem'), appendtext=out)
+                contest_page.save('dummy', summary=fetch_parsed_i18n('bot-problem-encountered'), appendtext=out)
             raise
 
     # Update redirect page
@@ -166,9 +164,9 @@ def main():
                 pages = [pages]
             for pagename in pages:
                 page = sites.homesite.pages[pagename]
-                txt = _('#REDIRECT [[%s]]') % contest_name
+                txt = '#REDIRECT [[%s]]'.format(contest_name) # FIXME – localize REDIRECT
                 if page.text() != txt and not args.simulate:
-                    page.save(txt, summary=_('Redirecting to %s') % contest_name)
+                    page.save(txt, summary=fetch_parsed_i18n('bot-redirecting', contest_name)
 
     runend = config['server_timezone'].localize(datetime.now())
     runend_s = time.time()
