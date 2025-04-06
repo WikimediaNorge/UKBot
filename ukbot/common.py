@@ -11,7 +11,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-# LOCALE_PATH = pkg_resources.resource_filename('ukbot', 'locale/')
 LOCALE_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "locale")
 
 logger.info('Locale path: %s', LOCALE_PATH)

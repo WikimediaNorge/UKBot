@@ -28,8 +28,8 @@ class RefRule(Rule):
     @staticmethod
     def count_sources(txt):
 
-        s1 = 0  # kilder
-        r1 = 0  # kildehenvisninger
+        s1 = 0  # references
+        r1 = 0  # reference pointers (re-uses)
 
         # Count all <ref> tags
         try:
@@ -48,6 +48,7 @@ class RefRule(Rule):
             r1 = 0
 
         # Count list item under section heading "Kilder" or "Kjelder"
+        # FIXME: Make language-agnostic
         refsection = False
         for line in txt.split('\n'):
             if refsection:

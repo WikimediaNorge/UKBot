@@ -87,60 +87,6 @@ class Filter(object):
                     type(self).__name__, len(articles), len(out))
         return out
 
-#class StubFilter(Filter):
-#    """ Filters articles that was stubs, but is no more """
-
-#    def __init__(self):
-#        Filter.__init__(self)
-
-#    def is_stub(self, text):
-#        """ Checks if a given text is a stub """
-
-#        m = re.search(r'{{[^}]*(?:stubb|spire)[^}]*}}', text, re.IGNORECASE)
-#        if m:
-#            if self.verbose:
-#                log(" >> %s " % m.group(0), newline = False)
-#            return True
-#        return False
-
-    #def filter(self, articles):
-
-    #    out = OrderedDict()
-    #    for article_key, article in articles.items():
-
-    #        firstrevid = article.revisions.firstkey()
-    #        lastrevid = article.revisions.lastkey()
-
-    #        firstrev = article.revisions[firstrevid]
-    #        lastrev = article.revisions[lastrevid]
-
-    #        try:
-
-    #            # skip pages that are definitely not stubs to avoid timeconsuming parsing
-    #            if article.new is False and article.redirect is False and len(firstrev.parenttext) < 20000:
-
-    #                # Check if first revision is a stub
-    #                if self.is_stub(firstrev.parenttext):
-
-    #                    # Check if last revision is a stub
-    #                    if not self.is_stub(lastrev.text):
-
-    #                        out[article_key] = article
-
-    #                    if self.verbose:
-    #                        log('')
-
-            #except DanmicholoParseError as e:
-            #    log(" >> DanmicholoParser failed to parse " + article_key)
-            #    parentid = firstrev.parentid
-            #    args = { 'article': article_key, 'prevrev': firstrev.parentid, 'rev': lastrev.revid, 'error': e.msg }
-            #    article.site().errors.append(_('Could not analyze the article %(article)s because one of the revisions %(prevrev)d or %(rev)d could not be parsed: %(error)s') % args)
-
-    #    log("  [+] Applying stub filter: %d -> %d" % (len(articles), len(out)))
-
-    #    return out
-
-
 class TemplateFilter(Filter):
     """ Filters articles that had any of a given set of templates (or their aliases) at a point"""
 
@@ -601,7 +547,6 @@ class BackLinkFilter(Filter):
         for page in pages:
             for linked_page in page.links(redirects=True):
                 link = '%s:%s' % (linked_page.site.key, linked_page.name.replace('_', ' '))
-                # logger.debug(' - Include: %s', link)
                 self.page_keys.add(link)
 
                 # Include langlinks as well

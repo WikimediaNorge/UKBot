@@ -93,17 +93,6 @@ class UserContributions(object):
 
         return contribution.raw_points
 
-        # rev.points.append([pts, ptype, txt + ' &gt; ' + _('max'), points])
-
-        # elif not self.iszero(revpoints):
-        # else:
-        #     if self.iszero(points) and not include_zero:
-        #         return False
-        #     pts = points
-        #     rev.points.append([points, ptype, txt, points])
-        # if pts > 0.0:
-        #     return True
-
     def get_article_points(self, article, ignore_max=False, ignore_suspension_period=False,
                            ignore_disqualification=False, ignore_point_deductions=False):
 
@@ -135,14 +124,6 @@ class UserContributions(object):
                     points -= deduction[0]
         
         return points
-
-        # p = 0.
-        # for revid, rev in self.revisions.items():
-        #     dt = pytz.utc.localize(datetime.fromtimestamp(rev.timestamp))
-        #     if ignore_suspension_period is True or self.user().suspended_since is None or dt < self.user().suspended_since:
-        #         p += rev.get_points(ptype, ignore_max, ignore_point_deductions)
-        #     else:
-        #         logger.debug('!! Skipping revision %d in suspension period', revid)
 
     def get_articles(self):
         return sorted(
@@ -244,12 +225,6 @@ class UserContributions(object):
                                          ignore_disqualification=True)
         netto = self.get_article_points(article)
 
-        # if brutto == 0.0:
-        #     logger.debug('    %s: skipped (0 points)', article.key)
-        #     continue
-
-        # for contrib in contribs:
-
         tooltip_text = ''
         try:
             cat_path = [x.split(':')[-1] for x in article.cat_path]
@@ -257,12 +232,6 @@ class UserContributions(object):
         except AttributeError:
             pass
         tooltip_text += '<br>'.join(revisions_formatted)
-
-        # if len(article.point_deductions) > 0:
-        #     pds = []
-        #     for points, reason in article.point_deductions:
-        #         pds.append('%.f p: %s' % (-points, reason))
-        #     titletxt += '<div style="border-top:1px solid #CCC">\'\'' + _('Notes') + ':\'\'<br>%s</div>' % '<br>'.join(pds)
 
         if article.words > 0:
             tooltip_text += '<div style="border-top:1px solid #CCC">%s.</div>' % ( # FIXME inline styling
@@ -282,9 +251,6 @@ class UserContributions(object):
             )
         elif brutto != netto:
             formatted = '[[File:Qsicon Achtung.png|14px]] ' + formatted # FIXME inline image
-            # titletxt += '<div style="border-top:1px solid red; background:#ffcccc;"><strong>Merk:</strong>
-            # En eller flere revisjoner er ikke talt med fordi de ble gjort mens brukeren var suspendert.
-            # Hvis suspenderingen oppheves vil bidragene telle med.</div>'
 
         if article.new:
             formatted += ' ' + i18n('bot-new-page-abbr')
@@ -352,18 +318,3 @@ class UserContribution(object):
     @property
     def user(self):
         return self.rev.article().user()
-
-    # def get_points(self, ptype='', ignore_max=False, ignore_point_deductions=False):
-    #     p = 0.0
-    #     for pnt in self.points:
-    #         if ptype == '' or pnt[1] == ptype:
-    #             if ignore_max and len(pnt) > 3:
-    #                 p += pnt[3]
-    #             else:
-    #                 p += pnt[0]
-
-    #     if not ignore_point_deductions and (ptype == '' or ptype == 'trekk'):
-    #         for points, reason in self.point_deductions:
-    #             p -= points
-
-    #     return p

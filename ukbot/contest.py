@@ -182,18 +182,11 @@ class Contest(object):
         if config['templates']['rule']['name'] not in dp.templates:
             raise InvalidContestPage(i18n('bot-no-rules', '{{subst:ns:}}:' + config['templates']['rule']['name']))
 
-        #if not 'ukens konkurranse kriterium' in dp.templates.keys():
-        #    raise InvalidContestPage('Denne konkurransen har ingen bidragskriterier. Kriterier defineres med {{tl|ukens konkurranse kriterium}}.')
-
-
         ######################## Read infobox ########################
 
         infobox = parse_infobox(txt, self.sites.homesite.namespaces[2], self.config)
         self.start = infobox['start_time']
         self.end = infobox['end_time']
-
-        # args = {'week': commonargs['week'], 'year': commonargs['year'], 'start': ibcfg['start'], 'end': ibcfg['end'], 'template': ibcfg['name']}
-        # raise InvalidContestPage(_('Did not find %(week)s+%(year)s or %(start)s+%(end)s in {{tl|%(templates)s}}.') % args)
 
         self.year = self.start.isocalendar()[0]
         self.startweek = self.start.isocalendar()[1]
@@ -210,7 +203,6 @@ class Contest(object):
         ######################## Read filters ########################
 
         nfilters = 0
-        # print dp.templates.keys()
         filter_template_config = config['templates']['filters']
         if filter_template_config['name'] in dp.templates:
             for template in dp.templates[filter_template_config['name']]:
@@ -285,7 +277,6 @@ class Contest(object):
                 except ValueError:
                     raise InvalidContestPage(i18n('bot-unknown-date', '{{subst:ns:10}}:' + sucfg['name']))
 
-                #print 'Suspendert bruker:',uname,sdate
                 ufound = False
                 for u in self.users:
                     if u.name == uname:
@@ -295,7 +286,6 @@ class Contest(object):
                 if not ufound:
                     pass
                     # TODO: logging.warning
-                    #raise InvalidContestPage('Fant ikke brukeren %s gitt til {{tl|UK bruker suspendert}}-malen.' % uname)
 
         dicfg = self.config['templates']['disqualified']
         if dicfg['name'] in dp.templates:
@@ -412,7 +402,6 @@ class Contest(object):
         fig = plt.figure(figsize=(w, h))
 
         ax = fig.add_subplot(1, 1, 1, frame_on=True)
-        # ax.grid(True, which='major', color='gray', alpha=0.5)
         fig.subplots_adjust(left=0.10, bottom=0.09, right=0.65, top=0.94)
 
         t0 = float(unix_time(self.start))
@@ -445,7 +434,6 @@ class Contest(object):
                     y.append(y[-1])
                 l = ax.plot(x, y, linewidth=1.2, label=result['name'])  # markerfacecolor='#FF8C00', markeredgecolor='#888888', label = u['name'])
                 c = l[0].get_color()
-                #ax.plot(x[1:-1], y[1:-1], marker='.', markersize=4, markerfacecolor=c, markeredgecolor=c, linewidth=0., alpha=0.5)  # markerfacecolor='#FF8C00', markeredgecolor='#888888', label = u['name'])
                 if cnt >= 15:
                     break
 
@@ -495,12 +483,6 @@ class Contest(object):
             ax.set_xticks(x_ticks_minor, minor=True)
             x_ticks_minor_size = 3
 
-            # ax.set_xticklabels(['1', '', '', '', '5', '', '', '', '', '10', '', '', '', '', '15', '', '', '', '', '20', '', '', '', '', '25', '', '', '', '', '30'], minor=True)
-        # elif ndays == 31:
-        #     ax.set_xticklabels(['1', '', '', '', '5', '', '', '', '', '10', '', '', '', '', '15', '', '', '', '', '20', '', '', '', '', '25', '', '', '', '', '', '31'], minor=True)
-
-
-
         for i in range(1, ndays, 2):
             ax.axvspan(xt[i], xt[i + 1], facecolor='#000099', linewidth=0., alpha=0.03)
 
@@ -532,7 +514,6 @@ class Contest(object):
             plt.legend()
             ax = plt.gca()
             ax.legend(
-                # ncol = 4, loc = 3, bbox_to_anchor = (0., 1.02, 1., .102), mode = "expand", borderaxespad = 0.
                 loc=2, bbox_to_anchor=(1.0, 1.0), borderaxespad=0., frameon=0.
             )
             figname = os.path.join(self.project_dir, self.config['plot']['figname'] % {'year': self.year, 'week': self.startweek, 'month': self.month})
@@ -599,9 +580,6 @@ class Contest(object):
         contest_id = cur.fetchall()[0][0]
 
         logger.info('Delivering prices for contest %d' % (contest_id,))
-
-        # self.sql.commit()
-        # cur.close()
 
         for i, result in enumerate(results):
             prices = []
@@ -731,6 +709,7 @@ class Contest(object):
         """
         usertalkprefix = self.sites.homesite.namespaces[3]
         cur = self.sql.cursor()
+        # FIXME: Fix hard-coded Norwegian messages (or remove this functionality completely?)
         for u in self.users:
             msgs = []
             if u.suspended_since is not None:
@@ -761,15 +740,9 @@ class Contest(object):
                     heading = '== Viktig informasjon angående Ukens konkurranse uke %d ==' % self.startweek
                 else:
                     heading = '== Viktig informasjon angående Ukens konkurranse uke %d–%d ==' % (self.startweek, self.endweek)
-                #msg = 'Arrangøren av denne [[%(pagename)s|ukens konkurranse]] har registrert problemer ved noen av dine bidrag:
-                #så langt. Det er dessverre registrert problemer med enkelte av dine bidrag som medfører at vi er nødt til å informere deg om følgende:\n' % { 'pagename': self.name }
 
                 msg = ''.join(['* %s\n' % m for m in msgs])
                 msg += 'Denne meldingen er generert fra anmerkninger gjort av konkurransearrangør på [[%(pagename)s|konkurransesiden]]. Du finner mer informasjon på konkurransesiden og/eller tilhørende diskusjonsside. Så lenge konkurransen ikke er avsluttet, kan problemer løses i løpet av konkurransen. Om du ønsker det, kan du fjerne denne meldingen når du har lest den. ~~~~' % {'pagename': self.name}
-
-                #print '------------------------------',u.name
-                #print msg
-                #print '------------------------------'
 
                 page = self.sites.homesite.pages['%s:%s' % (usertalkprefix, u.name)]
                 logger.info('Leverer advarsel til %s', page.name)
@@ -792,13 +765,7 @@ class Contest(object):
 
         stats = []
 
-        # extraargs = {'namespace': 0}
         extraargs = {}
-        # host_filter = None
-        # for f in self.filters:
-        #     if isinstance(f, NamespaceFilter):
-        #         extraargs['namespace'] = '|'.join(f.namespaces)
-        #         host_filter = f.site
 
         article_errors = {}
         results = []
@@ -883,7 +850,6 @@ class Contest(object):
         # Make outpage
 
         out = ''
-        #out += '[[File:Nowp Ukens konkurranse %s.svg|thumb|400px|Resultater (oppdateres normalt hver natt i halv ett-tiden, viser kun de ti med høyest poengsum)]]\n' % self.start.strftime('%Y-%W')
 
         summary_tpl = None
         if 'status' in config['templates']:
@@ -918,7 +884,6 @@ class Contest(object):
 
         now = self.server_tz.localize(datetime.now())
         if self.state == STATE_ENDING:
-            # Konkurransen er nå avsluttet – takk til alle som deltok! Rosetter vil bli delt ut så snart konkurransearrangøren(e) har sjekket resultatene.
             out += "''" + i18n('bot-contest-limbo') + "''\n\n"
         elif self.state == STATE_CLOSING:
             out += "''" + i18n('bot-contest-closed') + "''\n\n"
@@ -928,7 +893,7 @@ class Contest(object):
                 'startdate': self.start.strftime('%Y-%m-%dT%H:%M:%S'),
                 'enddate': self.end.strftime('%Y-%m-%dT%H:%M:%S')
             }
-            out += "''" + i18n('bot-contest-last-updated', i18n('bot-date-time-format', oargs['lastupdate']), i18n('bot-date-format', oargs['startdate']), i18n('bot-date-format', oargs['enddate'])) + "''\n\n" # FIXME
+            out += "''" + i18n('bot-contest-last-updated', i18n('bot-date-time-format', oargs['lastupdate']), i18n('bot-date-format', oargs['startdate']), i18n('bot-date-format', oargs['enddate'])) + "''\n\n"
 
         for i, result in enumerate(results):
             awards = ''
@@ -1091,20 +1056,13 @@ class Contest(object):
             page = self.sites.homesite.pages[aws['pagename']]
             page.save(text=aws['sent'], summary=aws['sent'], bot=True)
 
-            # if not simulate:
-            #
-            # Skip for now: not Flow compatible
-            #     self.deliver_receipt_to_leaders()
-
             logger.info('Cleaning database')
             if not simulate:
                 self.delete_contribs_from_db()
 
         # Notify users about issues
 
-        # self.deliver_warnings(simulate=simulate)
-
-        # Update Wikipedia:Portal/Oppslagstavle
+        # Update noticeboards
 
         if 'noticeboard' in config:
             boardname = config['noticeboard']['name']
@@ -1117,7 +1075,7 @@ class Contest(object):
             dp = TemplateEditor(txt)
             ntempl = len(dp.templates[tplname])
             if ntempl != 1:
-                raise Exception('Feil: Fant %d %s-maler i %s' % (ntempl, tplname, boardname))
+                raise Exception('Feil: Fant %d %s-maler i %s' % (ntempl, tplname, boardname)) # FIXME: Hard-coded Norwegian
 
             tpl = dp.templates[tplname][0]
             now2 = now.astimezone(self.wiki_tz)

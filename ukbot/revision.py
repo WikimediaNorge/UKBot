@@ -138,14 +138,9 @@ class Revision(object):
             logger.warning(w)
             self.errors.append(w)
 
-        #s = _('A problem encountered with revision %(revid)d may have influenced the word count for this revision: <nowiki>%(problems)s</nowiki> ')
-        #s = _('Et problem med revisjon %d kan ha påvirket ordtellingen for denne: <nowiki>%s</nowiki> ')
         del mt1
         del mt0
-        # except DanmicholoParseError as e:
-        #     log("!!!>> FAIL: %s @ %d" % (self.article().name, self.revid))
-        #     self._wordcount = 0
-        #     #raise
+
         return self._wordcount
 
     @property
