@@ -321,7 +321,7 @@ msgstr "La pàgina no existeix: [[%(pagename)s]]"
 
 #: ukbot/sites.py:80
 #, python-format
-msgid "Could not found a site matching the prefix \"%(key)s\""
+msgid "Could not find a site matching the prefix \"%(key)s\""
 msgstr "No s'ha trobat un site que concordi amb el prefix \"%(key)s\""
 
 #: ukbot/ukbot.py:169

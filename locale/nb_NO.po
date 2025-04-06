@@ -320,7 +320,7 @@ msgstr "Siden finnes ikke: [[%(pagename)s]]"
 
 #: ukbot/sites.py:80
 #, python-format
-msgid "Could not found a site matching the prefix \"%(key)s\""
+msgid "Could not find a site matching the prefix \"%(key)s\""
 msgstr "Kunne ikke finne en wiki som matcher prefikset «%(key)s»"
 
 #: ukbot/ukbot.py:169
