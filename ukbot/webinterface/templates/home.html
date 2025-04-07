@@ -10,7 +10,7 @@
 <div class="row">
   <div class="col">
     <h2>
-      <span class="dbname">{{ dbname }}</span>
+      <span class="dbname">{{ contest_setup.dbname }}</span>
       <a href="{{ contest_setup.url }}">{{ contest_setup.name }}</a>
     </h2>
     <a href="./jobs/{{ contest_setup.id }}_{{ contest_setup.status['job_id'] }}">{{ contest_setup.status['msg'] | safe }}</a>
