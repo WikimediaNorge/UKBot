@@ -59,9 +59,14 @@ contest_setups = [
     },
     {
         "id": "es-estonia",
-		"name": "Wikiconcurso Estonia",
-		"url": "https://es.wikipedia.org/wiki/Wikipedia:Wikiconcurso/Reto_de_Estonia",
+        "name": "Wikiconcurso Estonia",
+        "url": "https://es.wikipedia.org/wiki/Wikipedia:Wikiconcurso/Reto_de_Estonia",
     },
+    {
+        "id": "gl-estonia",
+        "name": "Wikiproxecto Estonia",
+        "url": "https://gl.wikipedia.org/wiki/Wikipedia:Wikiproxecto_Estonia"
+    }
 ]
 
 app = Flask(__name__, static_url_path='/static')
