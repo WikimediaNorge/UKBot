@@ -2,7 +2,7 @@
 # vim: fenc=utf-8 et sw=4 ts=4 sts=4 ai
 import re
 
-from ..common import _
+from ..common import i18n
 from ..contributions import UserContribution
 from .rule import Rule
 from .decorators import family
@@ -27,4 +27,4 @@ class ExternalLinkRule(Rule):
         if links_added > 0:
             points = links_added * self.points
             yield UserContribution(rev=rev, points=points, rule=self,
-                                   description=_('links') % {'links': links_added})
+                                   description=i18n('bot-rule-links', links_added))

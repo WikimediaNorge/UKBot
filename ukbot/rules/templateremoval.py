@@ -2,7 +2,7 @@
 # vim: fenc=utf-8 et sw=4 ts=4 sts=4 ai
 import logging
 
-from ..common import _
+from ..common import i18n
 from ..contributions import UserContribution
 from .rule import Rule
 from .decorators import family
@@ -85,5 +85,5 @@ class TemplateRemovalRule(Rule):
             if removed > 0:
                 template['total'] += removed
                 yield UserContribution(rev=rev, rule=self, points=removed * self.points,
-                                       description=_('removal of {{tl|%(template)s}}') % {'template': template['name']})
+                                       description=i18n('bot-rule-template-removal', '{{subst:ns:10}}:' + template['name']))
 

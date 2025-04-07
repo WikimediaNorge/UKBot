@@ -4,7 +4,7 @@ import re
 from mwclient.errors import InvalidPageTitle
 import urllib
 import logging
-from ..common import _
+from ..common import i18n
 from ..contributions import UserContribution
 from .rule import Rule
 from .decorators import family
@@ -139,4 +139,4 @@ class ImageRule(Rule):
                     points += self.points
 
         yield UserContribution(rev=rev, rule=self, points=points,
-                               description=_('images') % {'images': len(added)})
+                               description=i18n('bot-rule-images', len(added)))
