@@ -144,7 +144,7 @@ class UserContributions(object):
         if self.user().suspended_since is not None:
             suspended = ', ' + i18n('bot-suspended-since', i18n('bot-format-date-time', self.user().suspended_since.strftime('%Y-%m-%dT%H:%M:%S')))
 
-        out = '=== %s %s ===' % ( award_icon, i18n('bot-results-user-heading', '[[{{subst:ns:2}}:%s|%s]]' % (self.user().name, self.user().name), self.sum(), suspended))
+        out = '=== %s %s ===\n' % ( award_icon, i18n('bot-results-user-heading', '[[{{subst:ns:2}}:%s|%s]]' % (self.user().name, self.user().name), self.sum(), suspended))
 
         if len(entries) == 0:
             out += "''%s''" % i18n('bot-no-contributions-yet')
@@ -258,11 +258,11 @@ class UserContributions(object):
         if article.site().host == 'www.wikidata.org':
             formatted += ' ' + i18n('bot-wikidata-abbr')
 
-        points = '%.1f p' % brutto
+        points = i18n('bot-points-sum', '%.1f' % brutto)
         if brutto != netto:
             points = '<s>' + points + '</s> '
             if netto != 0.:
-                points += '%.1f p' % netto
+                points += i18n('bot-points-sum', '%.1f' % netto)
         formatted += ' (<abbr class="uk-ap">%s</abbr>)' % points
 
         formatted = '# ' + formatted

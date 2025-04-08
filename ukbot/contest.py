@@ -502,13 +502,13 @@ class Contest(object):
             ax.set_xlim(t0, xt[-1])
             ax.set_ylim(0, 1.05 * np.max(yall))
 
-            ax.set_xlabel(fetch_parsed_i18n('bot-day', site=self.sites.homesite))
-            ax.set_ylabel(fetch_parsed_i18n('bot-points', site=self.sites.homesite))
+            ax.set_xlabel(fetch_parsed_i18n('bot-day'))
+            ax.set_ylabel(fetch_parsed_i18n('bot-points'))
 
             now = self.server_tz.localize(datetime.now())
             now2 = now.astimezone(self.wiki_tz).strftime('%Y-%m-%dT%H:%M:%S')
-            wikiformat_datetime = fetch_parsed_i18n('bot-date-time-format', now2, site=self.sites.homesite)
-            ax_title = fetch_parsed_i18n('bot-updated-time', wikiformat_datetime, site=self.sites.homesite)
+            wikiformat_datetime = fetch_parsed_i18n('bot-date-time-format', now2)
+            ax_title = fetch_parsed_i18n('bot-updated-time', wikiformat_datetime)
             ax.set_title(ax_title)
 
             plt.legend()
@@ -836,7 +836,7 @@ class Contest(object):
                 if simulate:
                     logger.error(out)
                 else:
-                    self.page.save('dummy', summary=fetch_parsed_i18n('bot-problem-encountered', site=self.sites.homesite), appendtext=out)
+                    self.page.save('dummy', summary=fetch_parsed_i18n('bot-problem-encountered'), appendtext=out)
                 raise
 
             del user
@@ -964,11 +964,11 @@ class Contest(object):
 
             logger.info('Updating wiki')
             if self.state == STATE_ENDING:
-                self.page.save(txt, summary=fetch_parsed_i18n('bot-updating-results', site=self.sites.homesite))
+                self.page.save(txt, summary=fetch_parsed_i18n('bot-updating-results'))
             elif self.state == STATE_CLOSING:
-                self.page.save(txt, summary=fetch_parsed_i18n('bot-checking-results', site=self.sites.homesite))
+                self.page.save(txt, summary=fetch_parsed_i18n('bot-checking-results'))
             else:
-                self.page.save(txt, summary=fetch_parsed_i18n('bot-updating', site=self.sites.homesite))
+                self.page.save(txt, summary=fetch_parsed_i18n('bot-updating'))
 
         if output != '':
             logger.info("Writing output to file")
