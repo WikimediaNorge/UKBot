@@ -584,16 +584,16 @@ class User:
 
         ros = '{awards}'
 
-        suspended = ''
+        suspended = '{{subst:ns:0}}'
         if self.suspended_since is not None:
             suspended = ', ' + i18n('bot-suspended-since', i18n('bot-date-time-format', self.suspended_since.strftime('%Y-%m-%dT%H:%M:%S')))
-        out = '=== %s %s ===' % (ros, i18n('bot-results-user-heading', '[[{{subst:ns:2}}:%s|%s]]'.format(self.name, self.name), self.contributinos.sum(), suspended))
+        out = '=== %s %s ===\n' % (ros, i18n('bot-results-user-heading', '[[{{subst:ns:2}}:%s|%s]]'.format(self.name, self.name), self.contributinos.sum(), suspended))
         if len(entries) == 0:
             out += "''" + i18n('bot-no-contributions-yet') + "''"
         else:
             out += i18n('bot-articles-kb', len(entries), '%0.2f' % self.bytes / 1000.)
         if len(entries) > 10:
-            out += _('{{Kolonner}}\n') # FIXME
+            out += '{{Kolonner}}\n' # FIXME
         out += '\n'.join(entries)
         out += '\n\n'
 

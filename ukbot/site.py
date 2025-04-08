@@ -27,7 +27,7 @@ class Site(mwclient.Site):
         access_token = os.getenv('MW_ACCESS_TOKEN')
         access_secret = os.getenv('MW_ACCESS_SECRET')
         session.auth = OAuth1(consumer_token, consumer_secret, access_token, access_secret)
-        session.headers['User-Agent'] = 'UKBot (http://tools.wmflabs.org/ukbot/; danmichaelo+wikipedia@gmail.com)'
+        session.headers['User-Agent'] = 'UKBot (https://ukbot.toolforge.org/; danmichaelo+wikipedia@gmail.com)'
 
         self.errors = []
         self.name = host

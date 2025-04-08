@@ -69,7 +69,7 @@ class WikidataRule(Rule):
                 ]
             self.matchers['prop:%s' % prop] = {
                 'rules': rules,
-                'msg': i18n('bot-rule-properties', '%(count)s', prop)
+                'msg': i18n('bot-rule-properties', '%(count)s', prop),
                 'opts': {'property': prop},
             }
 

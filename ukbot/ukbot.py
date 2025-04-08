@@ -75,9 +75,11 @@ def process_contest(contest_page, contest_state, sites, sql, config, working_dir
         contest.uploadplot(args.simulate, args.output)
 
     elif args.action == 'plot':
-        filename = os.path.join(working_dir, config['plot']['datafile'] % {'year': contest.year,
-                                                                           'week': contest.startweek,
-                                                                           'month': contest.month})
+        filename = os.path.join(working_dir, config['plot']['datafile'] % {
+            'year': contest.year,
+            'week': contest.startweek,
+            'month': contest.month
+        })
         with open(filename, 'r') as fp:
             plotdata = json.load(fp)
         contest.plot(plotdata)
@@ -143,10 +145,10 @@ def main():
             if status_template in te.templates:
                 te.templates[status_template][0].parameters[1] = 'error'
                 te.templates[status_template][0].parameters[2] = error_msg
-                contest_page.save(te.wikitext(), summary=fetch_parsed_i18n('bot-problem-encountered'))
+                contest_page.save(te.wikitext(), summary=fetch_parsed_i18n('bot-problem-encountered', site=sites.homesite))
             else:
                 out = '\n{{%s | error | %s }}' % (config['templates']['botinfo'], error_msg)
-                contest_page.save('dummy', summary=fetch_parsed_i18n('bot-problem-encountered'), appendtext=out)
+                contest_page.save('dummy', summary=fetch_parsed_i18n('bot-problem-encountered', site=sites.homesite), appendtext=out)
             raise
 
     # Update redirect page
@@ -166,7 +168,7 @@ def main():
                 page = sites.homesite.pages[pagename]
                 txt = '#REDIRECT [[%s]]'.format(contest_name) # FIXME – localize REDIRECT
                 if page.text() != txt and not args.simulate:
-                    page.save(txt, summary=fetch_parsed_i18n('bot-redirecting', contest_name)
+                    page.save(txt, summary=fetch_parsed_i18n('bot-redirecting', contest_name, site=sites.homesite))
 
     runend = config['server_timezone'].localize(datetime.now())
     runend_s = time.time()

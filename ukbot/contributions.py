@@ -2,7 +2,7 @@
 # vim: fenc=utf-8 et sw=4 ts=4 sts=4 ai
 import logging
 import weakref
-from .common import i18n, fetch_parsed_i18n
+from .common import i18n
 
 logger = logging.getLogger(__name__)
 
@@ -156,7 +156,7 @@ class UserContributions(object):
             out += '\n'
 
         if len(entries) > 10:
-            out += _('{{Kolonner}}') + '\n' # FIXME
+            out += '{{Kolonner}}' + '\n' # FIXME
 
         out += '\n'.join(entries)
         out += '\n\n'
