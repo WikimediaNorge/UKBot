@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 import os, sys
 
 setup(name='ukbot',
-      version='1.0.0',
+      version='1.1.0',
       description='Wikipedia writing contest bot',
       keywords='wikipedia',
       author='Dan Michael O. Heggø',

@@ -8,8 +8,8 @@ othersites:
     - nn.wikipedia.org
     - se.wikipedia.org
     - smn.wikipedia.org
-    - www.wikidata.org
-    - commons.wikimedia.org
+    #- www.wikidata.org
+    #- commons.wikimedia.org
 default_prefix: no
 wikidata_languages: ['nb', 'nn', 'en', 'se', 'smn']
 contestPages:
