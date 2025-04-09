@@ -584,6 +584,11 @@ class User:
 
         ros = '{awards}'
 
+        if 'columns' in self.contest().config['templates']:
+            column_template = '{{%s}}' % self.contest().config['templates']['columns']
+        else:
+            column_template = '<div class="uk-columns"></div>'
+
         suspended = '{{subst:ns:0}}'
         if self.suspended_since is not None:
             suspended = ', ' + i18n('bot-suspended-since', i18n('bot-date-time-format', self.suspended_since.strftime('%Y-%m-%dT%H:%M:%S')))
@@ -593,7 +598,7 @@ class User:
         else:
             out += i18n('bot-articles-kb', len(entries), '%0.2f' % self.bytes / 1000.)
         if len(entries) > 10:
-            out += '{{Kolonner}}\n' # FIXME
+            out += column_template + '\n'
         out += '\n'.join(entries)
         out += '\n\n'
 

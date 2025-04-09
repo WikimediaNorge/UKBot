@@ -47,19 +47,6 @@ class RefRule(Rule):
             s1 = 0
             r1 = 0
 
-        # Count list item under section heading "Kilder" or "Kjelder"
-        # FIXME: Make language-agnostic
-        refsection = False
-        for line in txt.split('\n'):
-            if refsection:
-                if re.match(r'==', line):
-                    refsection = False
-                    continue
-                if re.match(r'\*', line):
-                    s1 += 1
-            elif re.match(r'==[\s]*(Kilder|Kjelder|Gáldut)[\s]*==', line):
-                refsection = True
-
         return s1, r1
 
     @family('wikipedia.org', 'wikibooks.org')

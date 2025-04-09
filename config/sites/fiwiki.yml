@@ -99,6 +99,7 @@ templates:
                 name: sparql  # as in {{ ukb criterion | sparql }}
                 params:
                     query: query    # as in {{ ukb criterion | sparql | query=... }}
+    columns: Sarakkeet
 ignore:
     - muokkaukset kumottiin ja sivu palautettiin # MediaWiki:Revertpage
     - ^Hylättiin (viimeisin tekstimuutos|viimeisimmät .* tekstimuutosta) # MediaWiki:Revreview-reject-summary-cur/fi

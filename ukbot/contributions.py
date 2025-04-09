@@ -18,6 +18,7 @@ class UserContributions(object):
         self.user = weakref.ref(user)
         self.contributions = []
         self.labels = {}
+        self.config = config
         self.wikidata_languages = config['wikidata_languages']
 
     def add(self, contribution):
@@ -155,8 +156,13 @@ class UserContributions(object):
             out += '{{formatnum:%.2f}} kB' % (sum_bytes / 1000.)
             out += '\n'
 
+        if 'columns' in self.config['templates']:
+            column_template = '{{%s}}' % self.config['templates']['columns']
+        else:
+            column_template = '<div class="uk-columns"></div>'
+
         if len(entries) > 10:
-            out += '{{Kolonner}}' + '\n' # FIXME
+            out += column_template + '\n'
 
         out += '\n'.join(entries)
         out += '\n\n'

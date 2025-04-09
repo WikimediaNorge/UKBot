@@ -164,11 +164,14 @@ def main():
         if len(normal_contests) == 1:
             contest_name = normal_contests[0]
             pages = config['pages']['redirect']
+            magic_words = sites.homesite.api('query', meta='siteinfo', siprop='magicwords')['query']['magicwords']
+            redirect_localized = next((word for word in magic_words if word['name'] == 'redirect'), None)['aliases'][0]
+            logger.debug('Magic words for redirects is %s' % redirect_localized)
             if not isinstance(pages, list):
                 pages = [pages]
             for pagename in pages:
                 page = sites.homesite.pages[pagename]
-                txt = '#REDIRECT [[%s]]'.format(contest_name) # FIXME – localize REDIRECT
+                txt = '%s [[%s]]' % (redirect_localized, contest_name)
                 if page.text() != txt and not args.simulate:
                     page.save(txt, summary=fetch_parsed_i18n('bot-redirecting', contest_name))
 

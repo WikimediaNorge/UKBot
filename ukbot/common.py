@@ -24,7 +24,7 @@ class Localization:
         def init(self, homesite):
             messages = homesite.api(
                 'parse',
-                text='{{subst:#invoke:UKB/sandkasse|getAllI18n}}', # FIXME: De-sandbox
+                text='{{subst:#invoke:UKB|getAllI18n}}',
                 pst=1,
                 onlypst=1,
                 contentmodel='wikitext'

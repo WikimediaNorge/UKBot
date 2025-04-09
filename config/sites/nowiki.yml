@@ -106,6 +106,7 @@ templates:
                 name: sparql  # as in {{ ukb criterion | sparql }}
                 params:
                     query: spørring    # as in {{ ukb criterion | sparql | query=... }}
+    columns: Kolonner
 awards:
     blå: { file: Article blue.svg, winner: true }
     rød: { file: Article red.svg, winner: true }
