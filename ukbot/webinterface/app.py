@@ -24,44 +24,58 @@ project_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(_
 contest_setups = [
     {
         "id": "no-mk",
+        "dbname": "nowiki",
         "name": "Månedens konkurranse",
         "url": "https://no.wikipedia.org/wiki/WP:MK",
     },
     {
         "id": "no-fd",
+        "dbname": "nowiki",
         "name": "Fiks det!",
         "url": "https://no.wikipedia.org/wiki/WP:FD!",
     },
     {
         "id": "fi-vk",
+        "dbname": "fiwiki",
         "name": "Viikon kilpailu",
         "url": "https://fi.wikipedia.org/wiki/WP:VK",
     },
     {
         "id": "fi-hl",
+        "dbname": "fiwiki",
         "name": "Heinäkuun lähdetalkoot",
         "url": "https://fi.wikipedia.org/wiki/Wikipedia:Heinäkuun lähdetalkoot",
     },
     {
         "id": "fi-ek",
+        "dbname": "fiwiki",
         "name": "Elokuun kuvitustalkoot",
         "url": "https://fi.wikipedia.org/wiki/Wikipedia:Elokuun kuvitustalkoot",
     },
     {
         "id": "fi-pln2021",
+        "dbname": "fiwiki",
         "name": "Punaisten linkkien naiset",
         "url": "https://fi.wikipedia.org/wiki/Wikiprojekti:Punaisten_linkkien_naiset",
     },
     {
         "id": "eu",
+        "dbname": "euwiki",
         "name": "Atari:Hezkuntza/Lehiaketak",
         "url": "https://eu.wikipedia.org/wiki/Atari:Hezkuntza/Lehiaketak",
     },
     {
         "id": "es-estonia",
-		"name": "Wikiconcurso Estonia",
-		"url": "https://es.wikipedia.org/wiki/Wikipedia:Wikiconcurso/Reto_de_Estonia",
+        "dbname": "eswiki",
+        "name": "Wikiconcurso Estonia",
+        "url": "https://es.wikipedia.org/wiki/Wikipedia:Wikiconcurso/Reto_de_Estonia",
     },
+    {
+        "id": "gl-estonia",
+        "dbname": "glwiki",
+        "name": "Wikiproxecto Estonia",
+        "url": "https://gl.wikipedia.org/wiki/Wikipedia:Wikiproxecto_Estonia"
+    }
 ]
 
 app = Flask(__name__, static_url_path='/static')

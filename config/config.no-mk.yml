@@ -5,7 +5,20 @@ pages:
     base: Wikipedia:Konkurranser/Månedens konkurranse
     default: Wikipedia:Konkurranser/Månedens konkurranse %(year)d-%(month)02d
     redirect: WP:MK
+othersites:
+    - nn.wikipedia.org
+    - se.wikipedia.org
+    - smn.wikipedia.org
+    # - www.wikidata.org
+    # - commons.wikimedia.org
+    # FOR INDIAN CONTEST APRIL 2025 – remove in May
+    - bn.wikipedia.org
+    - hi.wikipedia.org
+    - kn.wikipedia.org
+    - syl.wikipedia.org
 contestPages:
+    resultsSection: 'Resultater|Results'
+    participantsSection: 'Delta[kg]ere|Participants'
     footer: "{{Månedens konkurranse %(year)s}}\n[[Kategori:Artikkelkonkurranser]]"
 templates:
     contestlist:
