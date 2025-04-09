@@ -1083,7 +1083,7 @@ class Contest(object):
                 logger.info('Updating noticeboard: %s', boardname)
                 tpllist = config['templates']['contestlist']
                 commonargs = config['templates']['commonargs']
-                tema = self.sites.homesite.api('parse', text='{{subst:%s|%s=%s}}' % (tpllist['name'], commonargs['week'], now2.strftime('%Y-%V')), pst=1, onlypst=1)['parse']['text']['*']
+                tema = self.sites.homesite.api('parse', text='{{subst:%s|%s=%s}}' % (tpllist['name'], commonargs['week'], now2.strftime('%Y-%V')), pst=1, onlypst=1, contentmodel='wikitext')['parse']['text']['*']
                 tpl.parameters[1] = tema
                 tpl.parameters[boardtpl['date']] = now2.strftime('%e. %h')
                 tpl.parameters[commonargs['year']] = now2.isocalendar()[0]

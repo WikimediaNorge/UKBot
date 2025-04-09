@@ -26,7 +26,8 @@ class Localization:
                 'parse',
                 text='{{subst:#invoke:UKB/sandkasse|getAllI18n}}', # FIXME: De-sandbox
                 pst=1,
-                onlypst=1
+                onlypst=1,
+                contentmodel='wikitext'
             )['parse']['text']['*']
             messages = json.loads(messages)
 
@@ -52,8 +53,9 @@ def i18n(*args):
     logger.debug('Arguments to i18n(): %s' % '|'.join([str(x) for x in args]))
     if len(args) == 0:
         raise ValueError('At least one argument (message key) must be given')
-    if args[0] == 'bot-day':
-        logger.debug('Messages json: ' + json.dumps(localization.messages))
+    message = '{{#invoke:UKB|getMessage|%s}}' % args[0] # Fallback if key doesn't exist
+    if args[0] not in localization.messages:
+        return message
     message = localization.messages[args[0]]
     for i in range(1, len(args)):
         message = message.replace('$' + str(i), str(args[i]))
@@ -71,11 +73,9 @@ def fetch_parsed_i18n(*args):
 	For all cases where text is output to wiki, the i18n() function should be used instead.
 	"""
     logger.debug('Arguments to fetch_parsed_i18n(): %s', '|'.join([str(x) for x in args]))
-    if len(args) == 0:
-        raise ValueError('At least one argument (message key) must be given')
-    if len(args) == 1:
+    if len(args) <= 1:
         return i18n(*args)
-    return localization.site.api('parse', text=i18n(*args), pst=1, onlypst=1)['parse']['text']['*']
+    return localization.site.api('parse', text=i18n(*args), pst=1, onlypst=1, contentmodel='wikitext')['parse']['text']['*']
 
 logfile = sys.stdout
 def log(msg, newline = True):
