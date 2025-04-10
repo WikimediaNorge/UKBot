@@ -68,20 +68,25 @@ def merge(base, current):
 
 def load_config(fp):
     folder = os.path.split(fp.name)[0]
+    logger.info('Loading config %s', fp.name)
+
+    config = {}
+    base_config = {}
 
     main_config = yaml.safe_load(fp)
     if '_extends' in main_config:
         filename = os.path.join(folder, main_config['_extends'])
         with open(filename, encoding='utf-8') as fp2:
-            base_config = yaml.safe_load(fp2)
-    else:
-        base_config = {}
+            base_config = load_config(fp2)
 
     config = merge(base_config, main_config)
 
-    config['wiki_timezone'] = pytz.timezone(config['wiki_timezone'])
-    config['server_timezone'] = pytz.timezone(config['server_timezone'])
+    if isinstance(config.get('wiki_timezone'), str):
+        config['wiki_timezone'] = pytz.timezone(config['wiki_timezone'])
+    if isinstance(config.get('server_timezone'), str):
+        config['server_timezone'] = pytz.timezone(config['server_timezone'])
 
+    logger.debug('Config: %s', config)
     return config
 
 
