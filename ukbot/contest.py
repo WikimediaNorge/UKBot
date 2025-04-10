@@ -661,7 +661,7 @@ class Contest(object):
         mld = '\n:' + i18n('bot-awards-sent', link )
         for u in self.ledere:
             page = self.sites.homesite.pages['%s:%s' % (usertalkprefix, u)]
-            logger.info('Sending %s a deliver_receipt_to_leaders', page.name)
+            logger.info('Sending leader delivery receipt to %s', page.name)
 
             # Find section number
             txt = page.text()

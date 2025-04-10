@@ -134,7 +134,7 @@ class Revision(object):
             self.errors.append(w)
 
         elif self._wordcount > 10 and self._wordcount > self.bytes:
-            w = i18n('bot-word-count-incorrect', '[//%s/w/index.php?diff=prev&oldid=%s %s]' % (self.article().sit().host, self.revid, self.revid), self._wordcount, self.bytes)
+            w = i18n('bot-word-count-incorrect', '[//%s/w/index.php?diff=prev&oldid=%s %s]' % (self.article().site().host, self.revid, self.revid), self._wordcount, self.bytes)
             logger.warning(w)
             self.errors.append(w)
 
