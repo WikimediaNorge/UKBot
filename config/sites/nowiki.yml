@@ -1,6 +1,4 @@
 ---
-locale: [nb_NO, no_NO]
-rollbar_token: 88f5bd483f7348ea8b0564449c8d77cd
 server_timezone: UTC
 wiki_timezone: Europe/Oslo
 homesite: no.wikipedia.org
@@ -106,6 +104,7 @@ templates:
                 name: sparql  # as in {{ ukb criterion | sparql }}
                 params:
                     query: spørring    # as in {{ ukb criterion | sparql | query=... }}
+    columns: Kolonner
 awards:
     blå: { file: Article blue.svg, winner: true }
     rød: { file: Article red.svg, winner: true }
