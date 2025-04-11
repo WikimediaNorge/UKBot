@@ -87,8 +87,8 @@ class SiteManager(object):
 
 def init_sites(config):
 
-    if 'ignore' not in config:
-        config['ignore'] = []
+    if 'ignoreTags' not in config:
+        config['ignoreTags'] = []
 
     # Configure home site (where the contests live)
     host = config['homesite']
@@ -109,11 +109,5 @@ def init_sites(config):
         for host in config['othersites']:
             prefixes = [k for k, v in iwmap.items() if v == host]
             sites[host] = Site(host, prefixes=prefixes)
-
-    for site in sites.values():
-        msg = site.get_revertpage_regexp()
-        if msg != '':
-            logger.debug('Revert page regexp: %s', msg)
-            config['ignore'].append(msg)
 
     return SiteManager(sites, homesite), sql

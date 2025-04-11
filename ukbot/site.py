@@ -60,12 +60,6 @@ class Site(mwclient.Site):
     def __hash__(self):
         return hash(self.__repr__())
 
-    def get_revertpage_regexp(self):
-        msg = self.pages['MediaWiki:Revertpage'].text()
-        msg = re.sub(r'\[\[[^\]]+\]\]', '.*?', msg)
-        msg = re.sub(r'(?i)\{\{PLURAL:\$\d\|(.+)\}\}', '(\1)', msg)
-        return msg
-
     def match_prefix(self, prefix):
         return prefix in self.prefixes or prefix == self.key
 

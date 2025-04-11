@@ -17,8 +17,8 @@ othersites:
     - kn.wikipedia.org
     - syl.wikipedia.org
 contestPages:
-    resultsSection: 'Resultater|Results'
-    participantsSection: 'Delta[kg]ere|Participants'
+    resultsSection: 'Resultater'
+    participantsSection: 'Delta[kg]ere'
     footer: "{{Månedens konkurranse %(year)s}}\n[[Kategori:Artikkelkonkurranser]]"
 templates:
     contestlist:
