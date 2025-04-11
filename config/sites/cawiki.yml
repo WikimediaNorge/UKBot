@@ -1,7 +1,5 @@
 _extends: default.yml
-locale: [ca_ES, ca_AD, ca_FR, ca_IT, ca_ES@valencia]
-server_timezone: UTC
-wiki_timezone: Europe/Andorra
+wiki_timezone: Europe/Berlin
 homesite: ca.wikipedia.org
 othersites:
     - ca.wikiquote.org

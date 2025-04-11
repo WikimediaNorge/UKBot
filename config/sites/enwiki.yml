@@ -1,7 +1,4 @@
 _extends: default.yml
-locale: [en_US]
-server_timezone: UTC
-wiki_timezone: Europe/Oslo
 homesite: en.wikipedia.org
 default_prefix: en
 wikidata_languages: ['en']

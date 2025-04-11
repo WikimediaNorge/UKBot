@@ -1,7 +1,5 @@
 _extends: default.yml
-locale: [eu_ES,en_US]
-server_timezone: UTC
-wiki_timezone: Europe/Oslo
+wiki_timezone: Europe/Berlin
 homesite: eu.wikipedia.org
 othersites:
     - eu.wikibooks.org
