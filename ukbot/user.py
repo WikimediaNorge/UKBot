@@ -114,7 +114,6 @@ class User:
 
             if ignored_tags_present:
                 logger.info('Ignoring revision %d of %s:%s because it has the following edit tags: %s', c['revid'], site_key, c['title'], ', '.join(ignored_tags_present))
-                break
             else:
                 rev_id = c['revid']
                 article_title = c['title']
