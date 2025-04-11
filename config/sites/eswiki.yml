@@ -1,4 +1,5 @@
 _extends: default.yml
+locale: [es_ES,en_US]
 homesite: es.wikipedia.org
 default_prefix: es
 wikidata_languages: ['es', 'en']
