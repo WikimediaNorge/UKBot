@@ -1,0 +1,26 @@
+server_timezone: UTC
+wiki_timezone: UTC
+ignoreTags:
+    - mw-reverted # Edits that have been reverted
+    - mw-manual-revert # Edits that manually revert to a previous version
+    - mw-undo # Edits that undo other edits
+    - mw-rollback # Edits made using the "rollback" button
+    # Wikidata-specific
+    - client-linkitem-change # Add/change interwiki links
+    - client-automatic-update # Moving pages
+    - 'OAuth CID: 1776' # QuickStatements 2.0
+    - 'OAuth CID: 1351' # QuickStatements 1.5
+    - 'OAuth CID: 1253' # QuickStatements 1.3
+    - 'OAuth CID: 699' # QuickStatements 1.1
+    - 'OAuth CID: 9364' # QuickStatements 3.0
+    - openrefine
+    - openrefine-3.0
+    - openrefine-3.1
+    - openrefine-3.2
+    - openrefine-3.3
+    - openrefine-3.4
+    - openrefine-3.5
+    - openrefine-3.6
+    - openrefine-3.7
+    - openrefine-3.8
+    - openrefine-4.0

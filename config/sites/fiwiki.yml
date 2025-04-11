@@ -1,5 +1,5 @@
+_extends: default.yml
 locale: fi_FI
-rollbar_token: 88f5bd483f7348ea8b0564449c8d77cd
 server_timezone: UTC
 wiki_timezone: Europe/Helsinki
 homesite: fi.wikipedia.org
@@ -99,9 +99,13 @@ templates:
                 name: sparql  # as in {{ ukb criterion | sparql }}
                 params:
                     query: query    # as in {{ ukb criterion | sparql | query=... }}
+<<<<<<< HEAD
 ignore:
     - muokkaukset kumottiin ja sivu palautettiin # MediaWiki:Revertpage
     - ^Hylättiin (viimeisin tekstimuutos|viimeisimmät .* tekstimuutosta) # MediaWiki:Revreview-reject-summary-cur/fi
     - ^Kumottu muokkaus # MediaWiki:Undo-summary/fi
     - clientsitelink-update  # Wikidata: Page moved from .. to ..
     - clientsitelink-remove  # Wikidata: Removed sitelink
+=======
+    columns: Sarakkeet
+>>>>>>> e74fcf3 (Use edit tags instead of edit summaries to detect reverts)

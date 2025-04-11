@@ -88,6 +88,8 @@ class User:
             args['namespace'] = kwargs['namespace']
             logger.debug('Limiting to namespaces: %s', args['namespace'])
 
+        ignore_tags = set(self.contest().config['ignoreTags'])
+        logger.debug('Edit tags that should be ignored: %s', ', '.join(sorted(ignore_tags)))
         new_revisions = []
         # stored_revisions = set(copy(self.revisions.keys()))
         stored_revisions = set([rev.revid for rev in self.revisions.values() if rev.article().site() == site])
@@ -96,7 +98,7 @@ class User:
         t1 = time.time()
         tnr = 0
         n_articles = len(self.articles)
-        for c in site.usercontributions(self.name, ts_start, ts_end, 'newer', prop='ids|title|timestamp|comment', **args):
+        for c in site.usercontributions(self.name, ts_start, ts_end, 'newer', prop='ids|title|timestamp|comment|tags', **args):
             tnr += 1
 
             dt1 = time.time() - t1
@@ -106,40 +108,37 @@ class User:
                 logger.info('Found %d new revisions from API so far (%.0f secs elapsed)',
                             len(new_revisions), dt0)
 
-            if 'comment' in c:
-                article_comment = c['comment']
+            ignored_tags_present = set(c['tags']) & ignore_tags
 
-                ignore = False
-                for pattern in self.contest().config['ignore']:
-                    if re.search(pattern, article_comment):
-                        ignore = True
-                        logger.info('Ignoring revision %d of %s:%s because it matched /%s/', c['revid'], site_key, c['title'], pattern)
-                        break
+            logger.debug('Revision %d has the following tags: %s', c['revid'], ', '.join(sorted(c['tags'])))
 
-                if not ignore:
-                    rev_id = c['revid']
-                    article_title = c['title']
-                    article_key = site_key + ':' + article_title
-                    current_revisions.add(rev_id)
+            if ignored_tags_present:
+                logger.info('Ignoring revision %d of %s:%s because it has the following edit tags: %s', c['revid'], site_key, c['title'], ', '.join(ignored_tags_present))
+                break
+            else:
+                rev_id = c['revid']
+                article_title = c['title']
+                article_key = site_key + ':' + article_title
+                current_revisions.add(rev_id)
 
-                    if rev_id in self.revisions:
-                        # We check self.revisions instead of article.revisions, because the revision may
-                        # already belong to "another article" (another title) if the article has been moved
+                if rev_id in self.revisions:
+                    # We check self.revisions instead of article.revisions, because the revision may
+                    # already belong to "another article" (another title) if the article has been moved
 
-                        if self.revisions[rev_id].article().name != article_title:
-                            rev = self.revisions[rev_id]
-                            logger.info('Moving revision %d from "%s" to "%s"', rev_id, rev.article().name, article_title)
-                            article = self.add_article_if_necessary(site, article_title, c['ns'])
-                            rev.article().revisions.pop(rev_id)  # remove from old article
-                            article.revisions[rev_id] = rev    # add to new article
-                            rev.article = weakref.ref(article)              # and update reference
-
-                    else:
-
+                    if self.revisions[rev_id].article().name != article_title:
+                        rev = self.revisions[rev_id]
+                        logger.info('Moving revision %d from "%s" to "%s"', rev_id, rev.article().name, article_title)
                         article = self.add_article_if_necessary(site, article_title, c['ns'])
-                        rev = article.add_revision(rev_id, timestamp=time.mktime(c['timestamp']), username=self.name)
-                        rev.saved = False  # New revision that should be stored in DB
-                        new_revisions.append(rev)
+                        rev.article().revisions.pop(rev_id)  # remove from old article
+                        article.revisions[rev_id] = rev    # add to new article
+                        rev.article = weakref.ref(article)              # and update reference
+
+                else:
+
+                    article = self.add_article_if_necessary(site, article_title, c['ns'])
+                    rev = article.add_revision(rev_id, timestamp=time.mktime(c['timestamp']), username=self.name)
+                    rev.saved = False  # New revision that should be stored in DB
+                    new_revisions.append(rev)
 
         # Check if revisions have been deleted
         logger.info('Site: %s, stored revisions: %d, current revisions: %d', site.key, len(stored_revisions), len(current_revisions))

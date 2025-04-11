@@ -1,5 +1,5 @@
+_extends: default.yml
 locale: [eu_ES,en_US]
-rollbar_token: 88f5bd483f7348ea8b0564449c8d77cd
 server_timezone: UTC
 wiki_timezone: Europe/Oslo
 homesite: eu.wikipedia.org
@@ -98,13 +98,3 @@ templates:
                 name: sparql  # as in {{ ukb criterion | sparql }}
                 params:
                     query: query    # as in {{ ukb criterion | sparql | query=... }}
-ignore:
-    - Tilbakestilte endring # MediaWiki:Revertpage/nb
-    - Attenderulla endring  # MediaWiki:Revertpage/nn
-    - rievdadusat sihkkojuvvui ja siidu  # MediaWiki:Revertpage/se
-    - Reverted edits by  # MediaWiki:Revertpage/en
-    - Fjerner revisjon # MediaWiki:Undo-summary/nb
-    - Rullar attende versjon # MediaWiki:Undo-summary/nn
-    - Undo revision # MediaWiki:Revertpage/en
-    - clientsitelink-update  # Wikidata: Page moved from .. to ..
-    - clientsitelink-remove  # Wikidata: Removed sitelink
