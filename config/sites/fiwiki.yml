@@ -1,4 +1,5 @@
 _extends: default.yml
+locale: fi_FI
 wiki_timezone: Europe/Helsinki
 homesite: fi.wikipedia.org
 default_prefix: fi

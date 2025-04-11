@@ -1,4 +1,5 @@
 _extends: default.yml
+locale: [ca_ES, ca_AD, ca_FR, ca_IT, ca_ES@valencia]
 wiki_timezone: Europe/Berlin
 homesite: ca.wikipedia.org
 othersites:
