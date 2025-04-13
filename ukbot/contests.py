@@ -13,7 +13,7 @@ def award_delivery_confirmed(site, config, page_title):
     confirmation_message = config['send']
 
     if status_page.exists:
-        lastrev = status_page.revisions(prop='user|comment|content', slots='main').next()
+        lastrev = next(status_page.revisions(prop='user|comment|content', slots='main'))
         if lastrev['comment'].find('/* %s */' % confirmation_message) == -1 and lastrev['slots']['main']['*'].find(confirmation_message) == -1:
             logger.info('Contest [[%s]] is to be closed, but award delivery has not been confirmed yet', page_title)
         else:
