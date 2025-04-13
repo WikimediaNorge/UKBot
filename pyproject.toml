@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ukbot"
+version = "1.1.0"
+description = "Wikipedia writing contest bot"
+authors = [
+  { name = "Dan Michael O. Heggø", email = "danmichaelo@gmail.com" },
+  { name = "Jon Harald Søby", email = "jhsoby@wikimedia.no" }
+]
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.7"
+keywords = ["wikipedia"]
+dependencies = [
+  "Flask",
+  "isoweek",
+  "jsonpath-rw",
+  "lxml",
+  "matplotlib",
+  "more-itertools",
+  "mwclient",
+  "mwtemplates",
+  "mwtextextractor",
+  "numpy",
+  "psutil",
+  "pydash",
+  "PyMySQL",
+  "python-dotenv",
+  "pytz",
+  "PyYAML",
+  "requests",
+  "requests-oauthlib",
+]
+
+classifiers = [
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.9"
+]
+
+[project.scripts]
+ukbot = "ukbot.ukbot:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
