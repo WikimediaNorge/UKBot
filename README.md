@@ -3,7 +3,7 @@
 <p align="center">Bot for updating results in writing contests at Wikipedia, deployed at <a href="https://ukbot.toolforge.org/">ukbot.toolforge.org</a>.</p>
 
 <div align="center">
-  <p>Create with ❤︎ by <a href="https://github.com/WikimediaNorge/UKBot/graphs/contributors">contributors</a></p>
+  <p>Created by <a href="https://github.com/danmichaelo">Dan Michael</a> and maintained with ❤︎ by <a href="https://github.com/WikimediaNorge/UKBot/graphs/contributors">contributors</a></p>
 </div>
  
 ## Getting Started

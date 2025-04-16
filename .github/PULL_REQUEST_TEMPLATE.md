@@ -37,4 +37,8 @@ Please use this format link issue numbers: Fixes #123
 - [ ] 📖 own file under the docs folder
 - [ ] 🙅 no documentation needed
 
-## [optional] Are there any post-deployment tasks we need to perform?
+## [optional] Are there any pre- or post-deployment tasks we need to perform?
+
+<!-- 
+Write about changing templates or modules on-wiki in order to accomodate changes in this PR
+-->

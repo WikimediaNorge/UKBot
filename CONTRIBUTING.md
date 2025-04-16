@@ -1,6 +1,6 @@
 # Contributing to UKBot
 
-Thank you for your interest in `UKBot` and for taking the time to contribute to this project. `UKBot` software behind the weekly contest bot for Wikipedia, and there are many ways you can contribute.
+Thank you for your interest in `UKBot` and for taking the time to contribute to this project. ``UKBot` software behind the weekly contest bot for Wikipedia, and there are many ways you can contribute.
 
 ## Code of conduct
 
