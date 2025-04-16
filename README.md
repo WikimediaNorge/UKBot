@@ -1,6 +1,10 @@
-# ukbot
+<h1 align="center">UKBot</h1>
 
-Bot for updating results in writing contests at Wikipedia, deployed at [ukbot.wmflabs.org](https//ukbot.wmflabs.org).
+<p align="center">Bot for updating results in writing contests at Wikipedia, deployed at <a href="https://ukbot.toolforge.org/">ukbot.toolforge.org</a>.</p>
+
+<div align="center">
+  <p>Created by <a href="https://github.com/danmichaelo">Dan Michael</a> and maintained with ❤︎ by <a href="https://github.com/WikimediaNorge/UKBot/graphs/contributors">contributors</a></p>
+</div>
  
 ## Getting Started
 
