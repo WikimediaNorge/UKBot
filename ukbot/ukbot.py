@@ -17,6 +17,7 @@ import mwclient
 from mwtemplates import TemplateEditor
 import platform
 from dotenv import load_dotenv
+from importlib.metadata import version
 
 from .common import get_mem_usage, Localization, _, STATE_NORMAL, InvalidContestPage
 from .util import load_config
@@ -26,6 +27,7 @@ from .sites import init_sites
 
 matplotlib.use('svg')
 
+__version__ = version('ukbot')
 
 class AppFilter(logging.Filter):
 
@@ -119,8 +121,9 @@ def main():
                 mainstart.strftime('%F %T'),
                 mainstart.astimezone(config['wiki_timezone']).strftime('%F %T'))
     logger.info(
-        'Platform: Python %s, Mwclient %s, %s',
+        'Platform: Python %s, UKBot %s, Mwclient %s, %s',
         platform.python_version(),
+        __version__,
         mwclient.__version__,
         platform.platform()
     )
