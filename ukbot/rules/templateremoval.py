@@ -86,15 +86,12 @@ class TemplateRemovalRule(Rule):
                 template['total'] += removed
                 # Add language code if template is from a different site
                 lang_code = ''
-                if hasattr(template['site'], 'code') and template['site'].code != rev.article().site().code:
-                    lang_code = '|' + template['site'].code
+                if 'lang' in template['site'].site and template['site'].site['lang'] != self.sites.homesite.site['lang']:
+                    lang_code = '|' + template['site'].site['lang']
                 yield UserContribution(
                     rev=rev,
                     rule=self,
                     points=removed * self.points,
-                    description=_('removal of {{tl|%(template)s%(lang)s}}') % {
-                        'template': template['name'],
-                        'lang': lang_code
-                    }
+                    description=_('removal of {{tl|%(template)s%(lang)s}}') % {'template': template['name'], 'lang': lang_code}
                 )
 
