@@ -257,12 +257,13 @@ class CatFilter(Filter):
                 categories.append(cat_page)
             except InvalidContestPage as e:
                 logger.warning('Category does not exist: %s', cat_name)
-                try:
-                    tpl.sites.homesite.errors.append(_('Warning: Category does not exist: %(cat)s') % {'cat': cat_name})
-                except Exception as ex:
-                    logger.warning('Could not attach warning to homesite: %s', ex)
+                self_site = tpl.sites.homesite
+                attach_warning_to_homesite(
+                    self_site,
+                    _('Warning: Category does not exist: %(cat)s') % {'cat': cat_name},
+                    logger
+                )
                 # Do not abort, just skip this category
-                continue
 
         params = {
             'sites': tpl.sites,
