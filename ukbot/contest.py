@@ -224,31 +224,14 @@ class Contest(object):
                 try:
                     filter_inst = filter_tpl.make(self)
                 except RuntimeError as exp:
-                    # Only abort for truly fatal errors (like missing required arguments)
-                    fatal_errors = [
-                        'Too few arguments',
-                        'No category values given',
-                        'No byte limit',
-                        'No "%s" parameter given',
-                        'Could not parse the catignore page',
-                    ]
-                    msg = str(exp)
-                    if any(fe in msg for fe in fatal_errors):
-                        raise InvalidContestPage(
-                            _('Could not parse {{tlx|%(template)s|%(firstarg)s}} template: %(err)s')
-                            % {
-                                'template': filter_template_config['name'],
-                                'firstarg': filter_tpl.anon_params[1],
-                                'err': msg
-                            }
-                        )
-                    # Otherwise, treat as warning and continue
-                    logger.warning('Non-fatal filter error: %s', msg)
-                    try:
-                        self.sites.homesite.errors.append(_('Warning: %(msg)s') % {'msg': msg})
-                    except Exception as e:
-                        logger.warning('Could not attach warning to homesite: %s', e)
-                    continue
+                    raise InvalidContestPage(
+                        _('Could not parse {{tlx|%(template)s|%(firstarg)s}} template: %(err)s')
+                        % {
+                            'template': filter_template_config['name'],
+                            'firstarg': filter_tpl.anon_params[1],
+                            'err': str(exp)
+                        }
+                    )
 
                 nfilters += 1
                 if op == 'OR':
