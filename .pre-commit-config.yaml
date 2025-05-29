@@ -1,0 +1,28 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+    -   id: check-yaml
+    -   id: end-of-file-fixer
+    -   id: trailing-whitespace
+    -   id: check-docstring-first
+    -   id: check-added-large-files
+    -   id: check-case-conflict
+    -   id: debug-statements
+    -   id: requirements-txt-fixer
+-   repo: https://github.com/pre-commit/mirrors-autopep8
+    rev: 'v1.6.0'
+    hooks:
+    -   id: autopep8
+-   repo: https://github.com/pre-commit/mirrors-mypy
+    rev: 'v0.950'
+    hooks:
+    -   id: mypy
+        name: mypy ukbot
+        exclude: config/, locale/
+        entry: mypy ukbot/
+        pass_filenames: false
+-   repo: https://github.com/PyCQA/flake8
+    rev: 4.0.1
+    hooks:
+    -   id: flake8
