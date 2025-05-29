@@ -76,3 +76,7 @@ See https://wikitech.wikimedia.org/wiki/Tool:UKBot for deployment notes.
 Forenklet flytkart:
 ![Flowchart](https://github.com/danmichaelo/UKBot/raw/master/flowchart.png)
  
+python -m ukbot.ukbot --page Bruker:Premeditated/Sandkasse5 config/config.no-fd.yml --simulate
+omdøpte brukeren Poriman55 (14 redigeringer) til EAKI78 (per request)
+
+python -m ukbot.ukbot --page "Bruker:Premeditated/Sandkasse5" config/config.no-fd.yml --simulate --output Sandkasse5.txt
