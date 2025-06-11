@@ -1,0 +1,20 @@
+''Sist oppdatert 25. mai 2025, 18:53. Konkurransen er åpen fra  1. mai 2025, 00:00 til 31. mai 2025, 23:59.''
+
+===  [[Bruker:Premeditated|Premeditated]] (20 p) ===
+2 articles, {{formatnum:0.54}} kB
+# [[:Dansk Danseteater]] (<abbr class="uk-ap">13.6 p</abbr>)<div class="uk-ap-title">''Kategoritreff'': Ballett<br>[[Special:Diff/25154939|24. mai 2025, 22:08]]: 3.5 p (346 {{subst:PLURAL:346|byte}}) + 0.1 p (1 {{subst:PLURAL:1|ord}}) + 10.0 p ({{subst:PLURAL:2|én kilde|2 kilder}})<div style="border-top:1px solid #CCC">Total: 346 bytes, 1 words.</div></div>
+# [[:nn:Marius Petipa|Marius Petipa]] (<abbr class="uk-ap">6.9 p</abbr>)<div class="uk-ap-title">''Kategoritreff'': Ballett &gt; Ballettdansarar<br>[[:nn:Special:Diff/3607658|24. mai 2025, 23:12]]: 1.9 p (194 {{subst:PLURAL:194|byte}}) + 5.0 p ({{subst:PLURAL:1|én kilde|1 kilder}})</div>
+
+===  [[Bruker:Poriman55|Poriman55]] (0 p) ===
+''Ingen kvalifiserte bidrag har blitt registrert enda''
+
+===  [[Bruker:Pdwyiei|Pdwyiei]] (0 p) ===
+''Ingen kvalifiserte bidrag har blitt registrert enda''
+
+{{Ukens konkurranse robotinfo | 1=note | 2=2025-05-25 18:53:48 | 3=
+* Warning: Site "as" is not included in the contest configuration, so category "as:নৰৱে" was ignored.
+* Warning: Category does not exist: Non-existent category
+* Warning: Site "zh" is not included in the contest configuration, so category "zh:意大利足球甲级联赛赛季" was ignored. }}
+{{Fiks det!}}
+[[Kategori:Fiks det!]]
+[[Kategori:Artikkelkonkurranser]]
