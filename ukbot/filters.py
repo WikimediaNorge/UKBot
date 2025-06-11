@@ -237,24 +237,38 @@ class CatFilter(Filter):
         if len(tpl.anon_params) < 3:
             raise RuntimeError(_('No category values given!'))
 
+        # Build category list, catching missing categories as warnings
+        categories = []
+        for cat_name in tpl.anon_params[2:]:
+            if cat_name.strip() == '':
+                continue
+            # Check for interwiki prefix
+            prefix = cat_name.split(':', 1)[0] if ':' in cat_name else None
+            # Use from_prefix to check if prefix is recognized
+            if prefix and tpl.sites.from_prefix(prefix) is None:
+                logger.warning('Site "%s" is not included in the contest configuration, so category "%s" was ignored.', prefix, cat_name)
+                try:
+                    tpl.sites.homesite.errors.append(_('Warning: Site "%(prefix)s" is not included in the contest configuration, so category "%(cat)s" was ignored.') % {'prefix': prefix, 'cat': cat_name})
+                except Exception as ex:
+                    logger.warning('Could not attach warning to homesite: %s', ex)
+                continue
+            try:
+                cat_page = tpl.sites.resolve_page(cat_name, 14, True)
+                categories.append(cat_page)
+            except InvalidContestPage as e:
+                logger.warning('Category does not exist: %s', cat_name)
+                try:
+                    self_site = tpl.sites.homesite
+                    self_site.errors.append(_('Warning: Category does not exist: %(cat)s') % {'cat': cat_name})
+                except Exception as ex:
+                    logger.warning('Could not attach warning to homesite: %s', ex)
+                # Do not abort, just skip this category
+
         params = {
             'sites': tpl.sites,
             'ignore': cls.get_ignore_list(tpl, kwargs.get('cfg', {}).get('ignore_page')),
-            'categories': [
-                tpl.sites.resolve_page(cat_name, 14, True)
-                for cat_name in tpl.anon_params[2:] if cat_name.strip() != ''
-            ],
+            'categories': categories,
         }
-
-        if tpl.has_param('ignore'):
-            params['ignore'].extend([
-                a.strip()
-                for a in tpl.get_param('ignore').split(',')
-            ])
-
-        if tpl.has_param('maxdepth'):
-            params['maxdepth'] = int(tpl.get_param('maxdepth'))
-
         return cls(**params)
 
     def __init__(self, sites: 'SiteManager', categories: List[Union['Page', WildcardPage]], maxdepth: int = 5,
