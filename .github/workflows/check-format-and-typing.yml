@@ -30,4 +30,4 @@ jobs:
         run: flake8 ukbot
 
       - name: mypy static type checker
-        run: mypy --config-file mypy.ini ukbot
+        run: mypy ukbot

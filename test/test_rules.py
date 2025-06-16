@@ -1,7 +1,7 @@
 # encoding=utf-8
 import re
 from datetime import datetime
-import mock
+import unittest.mock as mock
 from unittest import TestCase
 
 import pytz

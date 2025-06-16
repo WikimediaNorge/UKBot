@@ -1,7 +1,7 @@
 # encoding=utf-8
 from collections import OrderedDict
 import unittest
-from mock import Mock
+import unittest.mock as mock
 from unittest import TestCase
 
 from faker import Faker
@@ -19,15 +19,15 @@ class DummyDataProvider:
 
     def page_mock(self, name=None, site=None, prefix=''):
         """ Create a MWClient Page instance mock """
-        page = Mock(Page)
+        page = mock.Mock(Page)
         page.site = site or self.site
         page.name = '%s%s' % (prefix, name or fake.name())
         return page
 
     def article_mock(self, name=None, site=None):
         """ Create an UKBOt Article instance mock """
-        article = Mock(Article)
-        article.site = Mock(return_value=site or self.site)
+        article = mock.Mock(Article)
+        article.site = mock.Mock(return_value=site or self.site)
         article.name = name or fake.name()
         article.key = article.site().key + ':' + article.name
         return article
@@ -35,15 +35,15 @@ class DummyDataProvider:
     def __init__(self, articles: int, categories: int):
 
         # Define a dummy site
-        self.site = Mock(Site)
+        self.site = mock.Mock(Site)
         self.site.key = 'dummy.wikipedia.org'
         # self.site.redirect_regexp = re.compile(u'(?:%s)' % u'|'.join(['redirect']), re.I)
         self.site.rights = ['bot']
 
         # And a site manager
-        self.sites = Mock(SiteManager)
-        self.sites.keys = Mock(return_value=[self.site.key])
-        self.sites.items = Mock(return_value=[(self.site.key, self.site)])
+        self.sites = mock.Mock(SiteManager)
+        self.sites.keys = mock.Mock(return_value=[self.site.key])
+        self.sites.items = mock.Mock(return_value=[(self.site.key, self.site)])
 
         # Create some articles and categories
         self.articles = [self.article_mock() for n in range(articles)]
