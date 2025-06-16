@@ -20,11 +20,17 @@ repos:
     hooks:
     -   id: mypy
         name: mypy ukbot
-        language_version: python3.10  # Align with GitHub Actions workflows
         exclude: config/, locale/
         entry: mypy ukbot/
         pass_filenames: false
-        args: [--config-file, mypy.ini]
+        args: [--config-file=mypy.ini]
+        additional_dependencies:
+          - types-PyMySQL
+          - types-pytz
+          - types-PyYAML
+          - types-requests
+          - urllib3
+
 -   repo: https://github.com/PyCQA/flake8
     rev: 4.0.1
     hooks:

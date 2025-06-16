@@ -10,7 +10,7 @@ import urllib
 import requests
 from collections import OrderedDict
 from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
+from urllib3.util.retry import Retry
 from mwtemplates.templateeditor2 import TemplateParseError
 from mwclient.page import Page
 from .site import WildcardPage
