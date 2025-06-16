@@ -6,3 +6,4 @@ pre-commit==3.3.3
 pytest==7.3.2
 pytest-cov==4.1.0
 pytest-mock==3.11.1
+faker==37.4.0
