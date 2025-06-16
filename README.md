@@ -5,7 +5,7 @@
 <div align="center">
   <p>Created by <a href="https://github.com/danmichaelo">Dan Michael</a> and maintained with ❤︎ by <a href="https://github.com/WikimediaNorge/UKBot/graphs/contributors">contributors</a></p>
 </div>
- 
+
 ## Getting Started
 
 Clone code from github
@@ -66,8 +66,8 @@ To modify the code and test it locally, you'll need to install it as a pip packa
 
 ## Deployment
 
-The bot is deployed at [ToolForge](https://wikitech.wikimedia.org/wiki/Portal:Toolforge) under the "UKBot" account using 
-[Webservice](https://wikitech.wikimedia.org/wiki/Help:Toolforge/Web) and the [Toolforge Jobs Framework](https://wikitech.wikimedia.org/wiki/Portal:Toolforge/Admin/Kubernetes/Jobs_framework). 
+The bot is deployed at [ToolForge](https://wikitech.wikimedia.org/wiki/Portal:Toolforge) under the "UKBot" account using
+[Webservice](https://wikitech.wikimedia.org/wiki/Help:Toolforge/Web) and the [Toolforge Jobs Framework](https://wikitech.wikimedia.org/wiki/Portal:Toolforge/Admin/Kubernetes/Jobs_framework).
 
 See https://wikitech.wikimedia.org/wiki/Tool:UKBot for deployment notes.
 
@@ -75,8 +75,3 @@ See https://wikitech.wikimedia.org/wiki/Tool:UKBot for deployment notes.
 
 Forenklet flytkart:
 ![Flowchart](https://github.com/danmichaelo/UKBot/raw/master/flowchart.png)
- 
-python -m ukbot.ukbot --page Bruker:Premeditated/Sandkasse5 config/config.no-fd.yml --simulate
-omdøpte brukeren Poriman55 (14 redigeringer) til EAKI78 (per request)
-
-python -m ukbot.ukbot --page "Bruker:Premeditated/Sandkasse5" config/config.no-fd.yml --simulate --output Sandkasse5.txt

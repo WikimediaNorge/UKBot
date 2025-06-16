@@ -1,5 +1,4 @@
 # encoding=utf-8
-import re
 from collections import OrderedDict
 import unittest
 from mock import Mock

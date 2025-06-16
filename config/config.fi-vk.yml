@@ -23,10 +23,10 @@ plot:
         |Date           = %(start)s
         |Author         = [[User:UKBot|UKBot]]
         }}
-        
+
         == {{int:license-header}} ==
         {{PD-self}}
-        
+
         [[Category:Viikon kilpailu %(year)s]]
 awards:
     sininen: { file: Article blue.svg, winner: true }

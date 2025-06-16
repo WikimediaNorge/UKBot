@@ -2,7 +2,6 @@
 import re
 from datetime import datetime
 import mock
-import json
 from unittest import TestCase
 
 import pytz
@@ -150,8 +149,8 @@ class TestTemplateRemovalRule(RuleTestCase):
 
     def test_it_gives_points_for_template_removal(self):
         points_per_template = 10
-        self.rev.text='<root>Hello</root>'
-        self.rev.parenttext='<root>Hello {{world}} {{ world }} {{ world | param | 3=other param }}</root>'
+        self.rev.text = '<root>Hello</root>'
+        self.rev.parenttext = '<root>Hello {{world}} {{ world }} {{ world | param | 3=other param }}</root>'
 
         self.sites.resolve_page.return_value = self.page_mock('World', [], site=self.site)
         rule = TemplateRemovalRule(self.sites, {2: points_per_template, 3: 'world'})

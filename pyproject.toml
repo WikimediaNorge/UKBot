@@ -33,6 +33,7 @@ dependencies = [
   "PyYAML",
   "requests",
   "requests-oauthlib",
+  "pkg_resources"
 ]
 
 classifiers = [

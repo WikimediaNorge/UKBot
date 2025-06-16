@@ -22,4 +22,3 @@ stdbuf -oL -eL ukbot config/config.${CONTEST}.yml --job_id "$JOB_ID" --action "u
 status="${PIPESTATUS[0]}"
 
 echo "$(date) : Job $JOB_NAME ($JOB_ID) on $HOSTNAME finished with exit code $status" >> $logfile
-
