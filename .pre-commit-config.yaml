@@ -20,7 +20,7 @@ repos:
     hooks:
     -   id: mypy
         name: mypy ukbot
-        language_version: python3.11  # or your venv's Python version
+        language_version: python3.10  # Align with GitHub Actions workflows
         exclude: config/, locale/
         entry: mypy ukbot/
         pass_filenames: false
