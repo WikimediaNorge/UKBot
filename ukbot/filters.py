@@ -20,7 +20,7 @@ from typing import List, Union, Optional, Set, Dict
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from .ukbot import FilterTemplate, SiteManager  # type: ignore[attr-defined]
-    from .article import Article
+    from .article import Article  # noqa: F401
 
 Articles = OrderedDict[str, 'Article']
 

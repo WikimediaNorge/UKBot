@@ -32,8 +32,7 @@ dependencies = [
   "pytz",
   "PyYAML",
   "requests",
-  "requests-oauthlib",
-  "pkg_resources"
+  "requests-oauthlib"
 ]
 
 classifiers = [

@@ -19,3 +19,4 @@ PyYAML
 Requests
 requests_oauthlib
 setuptools
+uwsgi
