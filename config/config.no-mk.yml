@@ -11,14 +11,9 @@ othersites:
     - smn.wikipedia.org
     # - www.wikidata.org
     # - commons.wikimedia.org
-    # FOR INDIAN CONTEST APRIL 2025 – remove in May
-    - bn.wikipedia.org
-    - hi.wikipedia.org
-    - kn.wikipedia.org
-    - syl.wikipedia.org
 contestPages:
-    resultsSection: 'Resultater|Results'
-    participantsSection: 'Delta[kg]ere|Participants'
+    resultsSection: 'Resultater'
+    participantsSection: 'Delta[kg]ere'
     footer: "{{Månedens konkurranse %(year)s}}\n[[Kategori:Artikkelkonkurranser]]"
 templates:
     contestlist:

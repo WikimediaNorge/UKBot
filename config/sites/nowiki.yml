@@ -1,6 +1,5 @@
----
-server_timezone: UTC
-wiki_timezone: Europe/Oslo
+_extends: default.yml
+wiki_timezone: Europe/Berlin
 homesite: no.wikipedia.org
 othersites:
     - nn.wikipedia.org
@@ -121,17 +120,3 @@ awardstatus:
     wait: Venter
     send: Send ut
     sent: Sendt
-ignore:
-    - Tilbakestilte endring # MediaWiki:Revertpage/nb
-    - Attenderulla endring  # MediaWiki:Revertpage/nn
-    - rievdadusat sihkkojuvvui ja siidu  # MediaWiki:Revertpage/se
-    - muokkaukset kumottiin ja sivu palautettiin # MediaWiki:Revertpage/fi (not translated into smn yet)
-    - Reverted edits by  # MediaWiki:Revertpage/en
-    - Fjerner revisjon # MediaWiki:Undo-summary/nb
-    - Rullar attende versjon # MediaWiki:Undo-summary/nn
-    - ^Kumottu muokkaus # MediaWiki:Undo-summary/fi (not translated into smn yet)
-    - Undo revision # MediaWiki:Revertpage/en
-    - clientsitelink-update  # Wikidata: Page moved from .. to ..
-    - clientsitelink-remove  # Wikidata: Removed sitelink
-    - '#temporary_batch'  # QuickStatements Author Disambiguator o.l.
-    - '#quickstatements'  # QuickStatements

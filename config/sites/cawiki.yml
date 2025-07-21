@@ -1,5 +1,5 @@
-server_timezone: UTC
-wiki_timezone: Europe/Andorra
+_extends: default.yml
+wiki_timezone: Europe/Berlin
 homesite: ca.wikipedia.org
 othersites:
     - ca.wikiquote.org
@@ -119,14 +119,3 @@ awardstatus:
     wait: Esperant
     send: Envia
     sent: Enviat
-ignore:
-    - Tilbakestilte endring # MediaWiki:Revertpage/nb
-    - Attenderulla endring  # MediaWiki:Revertpage/nn
-    - rievdadusat sihkkojuvvui ja siidu  # MediaWiki:Revertpage/se
-    - Reverted edits by  # MediaWiki:Revertpage/en
-    - Fjerner revisjon # MediaWiki:Undo-summary/nb
-    - Rullar attende versjon # MediaWiki:Undo-summary/nn
-    - Undo revision # MediaWiki:Revertpage/en
-    - clientsitelink-update  # Wikidata: Page moved from .. to ..
-    - clientsitelink-remove  # Wikidata: Removed sitelink
-    - Revertides les edicions # MediaWiki:Revertpage/ca

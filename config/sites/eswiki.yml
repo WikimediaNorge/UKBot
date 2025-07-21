@@ -1,5 +1,4 @@
-server_timezone: UTC
-wiki_timezone: UTC
+_extends: default.yml
 homesite: es.wikipedia.org
 default_prefix: es
 wikidata_languages: ['es', 'en']
@@ -94,9 +93,3 @@ templates:
                 name: sparql # as in {{ ukb criterion | sparql }}
                 params:
                     query: query # as in {{ ukb criterion | sparql | query=... }}
-ignore:
-    - Revertida una edición # MediaWiki:Revertpage/es
-    - 'Revertidas \d+ ediciones' # MediaWiki:Revertpage/es
-    - Deshecha la # MediaWiki:Undo-summary/es
-    - clientsitelink-update  # Wikidata: Page moved from .. to ..
-    - clientsitelink-remove  # Wikidata: Removed sitelink
