@@ -73,18 +73,18 @@
   schedule: "45 22 * * *"
   emails: onfailure
 # fi-ek
-- name: fi-ek2023
-  command: ./jobs/run.sh fi-ek2023
+- name: fi-ek
+  command: ./jobs/run.sh fi-ek
   image: python3.11
   schedule: "29 * * * *"
   emails: onfailure
   mem: 2Gi
-- name: upload-plot-fi-ek2023
-  command: ./jobs/upload.sh fi-ek2023
+- name: upload-plot-fi-ek
+  command: ./jobs/upload.sh fi-ek
   image: python3.11
   schedule: "50 22 * * *"
   emails: onfailure
-# fi-ek
+# fi-wsc
 - name: fi-wsc
   command: ./jobs/run.sh fi-wsc
   image: python3.11
