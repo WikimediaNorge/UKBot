@@ -37,7 +37,7 @@ class ImageRule(Rule):
 
         # Compile regexps for match images
         prefixes = r'(?:%s)' % '|'.join(['%s:' % x for x in self.file_prefixes])
-        suffixes = r'\.(?:svg|png|jpe?g|gif|tiff)'
+        suffixes = r'\.(?:svg|png|jpe?g|gif|tiff|webp|xcf)'
         imagematcher = r"""
             (?:
                 (?:=|\||^)%(prefixes)s?   # "=File:", "=", "|File:", "|", ...
