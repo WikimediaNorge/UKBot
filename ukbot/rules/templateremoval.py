@@ -92,6 +92,6 @@ class TemplateRemovalRule(Rule):
                     rev=rev,
                     rule=self,
                     points=removed * self.points,
-                    description=_('removal of {{tl|%(template)s%(lang)s}}') % {'template': template['name'], 'lang': lang_code}
+                    description=_('removal of [[%(lang)sTemplate:%(template)s]]') % {'template': template['name'], 'lang': lang_code}
                 )
 
