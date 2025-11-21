@@ -1,6 +1,5 @@
 # encoding=utf-8
 # vim: fenc=utf-8 et sw=4 ts=4 sts=4 ai
-import sys
 import re
 from copy import copy
 
@@ -11,18 +10,19 @@ import urllib
 import requests
 from collections import OrderedDict
 from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
+from urllib3.util.retry import Retry
 from mwtemplates.templateeditor2 import TemplateParseError
-from .common import _, InvalidContestPage
+from mwclient.page import Page
 from .site import WildcardPage
+from .common import _
 
-from typing import List, Union, Optional
+from typing import List, Union, Optional, Set, Dict
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from .ukbot import FilterTemplate, SiteManager
-    from .article import Article
-    from mwclient.page import Page
-    Articles = OrderedDict[str, 'Article']
+    from .ukbot import FilterTemplate, SiteManager  # type: ignore[attr-defined]
+    from .article import Article  # noqa: F401
+
+Articles = OrderedDict[str, 'Article']
 
 logger = logging.getLogger(__name__)
 
@@ -49,6 +49,7 @@ def requests_retry_session(
 
 class CategoryLoopError(Exception):
     """Raised when a category loop is found."""
+
     def __init__(self, catpath):
         """
         Args:
@@ -66,7 +67,7 @@ class Filter(object):
             sites (SiteManager): A SiteManager instance with the sites relevant for this filter.
         """
         self.sites = sites
-        self.page_keys = set()
+        self.page_keys: Set[str] = set()
 
     @classmethod
     def make(cls, tpl: 'FilterTemplate', **kwargs):
@@ -87,7 +88,7 @@ class Filter(object):
                     type(self).__name__, len(articles), len(out))
         return out
 
-#class StubFilter(Filter):
+# class StubFilter(Filter):
 #    """ Filters articles that was stubs, but is no more """
 
 #    def __init__(self):
@@ -103,7 +104,7 @@ class Filter(object):
 #            return True
 #        return False
 
-    #def filter(self, articles):
+    # def filter(self, articles):
 
     #    out = OrderedDict()
     #    for article_key, article in articles.items():
@@ -130,11 +131,11 @@ class Filter(object):
     #                    if self.verbose:
     #                        log('')
 
-            #except DanmicholoParseError as e:
-            #    log(" >> DanmicholoParser failed to parse " + article_key)
-            #    parentid = firstrev.parentid
-            #    args = { 'article': article_key, 'prevrev': firstrev.parentid, 'rev': lastrev.revid, 'error': e.msg }
-            #    article.site().errors.append(_('Could not analyze the article %(article)s because one of the revisions %(prevrev)d or %(rev)d could not be parsed: %(error)s') % args)
+        # except DanmicholoParseError as e:
+        #    log(" >> DanmicholoParser failed to parse " + article_key)
+        #    parentid = firstrev.parentid
+        #    args = { 'article': article_key, 'prevrev': firstrev.parentid, 'rev': lastrev.revid, 'error': e.msg }
+        #    article.site().errors.append(_('Could not analyze the article %(article)s because one of the revisions %(prevrev)d or %(rev)d could not be parsed: %(error)s') % args)
 
     #    log("  [+] Applying stub filter: %d -> %d" % (len(articles), len(out)))
 
@@ -228,6 +229,8 @@ class CatFilter(Filter):
 
         try:
             m = re.search(r'<pre>(.*?)</pre>', catignore_txt, flags=re.DOTALL)
+            if m is None:
+                return []
             return m.group(1).strip().splitlines()
         except (IndexError, KeyError):
             raise RuntimeError(_('Could not parse the catignore page'))
@@ -290,7 +293,7 @@ class CatFilter(Filter):
             if not isinstance(page, WildcardPage)
         ]
 
-        self.categories_cache = {site_key: {} for site_key in self.sites.keys()}
+        self.categories_cache: Dict[str, Dict[str, Set[str]]] = {site_key: {} for site_key in self.sites.keys()}
 
         # Sites for which we should accept all contributions
         self.wildcard_include = [
@@ -345,8 +348,8 @@ class CatFilter(Filter):
                 logger.debug('CatFilter [%s, level %d]: Cache hits: %d, cache misses: %d', site_key, level, len(titles0) - len(cache_misses), len(cache_misses))
 
                 for s0 in range(0, len(cache_misses), requestlimit):
-                    logger.debug('CatFilter [%s, level %d] Fetching categories for %d pages. Batch %d to %d', site_key, level, len(cache_misses), s0, s0+requestlimit)
-                    ids = '|'.join(cache_misses[s0:s0+requestlimit])
+                    logger.debug('CatFilter [%s, level %d] Fetching categories for %d pages. Batch %d to %d', site_key, level, len(cache_misses), s0, s0 + requestlimit)
+                    ids = '|'.join(cache_misses[s0:s0 + requestlimit])
 
                     cont = True
                     clcont = {'continue': ''}
@@ -442,9 +445,9 @@ class CatFilter(Filter):
 
             # It should be slightly more efficient to first populate a list, and then
             # convert it a set for uniqueness, rather than working with a set all the way.
-            categories = set(categories)
+            categories_set = set(categories)
 
-            matching_category = self.get_first_matching_category(categories)
+            matching_category = self.get_first_matching_category(categories_set)
             if matching_category is not None:
                 out[article_key] = article
                 try:
@@ -471,11 +474,6 @@ class CatFilter(Filter):
 
     @staticmethod
     def get_category_path(members: dict, category_key: str, article_key: str) -> List[str]:
-        """
-        Try to find a path from a category to an article:
-
-            [category_key, ..., article_key]
-        """
         cat_path = [category_key]
         i = 0
         while category_key != article_key:
@@ -503,7 +501,7 @@ class ByteFilter(Filter):
 
     def __init__(self, sites, bytelimit):
         """
-        The ByteFilter keeps pages with a byte size above a certain threshold limit. 
+        The ByteFilter keeps pages with a byte size above a certain threshold limit.
 
         Args:
             sites (SiteManager): References to the sites part of this contest
@@ -536,7 +534,7 @@ class NewPageFilter(Filter):
         """
         The NewPageFilter keeps pages that was created within the timeframe of a contest.
         In order to encourage collaboration on articles, the filter does not discriminate
-        on which user created the page. 
+        on which user created the page.
 
         Args:
             sites (SiteManager): References to the sites part of this contest
@@ -607,7 +605,7 @@ class BackLinkFilter(Filter):
         Args:
             sites (SiteManager): References to the sites part of this contest
             pages(list): List of Page objects to extract links from.
-            include_langlinks(bool): Whether to include langlinked pages as well. This is useful for 
+            include_langlinks(bool): Whether to include langlinked pages as well. This is useful for
                 multi-language contests, but we can save some time by not checking them.
         """
         Filter.__init__(self, sites)
@@ -681,7 +679,7 @@ class PageFilter(Filter):
     def __init__(self, sites, pages):
         """
         Arguments:
-            sites (SiteManager): References to the sites part of this contest 
+            sites (SiteManager): References to the sites part of this contest
             pages (list): list of Page objects
         """
         Filter.__init__(self, sites)
@@ -844,11 +842,9 @@ class SparqlFilter(Filter):
             SELECT ?%(item)s
             WHERE {
                 { %(query)s }
-            }
-        """ % {
+            }        """ % {
             'item': item_var,
             'query': self.query,
-            'site': site,
         }
         logger.debug('SparqlFilter: %s', query)
 

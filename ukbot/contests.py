@@ -90,7 +90,7 @@ def get_contest_page_titles(sql, homesite, config):
     )
     for row in cursor.fetchall():
         page_title = row[0]
-        logger.info(f"Contest [[%s]] ended at %s. Current time is %s", page_title, row[1].strftime('%F %T'), now_s)
+        logger.info("Contest [[%s]] ended at %s. Current time is %s", page_title, row[1].strftime('%F %T'), now_s)
         yield STATE_ENDING, page_title
 
     # 3) Check if there are other contests to update

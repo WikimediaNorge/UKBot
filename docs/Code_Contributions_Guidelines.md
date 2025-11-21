@@ -15,4 +15,15 @@ We use [GitHub Flow](https://guides.github.com/introduction/flow/index.html), so
 6. When you raise a pull request, we automatically run tests on our CI. Please ensure that all the tests are passing for your code change. We will not be able to accept your change if the test suite doesn't pass.
 
 ## 🏡 Setup for local development
-- In progress
+Install packages needed for development
+```bash
+pip install -r requirements.txt  -r requirements_dev.txt
+```
+Install [pre-commit](https://pre-commit.com/)
+```bash
+pre-commit install
+```
+When you have done your changes pre-commit will run when running `git commit`. To run it whenever you want type:
+```bash
+pre-commit run --all-files
+```

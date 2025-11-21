@@ -1,7 +1,6 @@
 # encoding=utf-8
 # vim: fenc=utf-8 et sw=4 ts=4 sts=4 ai
 import logging
-import re
 import time
 from collections import OrderedDict
 from copy import copy
@@ -11,7 +10,6 @@ import weakref
 import numpy as np
 from datetime import datetime
 import pytz
-import pymysql
 from more_itertools import first
 
 from .contributions import UserContributions
@@ -170,12 +168,12 @@ class User:
         # 2) Check if pages are redirects (this information can not be cached, because other users may make the page a redirect)
         #    If we fail to notice a redirect, the contributions to the page will be double-counted, so lets check
 
-        #titles = [a.name for a in self.articles.values() if a.site.key == site_key]
-        #for s0 in range(0, len(titles), apilim):
-        #    ids = '|'.join(titles[s0:s0+apilim])
-        #    for page in site.api('query', prop = 'info', titles = ids)['query']['pages'].values():
-        #        article_key = site_key + ':' + page['title']
-        #        self.articles[article_key].redirect = ('redirect' in page.keys())
+        # titles = [a.name for a in self.articles.values() if a.site.key == site_key]
+        #  for s0 in range(0, len(titles), apilim):
+        #     ids = '|'.join(titles[s0:s0+apilim])
+        #     for page in site.api('query', prop = 'info', titles = ids)['query']['pages'].values():
+        #         article_key = site_key + ':' + page['title']
+        #         self.articles[article_key].redirect = ('redirect' in page.keys())
 
         # 3) Fetch info about the new revisions: diff size, possibly content
 
@@ -340,7 +338,7 @@ class User:
         # Insert all revisions
         chunk_size = 1000
         for n in range(0, len(contribs_query_params), chunk_size):
-            data = contribs_query_params[n:n+chunk_size]
+            data = contribs_query_params[n:n + chunk_size]
             # logger.info('Adding %d contributions to database', len(data))
 
             t0 = time.time()
@@ -348,13 +346,13 @@ class User:
                 insert into contribs (revid, site, parentid, user, page, timestamp, size, parentsize, parsedcomment, ns)
                 values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
                 """, data
-            )
+                            )
             dt = time.time() - t0
             logger.info('Added %d contributions to database in %.2f secs', len(data), dt)
 
         chunk_size = 100
         for n in range(0, len(fulltexts_query_params), chunk_size):
-            data = fulltexts_query_params[n:n+chunk_size]
+            data = fulltexts_query_params[n:n + chunk_size]
             # logger.info('Adding %d fulltexts to database', len(data))
             t0 = time.time()
 
@@ -363,7 +361,7 @@ class User:
                 values (%s,%s,%s)
                 on duplicate key update revtxt=values(revtxt);
                 """, data
-            )
+                            )
 
             dt = time.time() - t0
             logger.info('Added %d fulltexts to database in %.2f secs', len(data), dt)
@@ -457,7 +455,7 @@ class User:
                 continue
 
             # Add article if not present
-            if not article_key in self.articles:
+            if article_key not in self.articles:
                 narts += 1
                 self.articles[article_key] = Article(sites[site_key], self, article_title, ns)
                 if article_key in self.disqualified_articles:
@@ -465,10 +463,10 @@ class User:
             article = self.articles[article_key]
 
             # Add revision if not present
-            if not rev_id in self.revisions:
+            if rev_id not in self.revisions:
                 nrevs += 1
                 article.add_revision(rev_id, timestamp=ts, parentid=parent_id, size=size, parentsize=parentsize,
-                    username=self.name, parsedcomment=parsedcomment, text=rev_text, parenttext=parent_rev_txt)
+                                     username=self.name, parsedcomment=parsedcomment, text=rev_text, parenttext=parent_rev_txt)
             rev = self.revisions[rev_id]
             rev.saved = True
 
@@ -602,41 +600,40 @@ class User:
         o = np.argsort(x)
         x = x[o]
         y = y[o]
-        #pl = np.array(pl, dtype=float)
-        #pl.sort(axis = 0)
+        # pl = np.array(pl, dtype=float)
+        # pl.sort(axis = 0)
         y2 = np.array([np.sum(y[:q + 1]) for q in range(len(y))])
         self.plotdata = np.column_stack((x, y2))
-        #np.savetxt('user-%s'%self.name, np.column_stack((x,y,y2)))
+        # np.savetxt('user-%s'%self.name, np.column_stack((x,y,y2)))
 
     def format_result(self):
         logger.debug('Formatting results for user %s', self.name)
         entries = []
 
-
-        ## WIP
+        # WIP
 
         # <<<<<<< HEAD
-        #                         dt = utc.localize(datetime.fromtimestamp(rev.timestamp))
-        #                         dt_str = dt.astimezone(self.contest().wiki_tz).strftime(_('%d.%m, %H:%M'))
-        #                         out = '[%s %s]: %s' % (rev.get_link(), dt_str, descr)
-        #                         if self.suspended_since is not None and dt > self.suspended_since:
-        #                             out = '<s>' + out + '</s>'
-        #                         if len(rev.errors) > 0:
-        #                             out = '[[File:Ambox warning yellow.svg|12px|%s]] ' % (', '.join(rev.errors)) + out
-        #                         revs.append(out)
+        # dt = utc.localize(datetime.fromtimestamp(rev.timestamp))
+        # dt_str = dt.astimezone(self.contest().wiki_tz).strftime(_('%d.%m, %H:%M'))
+        # out = '[%s %s]: %s' % (rev.get_link(), dt_str, descr)
+        # if self.suspended_since is not None and dt > self.suspended_since:
+        #     out = '<s>' + out + '</s>'
+        # if len(rev.errors) > 0:
+        #     out = '[[File:Ambox warning yellow.svg|12px|%s]] ' % (', '.join(rev.errors)) + out
+        # revs.append(out)
 
-        #                 titletxt = ''
-        #                 try:
-        #                     cat_path = [x.split(':')[-1] for x in article.cat_path]
-        #                     titletxt = ' : '.join(cat_path) + '<br />'
-        #                 except AttributeError:
-        #                     pass
-        #                 titletxt += '<br />'.join(revs)
-        #                 # if len(article.point_deductions) > 0:
-        #                 #     pds = []
-        #                 #     for points, reason in article.point_deductions:
-        #                 #         pds.append('%.f p: %s' % (-points, reason))
-        #                 #     titletxt += '<div style="border-top:1px solid #CCC">\'\'' + _('Notes') + ':\'\'<br />%s</div>' % '<br />'.join(pds)
+        # titletxt = ''
+        # try:
+        #     cat_path = [x.split(':')[-1] for x in article.cat_path]
+        #     titletxt = ' : '.join(cat_path) + '<br />'
+        # except AttributeError:
+        #     pass
+        # titletxt += '<br />'.join(revs)
+        # # if len(article.point_deductions) > 0:
+        # #     pds = []
+        # #     for points, reason in article.point_deductions:
+        # #         pds.append('%.f p: %s' % (-points, reason))
+        # #     titletxt += '<div style="border-top:1px solid #CCC">\'\'' + _('Notes') + ':\'\'<br />%s</div>' % '<br />'.join(pds)
 
         #                 titletxt += '<div style="border-top:1px solid #CCC">' + _('Total {{formatnum:%(bytecount)d}} bytes, %(wordcount)d words') % {'bytecount': article.bytes, 'wordcount': article.words} + '</div>'
 

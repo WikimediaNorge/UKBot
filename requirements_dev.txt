@@ -1,0 +1,13 @@
+autopep8==2.0.2
+faker==37.4.0
+flake8==6.0.0
+freezegun==1.2.2
+mypy==1.4.0
+pre-commit==3.3.3
+pytest==7.3.2
+pytest-cov==4.1.0
+pytest-mock==3.11.1
+types-PyMySQL==1.1.0.20250516
+types-pytz==2025.2.0.20250516
+types-PyYAML==6.0.12.20250516
+types-requests==2.32.4.20250611

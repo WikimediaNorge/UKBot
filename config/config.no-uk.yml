@@ -30,8 +30,8 @@ plot:
         |Date           = %(start)s
         |Author         = [[User:UKBot|UKBot]]
         }}
-        
+
         == {{int:license-header}} ==
         {{PD-self}}
-        
+
         [[Category:Ukens konkurranse %(year)s]]

@@ -426,4 +426,3 @@ msgstr "%(count)d declaracions de %(property)s"
 #, python-format
 msgid "%(words).f words"
 msgstr "%(words).f paraules"
-
