@@ -87,7 +87,7 @@ class TemplateRemovalRule(Rule):
                 # Add language code if template is from a different site
                 lang_code = ''
                 if 'lang' in template['site'].site and template['site'].site['lang'] != self.sites.homesite.site['lang']:
-                    lang_code = '|' + template['site'].site['lang']
+                    lang_code = template['site'].site['lang'] + ':'
                 yield UserContribution(
                     rev=rev,
                     rule=self,
