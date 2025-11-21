@@ -14,5 +14,3 @@ fh.setLevel(logging.DEBUG)
 fh.setFormatter(formatter)
 app.logger.addHandler(fh)
 
-# app.debug = True  # reload on each code change
-

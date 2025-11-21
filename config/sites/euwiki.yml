@@ -1,5 +1,4 @@
 _extends: default.yml
-locale: [eu_ES,en_US]
 wiki_timezone: Europe/Berlin
 homesite: eu.wikipedia.org
 othersites:

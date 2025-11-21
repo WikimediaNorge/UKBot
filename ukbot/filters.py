@@ -13,7 +13,7 @@ from collections import OrderedDict
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 from mwtemplates.templateeditor2 import TemplateParseError
-from .common import _, InvalidContestPage
+from .common import InvalidContestPage, i18n
 from .site import WildcardPage
 
 from typing import List, Union, Optional
@@ -87,67 +87,13 @@ class Filter(object):
                     type(self).__name__, len(articles), len(out))
         return out
 
-#class StubFilter(Filter):
-#    """ Filters articles that was stubs, but is no more """
-
-#    def __init__(self):
-#        Filter.__init__(self)
-
-#    def is_stub(self, text):
-#        """ Checks if a given text is a stub """
-
-#        m = re.search(r'{{[^}]*(?:stubb|spire)[^}]*}}', text, re.IGNORECASE)
-#        if m:
-#            if self.verbose:
-#                log(" >> %s " % m.group(0), newline = False)
-#            return True
-#        return False
-
-    #def filter(self, articles):
-
-    #    out = OrderedDict()
-    #    for article_key, article in articles.items():
-
-    #        firstrevid = article.revisions.firstkey()
-    #        lastrevid = article.revisions.lastkey()
-
-    #        firstrev = article.revisions[firstrevid]
-    #        lastrev = article.revisions[lastrevid]
-
-    #        try:
-
-    #            # skip pages that are definitely not stubs to avoid timeconsuming parsing
-    #            if article.new is False and article.redirect is False and len(firstrev.parenttext) < 20000:
-
-    #                # Check if first revision is a stub
-    #                if self.is_stub(firstrev.parenttext):
-
-    #                    # Check if last revision is a stub
-    #                    if not self.is_stub(lastrev.text):
-
-    #                        out[article_key] = article
-
-    #                    if self.verbose:
-    #                        log('')
-
-            #except DanmicholoParseError as e:
-            #    log(" >> DanmicholoParser failed to parse " + article_key)
-            #    parentid = firstrev.parentid
-            #    args = { 'article': article_key, 'prevrev': firstrev.parentid, 'rev': lastrev.revid, 'error': e.msg }
-            #    article.site().errors.append(_('Could not analyze the article %(article)s because one of the revisions %(prevrev)d or %(rev)d could not be parsed: %(error)s') % args)
-
-    #    log("  [+] Applying stub filter: %d -> %d" % (len(articles), len(out)))
-
-    #    return out
-
-
 class TemplateFilter(Filter):
     """ Filters articles that had any of a given set of templates (or their aliases) at a point"""
 
     @classmethod
     def make(cls, tpl, **kwargs):
         if len(tpl.anon_params) < 3:
-            raise RuntimeError(_('Too few arguments given to this template.'))
+            raise RuntimeError(i18n('bot-too-few-arguments'))
 
         params = {
             'sites': tpl.sites,
@@ -195,11 +141,7 @@ class TemplateFilter(Filter):
         except TemplateParseError as e:
             logger.warning('TemplateParser failed to parse %s', page.key)
             page.site().errors.append(
-                _('Could not analyze page %(article)s because the revision %(rev)d could not be parsed: %(error)s') % {
-                    'article': page.key,
-                    'rev': rev.parentid,
-                    'error': str(e),
-                }
+                i18n('bot-unable-to-analyze', page.key, rev.parentid, str(e))
             )
 
         if template_name is None:
@@ -230,12 +172,39 @@ class CatFilter(Filter):
             m = re.search(r'<pre>(.*?)</pre>', catignore_txt, flags=re.DOTALL)
             return m.group(1).strip().splitlines()
         except (IndexError, KeyError):
-            raise RuntimeError(_('Could not parse the catignore page'))
+            raise RuntimeError(i18n('bot-catignore-parse-error'))
 
     @classmethod
     def make(cls, tpl: 'FilterTemplate', **kwargs):
         if len(tpl.anon_params) < 3:
-            raise RuntimeError(_('No category values given!'))
+            raise RuntimeError(i18n('bot-no-category-values'))
+
+        # Build category list, catching missing categories as warnings
+        categories = []
+        for cat_name in tpl.anon_params[2:]:
+            if cat_name.strip() == '':
+                continue
+            # Check for interwiki prefix
+            prefix = cat_name.split(':', 1)[0] if ':' in cat_name else None
+            # Use from_prefix to check if prefix is recognized
+            if prefix and tpl.sites.from_prefix(prefix) is None:
+                logger.warning('Site "%s" is not included in the contest configuration, so category "%s" was ignored.', prefix, cat_name)
+                try:
+                    tpl.sites.homesite.errors.append(i18n('bot-warning-site-not-configured', prefix, cat_name))
+                except Exception as ex:
+                    logger.warning('Could not attach warning to homesite: %s', ex)
+                continue
+            try:
+                cat_page = tpl.sites.resolve_page(cat_name, 14, True)
+                categories.append(cat_page)
+            except InvalidContestPage as e:
+                logger.warning('Category does not exist: %s', cat_name)
+                try:
+                    self_site = tpl.sites.homesite
+                    self_site.errors.append(i18n('bot-warning-nonexistant-category', cat_name))
+                except Exception as ex:
+                    logger.warning('Could not attach warning to homesite: %s', ex)
+                # Do not abort, just skip this category
 
         # Build category list, catching missing categories as warnings
         categories = []
@@ -455,7 +424,7 @@ class CatFilter(Filter):
                     )
                 except CategoryLoopError as err:
                     loop = ' → '.join(['[[:%s|]]' % c.replace('.wikipedia.org', '') for c in err.catpath])
-                    article.errors.append(_('Encountered an infinite category loop: ') + loop)
+                    article.errors.append(i18n('bot-category-loop', loop))
 
         dt = time.time() - t0
         logger.debug('CatFilter: Checked categories for %d articles in %.1f secs', len(articles), dt)
@@ -494,7 +463,7 @@ class ByteFilter(Filter):
     @classmethod
     def make(cls, tpl, sites, **kwargs):
         if len(tpl.anon_params) < 3:
-            raise RuntimeError(_('No byte limit (second argument) given'))
+            raise RuntimeError(i18n('bot-no-byte-limit'))
         params = {
             'sites': tpl.sites,
             'bytelimit': int(tpl.anon_params[2]),
@@ -619,7 +588,6 @@ class BackLinkFilter(Filter):
         for page in pages:
             for linked_page in page.links(redirects=True):
                 link = '%s:%s' % (linked_page.site.key, linked_page.name.replace('_', ' '))
-                # logger.debug(' - Include: %s', link)
                 self.page_keys.add(link)
 
                 # Include langlinks as well
@@ -731,7 +699,7 @@ class SparqlFilter(Filter):
     @classmethod
     def make(cls, tpl, cfg, **kwargs):
         if not tpl.has_param('query'):
-            raise RuntimeError(_('No "%s" parameter given') % cfg['params']['query'])
+            raise RuntimeError(i18n('bot-no-parameter', cfg['params']['query']))
         params = {
             'query': tpl.get_raw_param('query'),
             'sites': tpl.sites,

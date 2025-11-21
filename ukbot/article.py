@@ -55,8 +55,6 @@ class Article(object):
             ts = next(res)['timestamp']
             self._created_at = pytz.utc.localize(datetime.fromtimestamp(time.mktime(ts)))
 
-            # self._created = time.strftime('%Y-%m-%d %H:%M:%S', ts)
-            # datetime.fromtimestamp(rev.timestamp).strftime('%F %T')
             cur.execute(
                 'INSERT INTO articles (site, name, created_at) VALUES (%s, %s, %s)',
                 [self.site().key, self.key, self._created_at.strftime('%Y-%m-%d %H:%M:%S')]

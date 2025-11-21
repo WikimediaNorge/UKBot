@@ -1,5 +1,4 @@
 _extends: default.yml
-locale: [gl_ES,en_US]
 homesite: gl.wikipedia.org
 default_prefix: gl
 wikidata_languages: ['gl', 'en']
