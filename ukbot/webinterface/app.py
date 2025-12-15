@@ -16,6 +16,7 @@ import subprocess
 import urllib.parse
 from datetime import datetime
 from pathlib import Path
+from importlib.metadata import version, PackageNotFoundError
 
 logger = logging.getLogger('app')
 
@@ -124,6 +125,15 @@ def page_not_found(err):
 @app.context_processor
 def inject_current_time():
     return dict(current_time=datetime.now())
+
+
+@app.context_processor
+def inject_version():
+    try:
+        app_version = version('ukbot')
+    except PackageNotFoundError:
+        app_version = 'dev'
+    return dict(app_version=app_version)
 
 
 @app.route('/')
