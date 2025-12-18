@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ukbot"
-version = "1.1.0"
+version = "1.1.1"
 description = "Wikipedia writing contest bot"
 authors = [
   { name = "Dan Michael O. Heggø", email = "danmichaelo@gmail.com" },
@@ -12,7 +12,7 @@ authors = [
 ]
 license = { text = "MIT" }
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 keywords = ["wikipedia"]
 dependencies = [
   "Flask",
