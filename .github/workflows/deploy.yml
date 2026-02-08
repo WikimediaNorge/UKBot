@@ -23,10 +23,8 @@ jobs:
             # Update from GitHub repo.
             git pull
 
-            # Activate the virtual environment and update dependencies
-            source www/python/venv/bin/activate
-            pip install -U pip wheel
-            pip install -e . --upgrade
+            # Ensure the virtual environment exists and update dependencies
+            bash jobs/update-venv.sh
 
             # Load any changes to jobs.yaml
             toolforge-jobs load jobs.yaml
