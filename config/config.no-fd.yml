@@ -15,7 +15,7 @@ award_messages:
     winner_template: '{{FD deltaker|år=%(year)s|måned=%(month)s|%(awards)s}}'
     participant_template: '{{FD deltaker|år=%(year)s|måned=%(month)s|%(awards)s}}'
     organizer_template: '{{FD arrangør|år=%(year)s|måned=%(month)s|%(awards)s|visuk=nei}}'
-    reminder_msg: 'Husk at <span class="fd-tekstlogo">Fiks det!</span> foregår fram til desember 2025, med [[Wikipedia:Konkurranser/Fiks det!#Premier og milepæler|premier]] <mark>hver måned</mark>, samt premier til de som deltar mange ganger. [[WP:FD!|Meld deg på månedens «<span class="fd-tekstlogo">Fiks det!</span>» nå!]]'
+    reminder_msg: 'Neste <span class="fd-tekstlogo">Fiks det!</span> er i gang. [[WP:FD!|Meld deg på månedens «<span class="fd-tekstlogo">Fiks det!</span>» nå!]]'
 plot:
     datafile: 'plots/Nowp Fiks det! %(year)d-%(month)02d.json'
     figname: 'plots/Nowp Fiks det! %(year)d-%(month)02d.svg'
