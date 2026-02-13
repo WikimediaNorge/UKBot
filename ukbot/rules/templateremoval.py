@@ -84,6 +84,14 @@ class TemplateRemovalRule(Rule):
             removed = self.get_templates_removed(template, rev)
             if removed > 0:
                 template['total'] += removed
-                yield UserContribution(rev=rev, rule=self, points=removed * self.points,
-                                       description=_('removal of {{tl|%(template)s}}') % {'template': template['name']})
+                # Add language code if template is from a different site
+                lang_code = ''
+                if 'lang' in template['site'].site and template['site'].site['lang'] != self.sites.homesite.site['lang']:
+                    lang_code = template['site'].site['lang'] + ':'
+                yield UserContribution(
+                    rev=rev,
+                    rule=self,
+                    points=removed * self.points,
+                    description=_('removal of [[%(lang)sTemplate:%(template)s]]') % {'template': template['name'], 'lang': lang_code}
+                )
 
