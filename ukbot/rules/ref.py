@@ -5,7 +5,7 @@ from lxml.html import fromstring
 import lxml
 from mwtextextractor import condition_for_lxml
 
-from ..common import _
+from ..common import i18n
 from ..contributions import UserContribution
 from .rule import Rule
 from .decorators import family
@@ -28,8 +28,8 @@ class RefRule(Rule):
     @staticmethod
     def count_sources(txt):
 
-        s1 = 0  # kilder
-        r1 = 0  # kildehenvisninger
+        s1 = 0  # references
+        r1 = 0  # reference pointers (re-uses)
 
         # Count all <ref> tags
         try:
@@ -46,18 +46,6 @@ class RefRule(Rule):
         except lxml.etree.XMLSyntaxError:
             s1 = 0
             r1 = 0
-
-        # Count list item under section heading "Kilder" or "Kjelder"
-        refsection = False
-        for line in txt.split('\n'):
-            if refsection:
-                if re.match(r'==', line):
-                    refsection = False
-                    continue
-                if re.match(r'\*', line):
-                    s1 += 1
-            elif re.match(r'==[\s]*(Kilder|Kjelder|Gáldut)[\s]*==', line):
-                refsection = True
 
         return s1, r1
 
@@ -78,11 +66,11 @@ class RefRule(Rule):
 
             if sources_added > 0:
                 points += sources_added * self.sourcepoints
-                description.append(_('references') % {'num': sources_added})
+                description.append(i18n('bot-rule-references', sources_added))
 
             if refs_added > 0:
                 points += refs_added * self.refpoints
-                description.append(_('reference pointers') % {'num': refs_added})
+                description.append(i18n('bot-rule-reference-reuse', refs_added))
 
             yield UserContribution(rev=rev, points=points, rule=self,
                                    description=', '.join(description))

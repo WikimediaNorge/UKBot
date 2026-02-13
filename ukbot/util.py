@@ -148,12 +148,10 @@ def parse_infobox(page_text, userprefix, config):
                         parsed['awards'].append([award_name, 'pointlimit', int(award_value)])
                     except ValueError:
                         pass
-                        # raise InvalidContestPage('Klarte ikke tolke verdien til parameteren %s gitt til {{tl|infoboks ukens konkurranse}}.' % col)
 
     winner_awards = [k for k, v in award_cfg.items() if v.get('winner') is True]
     if len(parsed['awards']) != 0 and 'winner' not in [award[1] for award in parsed['awards']]:
         winner_awards = ', '.join(['{{para|%s|%s}}' % (k, infobox_cfg['winner']) for k in winner_awards])
-        # raise InvalidContestPage(_('Found no winner award in {{tl|%(template)s}}. Winner award is set by one of the following: %(awards)s.') % {'template': ibcfg['name'], 'awards': winner_awards})
         logger.warning(
             'Found no winner award in {{tl|%s}}. Winner award is set by one of the following: %s.',
             infobox_cfg['name'],

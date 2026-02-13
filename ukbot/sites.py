@@ -1,7 +1,7 @@
 # encoding=utf-8
 # vim: fenc=utf-8 et sw=4 ts=4 sts=4 ai
 import logging
-from .common import _, InvalidContestPage
+from .common import InvalidContestPage, i18n
 from .db import db_conn
 from .site import WildcardPage, Site
 
@@ -60,9 +60,7 @@ class SiteManager(object):
         else:
             page = site.pages[value]
             if not page.exists:
-                raise InvalidContestPage(_('Page does not exist: [[%(pagename)s]]') % {
-                    'pagename': site.link_to(page)
-                })
+                raise InvalidContestPage(i18n('bot-page-doesnt-exist', ':' + site.link_to(page)))
         return page
 
     def from_prefix(self, key, raise_on_error=False):
@@ -77,9 +75,7 @@ class SiteManager(object):
             if site.match_prefix(key):
                 return site
         if raise_on_error:
-            raise InvalidContestPage(_('Could not find a site matching the prefix "%(key)s"') % {
-                'key': key
-            })
+            raise InvalidContestPage(i18n('bot-site-not-found', key))
 
     def only(self, sites):
         return SiteManager(sites, self.homesite)

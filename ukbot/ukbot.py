@@ -19,7 +19,7 @@ import platform
 from dotenv import load_dotenv
 from importlib.metadata import version
 
-from .common import get_mem_usage, Localization, _, STATE_NORMAL, InvalidContestPage
+from .common import get_mem_usage, STATE_NORMAL, InvalidContestPage, Localization, i18n, fetch_parsed_i18n
 from .util import load_config
 from .contest import Contest
 from .contests import discover_contest_pages
@@ -77,9 +77,11 @@ def process_contest(contest_page, contest_state, sites, sql, config, working_dir
         contest.uploadplot(args.simulate, args.output)
 
     elif args.action == 'plot':
-        filename = os.path.join(working_dir, config['plot']['datafile'] % {'year': contest.year,
-                                                                           'week': contest.startweek,
-                                                                           'month': contest.month})
+        filename = os.path.join(working_dir, config['plot']['datafile'] % {
+            'year': contest.year,
+            'week': contest.startweek,
+            'month': contest.month
+        })
         with open(filename, 'r') as fp:
             plotdata = json.load(fp)
         contest.plot(plotdata)
@@ -112,8 +114,6 @@ def main():
     working_dir = os.path.realpath(os.getcwd())
     logger.info('Working dir: %s', working_dir)
 
-    Localization().init(config['locale'])
-
     mainstart = config['server_timezone'].localize(datetime.now())
     mainstart_s = time.time()
 
@@ -129,6 +129,8 @@ def main():
     )
 
     sites, sql = init_sites(config)
+
+    Localization().init(sites.homesite)
 
     active_contests = list(discover_contest_pages(sql, sites.homesite, config, args.page))
     logger.info('Number of active contests: %d', len(active_contests))
@@ -148,10 +150,10 @@ def main():
             if status_template in te.templates:
                 te.templates[status_template][0].parameters[1] = 'error'
                 te.templates[status_template][0].parameters[2] = error_msg
-                contest_page.save(te.wikitext(), summary=_('UKBot encountered a problem'))
+                contest_page.save(te.wikitext(), summary=fetch_parsed_i18n('bot-problem-encountered'))
             else:
                 out = '\n{{%s | error | %s }}' % (config['templates']['botinfo'], error_msg)
-                contest_page.save('dummy', summary=_('UKBot encountered a problem'), appendtext=out)
+                contest_page.save('dummy', summary=fetch_parsed_i18n('bot-problem-encountered'), appendtext=out)
             raise
 
     # Update redirect page
@@ -165,13 +167,16 @@ def main():
         if len(normal_contests) == 1:
             contest_name = normal_contests[0]
             pages = config['pages']['redirect']
+            magic_words = sites.homesite.api('query', meta='siteinfo', siprop='magicwords')['query']['magicwords']
+            redirect_localized = next((word for word in magic_words if word['name'] == 'redirect'), None)['aliases'][0]
+            logger.debug('Magic words for redirects is %s' % redirect_localized)
             if not isinstance(pages, list):
                 pages = [pages]
             for pagename in pages:
                 page = sites.homesite.pages[pagename]
-                txt = _('#REDIRECT [[%s]]') % contest_name
+                txt = '%s [[%s]]' % (redirect_localized, contest_name)
                 if page.text() != txt and not args.simulate:
-                    page.save(txt, summary=_('Redirecting to %s') % contest_name)
+                    page.save(txt, summary=fetch_parsed_i18n('bot-redirecting', contest_name))
 
     runend = config['server_timezone'].localize(datetime.now())
     runend_s = time.time()

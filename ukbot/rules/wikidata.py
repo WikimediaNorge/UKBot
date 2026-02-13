@@ -4,7 +4,7 @@ import re
 import json
 import logging
 from jsonpath_rw import parse
-from ..common import _
+from ..common import i18n
 from ..contributions import UserContribution
 from .rule import Rule
 from .decorators import family
@@ -44,19 +44,19 @@ class WikidataRule(Rule):
         for lang in self.labels:
             self.matchers['label:%s' % lang] = {
                 'rules': [parse('labels.%s' % lang)],
-                'msg': _('label (%(lang)s)'),
+                'msg': i18n('bot-rule-label-lang', lang),
                 'opts': {'lang': lang},
             }
         for lang in self.descriptions:
             self.matchers['description:%s' % lang] = {
                 'rule': [parse('descriptions.%s' % lang)],
-                'msg': _('description (%(lang)s)'),
+                'msg': i18n('bot-rule-description-lang', lang),
                 'opts': {'lang': lang},
             }
         for lang in self.aliases:
             self.matchers['alias:%s' % lang] = {
                 'rule': [parse('aliases.%s' % lang)],
-                'msg': _('alias (%(lang)s)'),
+                'msg': i18n('bot-rule-alias-lang', lang),
                 'opts': {'lang': lang},
             }
         for prop in self.properties:
@@ -69,8 +69,7 @@ class WikidataRule(Rule):
                 ]
             self.matchers['prop:%s' % prop] = {
                 'rules': rules,
-                'msg': _('%(property)s statement'),
-                'msg_plural': _('%(count)d %(property)s statements'),
+                'msg': i18n('bot-rule-properties', '%(count)s', prop),
                 'opts': {'property': prop},
             }
 
