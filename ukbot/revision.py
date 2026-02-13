@@ -106,7 +106,7 @@ class Revision(object):
             return 0
         try:
             return self._wordcount
-        except:
+        except AttributeError:
             pass
 
         mt1 = get_body_text(re.sub('<nowiki ?/>', '', self.text))
@@ -148,8 +148,8 @@ class Revision(object):
             logger.warning(w)
             self.errors.append(w)
 
-        #s = _('A problem encountered with revision %(revid)d may have influenced the word count for this revision: <nowiki>%(problems)s</nowiki> ')
-        #s = _('Et problem med revisjon %d kan ha påvirket ordtellingen for denne: <nowiki>%s</nowiki> ')
+        # s = _('A problem encountered with revision %(revid)d may have influenced the word count for this revision: <nowiki>%(problems)s</nowiki> ')
+        # s = _('Et problem med revisjon %d kan ha påvirket ordtellingen for denne: <nowiki>%s</nowiki> ')
         del mt1
         del mt0
         # except DanmicholoParseError as e:
@@ -174,7 +174,6 @@ class Revision(object):
         """ returns a link to revision """
         iw_prefix = ''
         if self.article().site().host != homesite.host:
-            homelang = homesite.host.split('.')[0]
             homefam = homesite.host.split('.')[1]
             targetlang = self.article().site().host.split('.')[0]
             targetfam = self.article().site().host.split('.')[1]

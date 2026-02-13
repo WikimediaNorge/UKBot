@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Usage: 
+# Usage:
 # toolforge-jobs run update-venv --command "./update_venv.sh" --image tf-python39 --wait
 
 set -euo pipefail

@@ -42,7 +42,7 @@ def app(env, start_response):
                 new_data = stream.read()
                 if new_data != '':
                     uwsgi.websocket_send(new_data)
-                    #if 'Job finished contest' in new_data:
+                    # if 'Job finished contest' in new_data:
                     #    close_next_time = True
                 if close_next_time:
                     logger.info(f"Completed streaming log: {log_file}")
@@ -61,4 +61,3 @@ def app(env, start_response):
                     logger.info(f"Status file {status_file} not found")
             n += 1
             time.sleep(1)
-

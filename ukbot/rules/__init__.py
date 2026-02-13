@@ -32,4 +32,3 @@ rule_classes = [
     WordRule,
     WordBonusRule,
 ]
-

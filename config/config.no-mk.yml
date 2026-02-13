@@ -40,8 +40,8 @@ plot:
         |Date           = %(start)s
         |Author         = [[User:UKBot|UKBot]]
         }}
-        
+
         == {{int:license-header}} ==
         {{PD-self}}
-        
+
         [[Category:Månedens konkurranse %(year)s]]

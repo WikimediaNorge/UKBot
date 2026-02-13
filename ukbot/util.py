@@ -11,7 +11,7 @@ import re
 from datetime import datetime
 from datetime import time as dt_time
 from isoweek import Week  # Sort-of necessary until datetime supports %V, see http://bugs.python.org/issue12006
-                          # and http://stackoverflow.com/questions/5882405/get-date-from-iso-week-number-in-python
+# and http://stackoverflow.com/questions/5882405/get-date-from-iso-week-number-in-python
 from mwtemplates import TemplateEditor
 
 logger = logging.getLogger(__name__)

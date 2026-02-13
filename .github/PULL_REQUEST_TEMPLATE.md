@@ -1,8 +1,8 @@
 ## Description
 
-<!-- 
-Please do not leave this blank 
-This PR [adds/removes/fixes/replaces] the [feature/bug/etc]. 
+<!--
+Please do not leave this blank
+This PR [adds/removes/fixes/replaces] the [feature/bug/etc].
 -->
 
 ## What type of PR is this? (check all applicable)
@@ -21,7 +21,7 @@ This PR [adds/removes/fixes/replaces] the [feature/bug/etc].
 
 ## Related Tickets & Documents
 
-<!-- 
+<!--
 Please use this format link issue numbers: Fixes #123
 -->
 
@@ -39,6 +39,6 @@ Please use this format link issue numbers: Fixes #123
 
 ## [optional] Are there any pre- or post-deployment tasks we need to perform?
 
-<!-- 
+<!--
 Write about changing templates or modules on-wiki in order to accomodate changes in this PR
 -->
