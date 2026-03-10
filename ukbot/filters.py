@@ -269,6 +269,16 @@ class CatFilter(Filter):
             'ignore': cls.get_ignore_list(tpl, kwargs.get('cfg', {}).get('ignore_page')),
             'categories': categories,
         }
+
+        if tpl.has_param('ignore'):
+            params['ignore'].extend([
+                a.strip()
+                for a in tpl.get_param('ignore').split(',')
+            ])
+
+        if tpl.has_param('maxdepth'):
+            params['maxdepth'] = int(tpl.get_param('maxdepth'))
+
         return cls(**params)
 
     def __init__(self, sites: 'SiteManager', categories: List[Union['Page', WildcardPage]], maxdepth: int = 5,
