@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-02 15:46+0200\n"
+"POT-Creation-Date: 2025-05-21 22:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,43 +68,43 @@ msgid ""
 "Couldn't find the user %(user)s given to the {{tl|%(template)s}} template."
 msgstr ""
 
-#: ukbot/contest.py:529
+#: ukbot/contest.py:538
 msgid "Day"
 msgstr ""
 
-#: ukbot/contest.py:530
+#: ukbot/contest.py:539
 msgid "Points"
 msgstr ""
 
-#: ukbot/contest.py:533 ukbot/contest.py:748 ukbot/contest.py:935
-#: ukbot/contest.py:936 ukbot/contest.py:937
+#: ukbot/contest.py:542 ukbot/contest.py:757 ukbot/contest.py:955
+#: ukbot/contest.py:956 ukbot/contest.py:957
 msgid "%e. %B %Y, %H:%M"
 msgstr ""
 
-#: ukbot/contest.py:534
+#: ukbot/contest.py:543
 #, python-format
 msgid "Updated %(date)s"
 msgstr ""
 
-#: ukbot/contest.py:569
+#: ukbot/contest.py:578
 #, python-format
 msgid "Weekly contest for week %(week)d"
 msgstr ""
 
-#: ukbot/contest.py:571
+#: ukbot/contest.py:580
 #, python-format
 msgid "Weekly contest for week %(startweek)d–%(endweek)d"
 msgstr ""
 
-#: ukbot/contest.py:649
+#: ukbot/contest.py:658
 msgid "Regards"
 msgstr ""
 
-#: ukbot/contest.py:649
+#: ukbot/contest.py:658
 msgid "and"
 msgstr ""
 
-#: ukbot/contest.py:679
+#: ukbot/contest.py:688
 #, python-format
 msgid ""
 "Now you must check if the results look ok. If there are error messages at "
@@ -115,77 +115,77 @@ msgid ""
 "can send out the awards at first occasion."
 msgstr ""
 
-#: ukbot/contest.py:680
+#: ukbot/contest.py:689
 msgid "Thanks, ~~~~"
 msgstr ""
 
-#: ukbot/contest.py:691
+#: ukbot/contest.py:700
 #, python-format
 msgid "Awards have been [%(link)s sent out]."
 msgstr ""
 
-#: ukbot/contest.py:880 ukbot/ukbot.py:148 ukbot/ukbot.py:151
+#: ukbot/contest.py:889 ukbot/ukbot.py:151 ukbot/ukbot.py:154
 msgid "UKBot encountered a problem"
 msgstr ""
 
-#: ukbot/contest.py:930
+#: ukbot/contest.py:950
 msgid ""
 "This contest is closed – thanks to everyone who participated! Awards will be "
 "sent out as soon as the contest organizer has checked the results."
 msgstr ""
 
-#: ukbot/contest.py:932
+#: ukbot/contest.py:952
 msgid "This contest is closed – thanks to everyone who participated!"
 msgstr ""
 
-#: ukbot/contest.py:939
+#: ukbot/contest.py:959
 #, python-format
 msgid ""
 "Last updated %(lastupdate)s. The contest is open from %(startdate)s to "
 "%(enddate)s."
 msgstr ""
 
-#: ukbot/contest.py:960
+#: ukbot/contest.py:980
 #, python-format
 msgid "UKBot encountered the following problems with the page [[%s]]"
 msgstr ""
 
-#: ukbot/contest.py:994
+#: ukbot/contest.py:1014
 #, python-format
 msgid "Results markers %(start_marker)s and %(end_marker)s not found"
 msgstr ""
 
-#: ukbot/contest.py:1005
+#: ukbot/contest.py:1025
 #, python-format
 msgid "No \"%(section_name)s\" section found."
 msgstr ""
 
-#: ukbot/contest.py:1015
+#: ukbot/contest.py:1035
 msgid "Updating with final results, the contest is now closed."
 msgstr ""
 
-#: ukbot/contest.py:1017
+#: ukbot/contest.py:1037
 msgid "Checking results and handing out awards"
 msgstr ""
 
-#: ukbot/contest.py:1019
+#: ukbot/contest.py:1039
 msgid "Updating"
 msgstr ""
 
-#: ukbot/contest.py:1149
+#: ukbot/contest.py:1169
 #, python-format
 msgid "The weekly contest is: %(link)s"
 msgstr ""
 
-#: ukbot/contributions.py:164 ukbot/user.py:674
+#: ukbot/contributions.py:164 ukbot/user.py:672
 msgid "suspended since"
 msgstr ""
 
-#: ukbot/contributions.py:164 ukbot/user.py:674
+#: ukbot/contributions.py:164 ukbot/user.py:672
 msgid "%A, %H:%M"
 msgstr ""
 
-#: ukbot/contributions.py:178 ukbot/user.py:679
+#: ukbot/contributions.py:178 ukbot/user.py:677
 msgid "No qualifying contributions registered yet"
 msgstr ""
 
@@ -291,21 +291,21 @@ msgstr ""
 msgid "Could not find a site matching the prefix \"%(key)s\""
 msgstr ""
 
-#: ukbot/ukbot.py:169
+#: ukbot/ukbot.py:172
 #, python-format
 msgid "#REDIRECT [[%s]]"
 msgstr ""
 
-#: ukbot/ukbot.py:171
+#: ukbot/ukbot.py:174
 #, python-format
 msgid "Redirecting to %s"
 msgstr ""
 
-#: ukbot/user.py:681
+#: ukbot/user.py:679
 msgid "articles"
 msgstr ""
 
-#: ukbot/user.py:683
+#: ukbot/user.py:681
 msgid "{{Kolonner}}\n"
 msgstr ""
 
@@ -359,9 +359,9 @@ msgstr ""
 msgid "bonus %(words)d words"
 msgstr ""
 
-#: ukbot/rules/templateremoval.py:88
+#: ukbot/rules/templateremoval.py:95
 #, python-format
-msgid "removal of {{tl|%(template)s}}"
+msgid "removal of {{tl|%(template)s%(lang)s}}"
 msgstr ""
 
 #: ukbot/rules/wikidata.py:47
