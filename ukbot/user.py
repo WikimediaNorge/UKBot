@@ -205,7 +205,7 @@ class User:
                     rev = self.articles[article_key].revisions[apirev['revid']]
                     rev.parentid = apirev['parentid']
                     rev.size = apirev['size']
-                    rev.parsedcomment = apirev['parsedcomment']
+                    rev.parsedcomment = apirev.get('parsedcomment', '')
                     content = pydash.get(apirev, 'slots.main.*')
                     if content is not None:
                         rev.text = content
