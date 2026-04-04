@@ -2,6 +2,9 @@ _extends: sites/fiwiki.yml
 name: Punaisten linkkien naiset %(year)s
 othersites:
     - se.wikipedia.org
+    - smn.wikipedia.org
+    - olo.wikipedia.org
+    - incubator.wikimedia.org    
 pages:
     catignore: Käyttäjä:UKBot/cat-ignore
     base: Wikiprojekti:Punaisten linkkien naiset
