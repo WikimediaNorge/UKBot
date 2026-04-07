@@ -3,6 +3,7 @@
 import sys
 import re
 from copy import copy
+from fnmatch import fnmatch
 
 from more_itertools import first
 import logging
@@ -843,11 +844,14 @@ class SparqlFilter(Filter):
         logger.info('SparqlFilter: Initialized with %d articles', len(self.page_keys))
 
     def add_pages(self):
+        allowed_hosts = list(self.sites.keys())
+
         for res in self.do_query(self.query)['rows']:
             parsed = urllib.parse.urlparse(res)
             if parsed.scheme not in ['http', 'https']:
                 continue
-            if parsed.hostname not in self.sites.keys():
+            hostname = parsed.hostname or ''
+            if not any(fnmatch(hostname, pattern) for pattern in allowed_hosts):
                 continue
             if not parsed.path.startswith('/wiki/'):
                 continue
@@ -855,7 +859,7 @@ class SparqlFilter(Filter):
             article = urllib.parse.unquote(parsed.path[len('/wiki/'):]).replace('_', ' ')
             if article == '':
                 continue
-            page_key = '%s:%s' % (parsed.hostname, article)
+            page_key = '%s:%s' % (hostname, article)
             self.page_keys.add(page_key)
 
     def add_linked_articles(self, site, item_var):

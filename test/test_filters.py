@@ -215,7 +215,7 @@ class TestSparqlFilter(TestCase):
 
     @patch('ukbot.filters.SparqlFilter.fetch')
     def test_add_pages_filters_to_contest_wikis(self, fetch_mock):
-        sites = {'en.wikipedia.org': Mock(), 'fi.wikipedia.org': Mock()}
+        sites = {'en.wikipedia.org': Mock(), 'fi.wikipedia.org': Mock(), '*.wikivoyage.org': Mock()}
         sparql_filter = SparqlFilter(
             sites=sites,
             query='SELECT ?article WHERE { ?article ?p ?o . }',
@@ -225,6 +225,7 @@ class TestSparqlFilter(TestCase):
             'rows': [
                 'https://en.wikipedia.org/wiki/Foo_bar',
                 'http://fi.wikipedia.org/wiki/Baz',
+                'https://fi.wikivoyage.org/wiki/Helsinki',
                 'https://en.wikipedia.org/w/index.php?title=Ignored',
                 'https://example.org/wiki/Outside',
                 'not a url',
@@ -236,6 +237,7 @@ class TestSparqlFilter(TestCase):
         assert sparql_filter.page_keys == {
             'en.wikipedia.org:Foo bar',
             'fi.wikipedia.org:Baz',
+            'fi.wikivoyage.org:Helsinki',
         }
 
 
