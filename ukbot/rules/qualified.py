@@ -14,7 +14,7 @@ class QualiRule(Rule):
         Rule.__init__(self, sites, template, trans)
         self.articles_seen = set()
 
-    @family('wikipedia.org', 'wikibooks.org')
+    @family('wikipedia.org', 'wikibooks.org', 'incubator.wikimedia.org', 'wikivoyage.org')
     def test(self, rev):
         if rev.article().key not in self.articles_seen:
             self.articles_seen.add(rev.article().key)

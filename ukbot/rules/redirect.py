@@ -10,7 +10,7 @@ class RedirectRule(Rule):
 
     rule_name = 'redirect'
 
-    @family('wikipedia.org', 'wikibooks.org')
+    @family('wikipedia.org', 'wikibooks.org', 'incubator.wikimedia.org', 'wikivoyage.org')
     def test(self, rev):
         if rev.new and rev.redirect:
             yield UserContribution(rev=rev, points=self.points, rule=self, description=_('redirect'))
