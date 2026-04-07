@@ -166,6 +166,28 @@ class TestSparqlFilter(TestCase):
         assert sparql_filter.endpoint == 'https://query.wikidata.org/sparql'
         fetch_mock.assert_called_once()
 
+    @patch('ukbot.filters.SparqlFilter.fetch')
+    def test_make_reads_mode_param(self, fetch_mock):
+        tpl = Mock()
+        tpl.sites = Mock()
+        tpl.has_param = lambda name: name in ['query', 'mode']
+        tpl.get_raw_param = lambda name: {
+            'query': 'SELECT ?article WHERE { ?article ?p ?o . }',
+            'mode': 'pages',
+        }[name]
+
+        cfg = {
+            'params': {
+                'query': 'query',
+                'mode': 'mode',
+            },
+        }
+
+        sparql_filter = SparqlFilter.make(tpl=tpl, cfg=cfg)
+
+        assert sparql_filter.mode == 'pages'
+        fetch_mock.assert_called_once()
+
     @patch('ukbot.filters.requests_retry_session')
     @patch('ukbot.filters.SparqlFilter.fetch')
     def test_do_query_uses_custom_endpoint(self, fetch_mock, requests_retry_session_mock):
@@ -190,6 +212,31 @@ class TestSparqlFilter(TestCase):
         assert call_args[0][0] == 'https://example.org/sparql'
         assert result['var'] == 'item'
         assert result['rows'] == ['http://www.wikidata.org/entity/Q1']
+
+    @patch('ukbot.filters.SparqlFilter.fetch')
+    def test_add_pages_filters_to_contest_wikis(self, fetch_mock):
+        sites = {'en.wikipedia.org': Mock(), 'fi.wikipedia.org': Mock()}
+        sparql_filter = SparqlFilter(
+            sites=sites,
+            query='SELECT ?article WHERE { ?article ?p ?o . }',
+            mode='pages',
+        )
+        sparql_filter.do_query = Mock(return_value={
+            'rows': [
+                'https://en.wikipedia.org/wiki/Foo_bar',
+                'http://fi.wikipedia.org/wiki/Baz',
+                'https://en.wikipedia.org/w/index.php?title=Ignored',
+                'https://example.org/wiki/Outside',
+                'not a url',
+            ],
+        })
+
+        sparql_filter.add_pages()
+
+        assert sparql_filter.page_keys == {
+            'en.wikipedia.org:Foo bar',
+            'fi.wikipedia.org:Baz',
+        }
 
 
 if __name__ == '__main__':
