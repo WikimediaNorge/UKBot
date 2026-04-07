@@ -10,7 +10,7 @@ class ContribRule(Rule):
 
     rule_name = 'contrib'
 
-    @family('wikipedia.org', 'wikibooks.org')
+    @family('wikipedia.org', 'wikibooks.org', 'incubator.wikimedia.org', 'wikivoyage.org')
     def test(self, rev):
         yield UserContribution(rev=rev, points=self.points, rule=self.rule,
                                description=_('contribution'))

@@ -10,7 +10,7 @@ class ByteRule(Rule):
 
     rule_name = 'byte'
 
-    @family('wikipedia.org', 'wikibooks.org')
+    @family('wikipedia.org', 'wikibooks.org', 'incubator.wikimedia.org', 'wikivoyage.org')
     def test(self, rev):
         bytes_added = rev.bytes
 
