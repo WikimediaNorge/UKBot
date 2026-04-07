@@ -94,3 +94,4 @@ templates:
                 name: sparql # as in {{ ukb criterion | sparql }}
                 params:
                     query: query # as in {{ ukb criterion | sparql | query=... }}
+                    endpoint: endpoint

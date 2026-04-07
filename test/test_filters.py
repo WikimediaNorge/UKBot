@@ -2,14 +2,14 @@
 import re
 from collections import OrderedDict
 import unittest
-from mock import Mock
+from mock import Mock, patch
 from unittest import TestCase
 
 from faker import Faker
 from mwclient.page import Page
 
 from ukbot.article import Article
-from ukbot.filters import CatFilter
+from ukbot.filters import CatFilter, SparqlFilter
 from ukbot.site import Site
 from ukbot.sites import SiteManager
 
@@ -120,6 +120,76 @@ class TestCatFilter(TestCase):
 
         assert self.filter_and_return_keys(**kwargs(2)) == []
         assert self.filter_and_return_keys(**kwargs(3)) == [dummy.a_key(0)]
+
+class TestSparqlFilter(TestCase):
+
+    @patch('ukbot.filters.SparqlFilter.fetch')
+    def test_make_reads_endpoint_param(self, fetch_mock):
+        tpl = Mock()
+        tpl.sites = Mock()
+        tpl.has_param = lambda name: name in ['query', 'endpoint']
+        tpl.get_raw_param = lambda name: {
+            'query': 'SELECT ?item WHERE { ?item wdt:P31 wd:Q5 . }',
+            'endpoint': 'https://example.org/sparql',
+        }[name]
+
+        cfg = {
+            'params': {
+                'query': 'query',
+                'endpoint': 'endpoint',
+            },
+        }
+
+        sparql_filter = SparqlFilter.make(tpl=tpl, cfg=cfg)
+
+        assert sparql_filter.endpoint == 'https://example.org/sparql'
+        fetch_mock.assert_called_once()
+
+    @patch('ukbot.filters.SparqlFilter.fetch')
+    def test_make_uses_default_endpoint_when_missing(self, fetch_mock):
+        tpl = Mock()
+        tpl.sites = Mock()
+        tpl.has_param = lambda name: name == 'query'
+        tpl.get_raw_param = lambda name: {
+            'query': 'SELECT ?item WHERE { ?item wdt:P31 wd:Q5 . }',
+        }[name]
+
+        cfg = {
+            'params': {
+                'query': 'query',
+                'endpoint': 'endpoint',
+            },
+        }
+
+        sparql_filter = SparqlFilter.make(tpl=tpl, cfg=cfg)
+
+        assert sparql_filter.endpoint == 'https://query.wikidata.org/sparql'
+        fetch_mock.assert_called_once()
+
+    @patch('ukbot.filters.requests_retry_session')
+    @patch('ukbot.filters.SparqlFilter.fetch')
+    def test_do_query_uses_custom_endpoint(self, fetch_mock, requests_retry_session_mock):
+        response = Mock()
+        response.ok = True
+        response.headers = {}
+        response.json.return_value = {
+            'head': {'vars': ['item']},
+            'results': {'bindings': [{'item': {'value': 'http://www.wikidata.org/entity/Q1'}}]},
+        }
+        requests_retry_session_mock.return_value.get.return_value = response
+
+        sparql_filter = SparqlFilter(
+            sites=Mock(),
+            query='SELECT ?item WHERE { ?item wdt:P31 wd:Q5 . }',
+            endpoint='https://example.org/sparql',
+        )
+        result = sparql_filter.do_query('SELECT ?item WHERE { ?item wdt:P31 wd:Q5 . }')
+
+        requests_retry_session_mock.return_value.get.assert_called_once()
+        call_args = requests_retry_session_mock.return_value.get.call_args
+        assert call_args[0][0] == 'https://example.org/sparql'
+        assert result['var'] == 'item'
+        assert result['rows'] == ['http://www.wikidata.org/entity/Q1']
 
 
 if __name__ == '__main__':

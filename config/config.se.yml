@@ -101,6 +101,7 @@ templates:
         ignore: ignore
         sparql: sparql  # as in {{ ukb criterion | sparql }}
         query: query    # as in {{ ukb criterion | sparql | query=... }}
+        endpoint: endpoint
 pages:
     catignore: Käyttäjä:UKBot/cat-ignore
     base: Wikipedia:Elokuun_kuvitustalkoot/
