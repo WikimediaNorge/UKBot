@@ -740,29 +740,38 @@ class SparqlFilter(Filter):
 
     @classmethod
     def make(cls, tpl, cfg, **kwargs):
-        if not tpl.has_param('query'):
+        query_param = cfg['params']['query']
+        if not tpl.has_param(query_param):
             raise RuntimeError(_('No "%s" parameter given') % cfg['params']['query'])
+
+        endpoint_param = cfg['params'].get('endpoint')
         params = {
-            'query': tpl.get_raw_param('query'),
+            'query': tpl.get_raw_param(query_param),
             'sites': tpl.sites,
+            'endpoint': tpl.get_raw_param(endpoint_param) if endpoint_param and tpl.has_param(endpoint_param) else None,
         }
         return cls(**params)
 
-    def __init__(self, sites, query):
+    def __init__(self, sites, query, endpoint=None):
         """
         Args:
             sites (SiteManager): References to the sites part of this contest
             query (str): The SPARQL query
+            endpoint (str): SPARQL endpoint URL. Defaults to Wikidata Query Service.
         """
         Filter.__init__(self, sites)
         self.query = query
+        self.endpoint = endpoint or 'https://query.wikidata.org/sparql'
+        endpoint_scheme = urllib.parse.urlparse(self.endpoint).scheme.lower()
+        if endpoint_scheme not in ['http', 'https']:
+            raise ValueError('Invalid sparql endpoint scheme: %s' % endpoint_scheme)
         self.fetch()
 
     def do_query(self, querystring):
-        logger.info('Running SPARQL query: %s', querystring)
+        logger.info('Running SPARQL query at %s: %s', self.endpoint, querystring)
         try:
             response = requests_retry_session().get(
-                'https://query.wikidata.org/sparql',
+                self.endpoint,
                 params={
                     'query': querystring,
                 },
