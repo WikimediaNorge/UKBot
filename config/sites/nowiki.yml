@@ -105,6 +105,7 @@ templates:
                 params:
                     query: spørring    # as in {{ ukb criterion | sparql | query=... }}
                     endpoint: endpoint
+                    mode: mode
 awards:
     blå: { file: Article blue.svg, winner: true }
     rød: { file: Article red.svg, winner: true }

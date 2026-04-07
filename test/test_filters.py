@@ -234,6 +234,33 @@ class TestSparqlFilter(TestCase):
         assert result['var'] == 'item'
         assert result['rows'] == ['http://www.wikidata.org/entity/Q1']
 
+    @patch('ukbot.filters.SparqlFilter.fetch')
+    def test_add_pages_filters_to_contest_wikis(self, fetch_mock):
+        sites = {'en.wikipedia.org': Mock(), 'fi.wikipedia.org': Mock(), '*.wikivoyage.org': Mock()}
+        sparql_filter = SparqlFilter(
+            sites=sites,
+            query='SELECT ?article WHERE { ?article ?p ?o . }',
+            mode='pages',
+        )
+        sparql_filter.do_query = Mock(return_value={
+            'rows': [
+                'https://en.wikipedia.org/wiki/Foo_bar',
+                'http://fi.wikipedia.org/wiki/Baz',
+                'https://fi.wikivoyage.org/wiki/Helsinki',
+                'https://en.wikipedia.org/w/index.php?title=Ignored',
+                'https://example.org/wiki/Outside',
+                'not a url',
+            ],
+        })
+
+        sparql_filter.add_pages()
+
+        assert sparql_filter.page_keys == {
+            'en.wikipedia.org:Foo bar',
+            'fi.wikipedia.org:Baz',
+            'fi.wikivoyage.org:Helsinki',
+        }
+
 
 if __name__ == '__main__':
     unittest.main()

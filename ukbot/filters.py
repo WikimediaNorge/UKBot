@@ -3,6 +3,7 @@
 import sys
 import re
 from copy import copy
+from fnmatch import fnmatch
 
 from more_itertools import first
 import logging
@@ -745,19 +746,22 @@ class SparqlFilter(Filter):
             raise RuntimeError(_('No "%s" parameter given') % cfg['params']['query'])
 
         endpoint_param = cfg['params'].get('endpoint')
+        mode_param = cfg['params'].get('mode', 'mode')
         params = {
             'query': tpl.get_raw_param(query_param),
             'sites': tpl.sites,
             'endpoint': tpl.get_raw_param(endpoint_param) if endpoint_param and tpl.has_param(endpoint_param) else None,
+            'mode': tpl.get_raw_param(mode_param) if tpl.has_param(mode_param) else 'items',
         }
         return cls(**params)
 
-    def __init__(self, sites, query, endpoint=None):
+    def __init__(self, sites, query, endpoint=None, mode='items'):
         """
         Args:
             sites (SiteManager): References to the sites part of this contest
             query (str): The SPARQL query
             endpoint (str): SPARQL endpoint URL. Defaults to Wikidata Query Service.
+            mode (str): "items" (default) or "pages"
         """
         Filter.__init__(self, sites)
         self.query = query
@@ -765,6 +769,9 @@ class SparqlFilter(Filter):
         endpoint_scheme = urllib.parse.urlparse(self.endpoint).scheme.lower()
         if endpoint_scheme not in ['http', 'https']:
             raise ValueError('Invalid sparql endpoint scheme: %s' % endpoint_scheme)
+        if mode not in ['items', 'pages']:
+            raise ValueError('Invalid sparql mode: %s' % mode)
+        self.mode = mode
         self.fetch()
 
     def do_query(self, querystring):
@@ -813,6 +820,10 @@ class SparqlFilter(Filter):
         logger.debug('SparqlFilter: %s', self.query)
 
         item_var = 'item'
+        if self.mode == 'pages':
+            self.add_pages()
+            logger.info('SparqlFilter: Initialized with %d articles', len(self.page_keys))
+            return
 
         # Implementation notes:
         # - When the contest includes multiple sites, we do one query per site. I tried using
@@ -834,6 +845,25 @@ class SparqlFilter(Filter):
             logger.info('SparqlFilter: Got %d results for %s in %.1f secs', s1, site, t1)
 
         logger.info('SparqlFilter: Initialized with %d articles', len(self.page_keys))
+
+    def add_pages(self):
+        allowed_hosts = list(self.sites.keys())
+
+        for res in self.do_query(self.query)['rows']:
+            parsed = urllib.parse.urlparse(res)
+            if parsed.scheme not in ['http', 'https']:
+                continue
+            hostname = parsed.hostname or ''
+            if not any(fnmatch(hostname, pattern) for pattern in allowed_hosts):
+                continue
+            if not parsed.path.startswith('/wiki/'):
+                continue
+
+            article = urllib.parse.unquote(parsed.path[len('/wiki/'):]).replace('_', ' ')
+            if article == '':
+                continue
+            page_key = '%s:%s' % (hostname, article)
+            self.page_keys.add(page_key)
 
     def add_linked_articles(self, site, item_var):
         article_var = 'article19472065'  # "random string" to avoid matching anything in the subquery
