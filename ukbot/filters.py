@@ -766,6 +766,9 @@ class SparqlFilter(Filter):
         Filter.__init__(self, sites)
         self.query = query
         self.endpoint = endpoint or 'https://query.wikidata.org/sparql'
+        endpoint_scheme = urllib.parse.urlparse(self.endpoint).scheme.lower()
+        if endpoint_scheme not in ['http', 'https']:
+            raise ValueError('Invalid sparql endpoint scheme: %s' % endpoint_scheme)
         if mode not in ['items', 'pages']:
             raise ValueError('Invalid sparql mode: %s' % mode)
         self.mode = mode

@@ -188,6 +188,27 @@ class TestSparqlFilter(TestCase):
         assert sparql_filter.mode == 'pages'
         fetch_mock.assert_called_once()
 
+    @patch('ukbot.filters.SparqlFilter.fetch')
+    def test_make_rejects_non_http_endpoint(self, fetch_mock):
+        tpl = Mock()
+        tpl.sites = Mock()
+        tpl.has_param = lambda name: name in ['query', 'endpoint']
+        tpl.get_raw_param = lambda name: {
+            'query': 'SELECT ?item WHERE { ?item wdt:P31 wd:Q5 . }',
+            'endpoint': 'ftp://example.org/sparql',
+        }[name]
+
+        cfg = {
+            'params': {
+                'query': 'query',
+                'endpoint': 'endpoint',
+            },
+        }
+
+        with self.assertRaises(ValueError):
+            SparqlFilter.make(tpl=tpl, cfg=cfg)
+        fetch_mock.assert_not_called()
+
     @patch('ukbot.filters.requests_retry_session')
     @patch('ukbot.filters.SparqlFilter.fetch')
     def test_do_query_uses_custom_endpoint(self, fetch_mock, requests_retry_session_mock):
