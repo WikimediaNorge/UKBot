@@ -62,7 +62,13 @@ To modify the code and test it locally, you'll need to install it as a pip packa
 	ukbot --page Bruker:Danmichaelo/Sandkasse5 --simulate config/config.no-mk.yml
 
 
+## Howto run tests
 
+	python3 -m venv venv
+	source venv/bin/activate
+	pip install -r requirements.txt
+	pip install .
+	python3 -m unittest discover -s test -v
 
 ## Deployment
 
