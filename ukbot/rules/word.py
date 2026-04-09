@@ -10,7 +10,7 @@ class WordRule(Rule):
 
     rule_name = 'word'
 
-    @family('wikipedia.org', 'wikibooks.org')
+    @family('wikipedia.org', 'wikibooks.org', 'incubator.wikimedia.org', 'wikivoyage.org')
     def test(self, rev):
         words_added = rev.words
 

@@ -91,7 +91,7 @@ class ImageRule(Rule):
 
         return credit
 
-    @family('wikipedia.org', 'wikibooks.org')
+    @family('wikipedia.org', 'wikibooks.org', 'incubator.wikimedia.org', 'wikivoyage.org')
     def test(self, rev):
         imgs_before = list(self.get_images(rev.parenttext))
         imgs_after = list(self.get_images(rev.text))

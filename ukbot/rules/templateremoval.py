@@ -72,7 +72,7 @@ class TemplateRemovalRule(Rule):
         ct = self.count_instances(template, rev.te_text())
         return pt - ct
 
-    @family('wikipedia.org', 'wikibooks.org')
+    @family('wikipedia.org', 'wikibooks.org', 'incubator.wikimedia.org', 'wikivoyage.org')
     def test(self, rev):
         if rev.redirect or rev.parentredirect:
             # skip redirects

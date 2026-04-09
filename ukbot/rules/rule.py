@@ -58,7 +58,7 @@ class BonusRule(Rule):
     def get_metric(self, rev):
         raise NotImplementedError()  # Should be overridden
 
-    @family('wikipedia.org', 'wikibooks.org')
+    @family('wikipedia.org', 'wikibooks.org', 'incubator.wikimedia.org', 'wikivoyage.org')
     def test(self, current_rev):
         total = 0
         this_rev = False

@@ -18,7 +18,7 @@ class ExternalLinkRule(Rule):
         txt = re.sub(r'<ref[^>]*>.*?</ref>', '', txt, flags=re.MULTILINE)
         return len(re.findall(r'(?<!\[)\[[^\[\] ]+ [^\[\]]+\](?!])', txt))
 
-    @family('wikipedia.org', 'wikibooks.org')
+    @family('wikipedia.org', 'wikibooks.org', 'incubator.wikimedia.org', 'wikivoyage.org')
     def test(self, rev):
         links_before = self.count_links(rev.parenttext)
         links_after = self.count_links(rev.text)

@@ -61,7 +61,7 @@ class RefRule(Rule):
 
         return s1, r1
 
-    @family('wikipedia.org', 'wikibooks.org')
+    @family('wikipedia.org', 'wikibooks.org', 'incubator.wikimedia.org', 'wikivoyage.org')
     def test(self, rev):
 
         s1, r1 = self.count_sources(rev.parenttext)
