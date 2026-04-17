@@ -3,13 +3,14 @@ import re
 from collections import OrderedDict
 import unittest
 from mock import Mock
+from mock import patch
 from unittest import TestCase
 
 from faker import Faker
 from mwclient.page import Page
 
 from ukbot.article import Article
-from ukbot.filters import CatFilter
+from ukbot.filters import CatFilter, SparqlFilter
 from ukbot.site import Site
 from ukbot.sites import SiteManager
 
@@ -120,6 +121,54 @@ class TestCatFilter(TestCase):
 
         assert self.filter_and_return_keys(**kwargs(2)) == []
         assert self.filter_and_return_keys(**kwargs(3)) == [dummy.a_key(0)]
+
+
+class TestSparqlFilter(TestCase):
+
+    def test_do_query_unions_rows_from_both_endpoints(self):
+        sparql_filter = SparqlFilter.__new__(SparqlFilter)
+        endpoint_responses = {
+            'https://query.wikidata.org/sparql': {'var': 'item', 'rows': ['a', 'b']},
+            'https://query-main.wikidata.org/sparql': {'var': 'item', 'rows': ['b', 'c']},
+        }
+
+        with patch.object(
+            SparqlFilter,
+            'do_query_endpoint',
+            side_effect=lambda _, endpoint: endpoint_responses[endpoint],
+        ):
+            result = sparql_filter.do_query('SELECT ?item WHERE { ?item wdt:P31 wd:Q5 }')
+
+        assert result['var'] == 'item'
+        assert result['rows'] == ['a', 'b', 'c']
+
+    def test_do_query_succeeds_if_one_endpoint_fails(self):
+        sparql_filter = SparqlFilter.__new__(SparqlFilter)
+        endpoint_responses = {
+            'https://query-main.wikidata.org/sparql': {'var': 'item', 'rows': ['c']},
+        }
+
+        def endpoint_side_effect(_, endpoint):
+            if endpoint == 'https://query.wikidata.org/sparql':
+                raise IOError('boom')
+            return endpoint_responses[endpoint]
+
+        with patch.object(
+            SparqlFilter,
+            'do_query_endpoint',
+            side_effect=endpoint_side_effect,
+        ):
+            result = sparql_filter.do_query('SELECT ?item WHERE { ?item wdt:P31 wd:Q5 }')
+
+        assert result['var'] == 'item'
+        assert result['rows'] == ['c']
+
+    def test_do_query_fails_if_all_endpoints_fail(self):
+        sparql_filter = SparqlFilter.__new__(SparqlFilter)
+
+        with patch.object(SparqlFilter, 'do_query_endpoint', side_effect=IOError('boom')):
+            with self.assertRaises(IOError):
+                sparql_filter.do_query('SELECT ?item WHERE { ?item wdt:P31 wd:Q5 }')
 
 
 if __name__ == '__main__':

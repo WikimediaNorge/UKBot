@@ -737,6 +737,10 @@ class NamespaceFilter(Filter):
 
 class SparqlFilter(Filter):
     """Filters articles matching a SPARQL query"""
+    SPARQL_ENDPOINTS = [
+        'https://query.wikidata.org/sparql',
+        'https://query-main.wikidata.org/sparql',
+    ]
 
     @classmethod
     def make(cls, tpl, cfg, **kwargs):
@@ -758,11 +762,11 @@ class SparqlFilter(Filter):
         self.query = query
         self.fetch()
 
-    def do_query(self, querystring):
-        logger.info('Running SPARQL query: %s', querystring)
+    def do_query_endpoint(self, querystring, endpoint):
+        logger.info('Running SPARQL query against %s: %s', endpoint, querystring)
         try:
             response = requests_retry_session().get(
-                'https://query.wikidata.org/sparql',
+                endpoint,
                 params={
                     'query': querystring,
                 },
@@ -798,6 +802,29 @@ class SparqlFilter(Filter):
         return {
             'var': query_var,
             'rows': [x[query_var]['value'] for x in res['results']['bindings']],
+        }
+
+    def do_query(self, querystring):
+        rows = set()
+        query_var = None
+        last_error = None
+
+        for endpoint in self.SPARQL_ENDPOINTS:
+            try:
+                result = self.do_query_endpoint(querystring, endpoint)
+                if query_var is None:
+                    query_var = result['var']
+                rows.update(result['rows'])
+            except Exception as ex:
+                last_error = ex
+                logger.warning('SPARQL query failed for endpoint %s: %s', endpoint, ex)
+
+        if query_var is None:
+            raise last_error
+
+        return {
+            'var': query_var,
+            'rows': sorted(rows),
         }
 
     def fetch(self):
