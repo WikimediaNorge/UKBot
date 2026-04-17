@@ -93,6 +93,7 @@ def main():
     parser.add_argument('--page', required=False, help='Name of the contest page to work with')
     parser.add_argument('--user', required=False, help='For testing, check the contributions of a single user.')
     parser.add_argument('--simulate', action='store_true', default=False, help='Do not write results to wiki')
+    parser.add_argument('--use_oauth', action='store_true', default=False, help='When simulating, require OAuth login and run authenticated')
     parser.add_argument('--output', nargs='?', default='', help='Write results to file')
     parser.add_argument('--verbose', action='store_true', default=False, help='More verbose logging')
     parser.add_argument('--close', action='store_true', help='Close contest')
@@ -127,8 +128,8 @@ def main():
         mwclient.__version__,
         platform.platform()
     )
-
-    sites, sql = init_sites(config)
+    use_oauth = not args.simulate or args.use_oauth
+    sites, sql = init_sites(config, use_oauth=use_oauth)
 
     active_contests = list(discover_contest_pages(sql, sites.homesite, config, args.page))
     logger.info('Number of active contests: %d', len(active_contests))

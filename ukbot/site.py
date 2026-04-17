@@ -17,7 +17,7 @@ class Site(mwclient.Site):
 
     key = None
 
-    def __init__(self, host, prefixes, **kwargs):
+    def __init__(self, host, prefixes, use_oauth=True, **kwargs):
         session = Session()
         retries = Retry(total=5, backoff_factor=1, status_forcelist=[502, 503, 504])
         session.mount('https://', HTTPAdapter(max_retries=retries))
@@ -26,7 +26,8 @@ class Site(mwclient.Site):
         consumer_secret = os.getenv('MW_CONSUMER_SECRET')
         access_token = os.getenv('MW_ACCESS_TOKEN')
         access_secret = os.getenv('MW_ACCESS_SECRET')
-        session.auth = OAuth1(consumer_token, consumer_secret, access_token, access_secret)
+        if use_oauth and consumer_token and consumer_secret and access_token and access_secret:
+            session.auth = OAuth1(consumer_token, consumer_secret, access_token, access_secret)
         session.headers['User-Agent'] = 'UKBot (http://tools.wmflabs.org/ukbot/; danmichaelo+wikipedia@gmail.com)'
 
         self.errors = []

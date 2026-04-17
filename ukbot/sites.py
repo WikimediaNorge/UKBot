@@ -85,16 +85,17 @@ class SiteManager(object):
         return SiteManager(sites, self.homesite)
 
 
-def init_sites(config):
+def init_sites(config, use_oauth=True):
 
     if 'ignoreTags' not in config:
         config['ignoreTags'] = []
 
     # Configure home site (where the contests live)
     host = config['homesite']
-    homesite = Site(host, prefixes=[''])
+    homesite = Site(host, prefixes=[''], use_oauth=use_oauth)
 
-    assert homesite.logged_in
+    if use_oauth:
+        assert homesite.logged_in
 
     iwmap = homesite.interwikimap
     prefixes = [''] + [k for k, v in iwmap.items() if v == host]
@@ -108,6 +109,6 @@ def init_sites(config):
     if 'othersites' in config:
         for host in config['othersites']:
             prefixes = [k for k, v in iwmap.items() if v == host]
-            sites[host] = Site(host, prefixes=prefixes)
+            sites[host] = Site(host, prefixes=prefixes, use_oauth=use_oauth)
 
     return SiteManager(sites, homesite), sql
