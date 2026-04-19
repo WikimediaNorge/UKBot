@@ -283,10 +283,10 @@ class UserContributions(object):
 
         if article.name in self.labels:
             formatted = '[[%s|%s]]' % (article.link(), self.labels[article.name])
-        elif article.link() == ":" + article.name:
+        elif article.link() == ":" + article.name and article.name == article.display_name:
             formatted = '[[:%s]]' % article.name
         else:
-            formatted = '[[%s|%s]]' % (article.link(), article.name)
+            formatted = '[[%s|%s]]' % (article.link(), article.display_name)
         if article.key in self.user().disqualified_articles:
             formatted = '[[File:Qsicon Achtung.png|14px]] <s>' + formatted + '</s>'
             tooltip_text += '<div style="border-top:1px solid red; background:#ffcccc;">%s</div>' % (
