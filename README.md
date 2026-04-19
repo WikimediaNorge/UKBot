@@ -64,8 +64,8 @@ To modify the code and test it locally, you'll need to install it as a pip packa
 
 ## Howto run tests
 
-	python3 -m venv venv
-	source venv/bin/activate
+	python3 -m venv www/python/venv
+	. www/python/venv/bin/activate
 	pip install -r requirements.txt
 	pip install .
 	python3 -m unittest discover -s test -v
