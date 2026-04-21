@@ -69,6 +69,17 @@ class Article(object):
         return '%s:%s' % (self.site().key, self.name)
 
     @property
+    def display_name(self):
+        if self.site().host != 'incubator.wikimedia.org':
+            return self.name
+
+        parts = self.name.split('/', 2)
+        incubator_prefixes = {'Wp', 'Wt', 'Wq', 'Wb', 'Wn', 'Wy'}
+        if len(parts) == 3 and parts[0] in incubator_prefixes:
+            return parts[2]
+        return self.name
+
+    @property
     def firstrev(self):
         return self.revisions[first(self.revisions)]
     
