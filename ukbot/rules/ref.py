@@ -43,7 +43,7 @@ class RefRule(Rule):
                 else:
                     s1 += 1
             del xml
-        except lxml.etree.XMLSyntaxError:
+        except lxml.etree.LxmlError:
             s1 = 0
             r1 = 0
 
