@@ -15,7 +15,7 @@ import pymysql
 from more_itertools import first
 
 from .contributions import UserContributions
-from .common import _
+from .common import i18n
 from .db import result_iterator
 from .util import unix_time
 from .article import Article
@@ -70,8 +70,6 @@ class User:
             fulltext  : get revision fulltexts
         """
 
-        # logger.info('Reading contributions from %s', site.host)
-
         apilim = 50
         if 'bot' in site.rights:
             apilim = site.api_limit         # API limit, should be 500
@@ -91,7 +89,6 @@ class User:
         ignore_tags = set(self.contest().config['ignoreTags'])
         logger.debug('Edit tags that should be ignored: %s', ', '.join(sorted(ignore_tags)))
         new_revisions = []
-        # stored_revisions = set(copy(self.revisions.keys()))
         stored_revisions = set([rev.revid for rev in self.revisions.values() if rev.article().site() == site])
         current_revisions = set()
         t0 = time.time()
@@ -114,6 +111,7 @@ class User:
 
             if ignored_tags_present:
                 logger.info('Ignoring revision %d of %s:%s because it has the following edit tags: %s', c['revid'], site_key, c['title'], ', '.join(ignored_tags_present))
+                break
             else:
                 rev_id = c['revid']
                 article_title = c['title']
@@ -295,22 +293,6 @@ class User:
                 article = articles_by_site[site][row[0]]
                 article._created_at = pytz.utc.localize(row[1])
 
-            # n = 0
-            # for article_key, article in articles.items():
-            #     if article.created_at is None:
-            #         res = site.pages[article.name].revisions(prop='timestamp', limit=1, dir='newer')
-            #         ts = article.created_at = next(res)['timestamp']
-            #         ts = time.strftime('%Y-%m-%d %H:%M:%S', ts)
-            #         # datetime.fromtimestamp(rev.timestamp).strftime('%F %T')
-            #         cur.execute(
-            #             'INSERT INTO articles (site, name, created_at) VALUES (%s, %s, %s)',
-            #             [site.name, article_key, ts]
-            #         )
-            #         n += 1
-            # sql.commit()
-            # if n > 0:
-            #     logger.debug('Backfilled %d article creation dates from %s', n, site.name)
-
         cur.close()
 
     def save_contribs_to_db(self, sql):
@@ -341,7 +323,6 @@ class User:
         chunk_size = 1000
         for n in range(0, len(contribs_query_params), chunk_size):
             data = contribs_query_params[n:n+chunk_size]
-            # logger.info('Adding %d contributions to database', len(data))
 
             t0 = time.time()
             cur.executemany("""
@@ -355,7 +336,6 @@ class User:
         chunk_size = 100
         for n in range(0, len(fulltexts_query_params), chunk_size):
             data = fulltexts_query_params[n:n+chunk_size]
-            # logger.info('Adding %d fulltexts to database', len(data))
             t0 = time.time()
 
             cur.executemany("""
@@ -563,12 +543,6 @@ class User:
 
         # loop over articles
         for article in self.articles.values():
-            # if self.contest().verbose:
-            #     logger.info(article_key)
-            # else:
-            #     logger.info('.', newline=False)
-            # log(article_key)
-
             # loop over revisions
             for revid, rev in article.revisions.items():
 
@@ -585,14 +559,12 @@ class User:
                         points = sum([contribution.points for contribution in contributions])
 
                         if points > 0:
-                            # logger.debug('%s: %d: %s', self.name, rev.revid, points)
                             ts = float(unix_time(utc.localize(datetime.fromtimestamp(rev.timestamp)).astimezone(
                                 self.contest().wiki_tz
                             )))
                             x.append(ts)
                             y.append(float(points))
 
-                            # logger.debug('    %d : %d ', revid, points)
             logger.debug('[[%s]] Sum: %.1f points', article.name,
                          self.contributions.get_article_points(article=article))
 
@@ -602,83 +574,30 @@ class User:
         o = np.argsort(x)
         x = x[o]
         y = y[o]
-        #pl = np.array(pl, dtype=float)
-        #pl.sort(axis = 0)
         y2 = np.array([np.sum(y[:q + 1]) for q in range(len(y))])
         self.plotdata = np.column_stack((x, y2))
-        #np.savetxt('user-%s'%self.name, np.column_stack((x,y,y2)))
 
     def format_result(self):
         logger.debug('Formatting results for user %s', self.name)
         entries = []
 
-
-        ## WIP
-
-        # <<<<<<< HEAD
-        #                         dt = utc.localize(datetime.fromtimestamp(rev.timestamp))
-        #                         dt_str = dt.astimezone(self.contest().wiki_tz).strftime(_('%d.%m, %H:%M'))
-        #                         out = '[%s %s]: %s' % (rev.get_link(), dt_str, descr)
-        #                         if self.suspended_since is not None and dt > self.suspended_since:
-        #                             out = '<s>' + out + '</s>'
-        #                         if len(rev.errors) > 0:
-        #                             out = '[[File:Ambox warning yellow.svg|12px|%s]] ' % (', '.join(rev.errors)) + out
-        #                         revs.append(out)
-
-        #                 titletxt = ''
-        #                 try:
-        #                     cat_path = [x.split(':')[-1] for x in article.cat_path]
-        #                     titletxt = ' : '.join(cat_path) + '<br />'
-        #                 except AttributeError:
-        #                     pass
-        #                 titletxt += '<br />'.join(revs)
-        #                 # if len(article.point_deductions) > 0:
-        #                 #     pds = []
-        #                 #     for points, reason in article.point_deductions:
-        #                 #         pds.append('%.f p: %s' % (-points, reason))
-        #                 #     titletxt += '<div style="border-top:1px solid #CCC">\'\'' + _('Notes') + ':\'\'<br />%s</div>' % '<br />'.join(pds)
-
-        #                 titletxt += '<div style="border-top:1px solid #CCC">' + _('Total {{formatnum:%(bytecount)d}} bytes, %(wordcount)d words') % {'bytecount': article.bytes, 'wordcount': article.words} + '</div>'
-
-        #                 p = '%.1f p' % brutto
-        #                 if brutto != netto:
-        #                     p = '<s>' + p + '</s> '
-        #                     if netto != 0.:
-        #                         p += '%.1f p' % netto
-
-        #                 out = '[[%s|%s]]' % (article.link(), article.name)
-        #                 if article_key in self.disqualified_articles:
-        #                     out = '[[File:Qsicon Achtung.png|14px]] <s>' + out + '</s>'
-        #                     titletxt += '<div style="border-top:1px solid red; background:#ffcccc;">' + _('<strong>Note:</strong> The contributions to this article are currently disqualified.') + '</div>'
-        #                 elif brutto != netto:
-        #                     out = '[[File:Qsicon Achtung.png|14px]] ' + out
-        #                     #titletxt += '<div style="border-top:1px solid red; background:#ffcccc;"><strong>Merk:</strong> En eller flere revisjoner er ikke talt med fordi de ble gjort mens brukeren var suspendert. Hvis suspenderingen oppheves vil bidragene telle med.</div>'
-        #                 if article.new:
-        #                     out += ' ' + _('<abbr class="newpage" title="New page">N</abbr>')
-        #                 out += ' (<abbr class="uk-ap">%s</abbr>)' % p
-
-        #                 out = '# ' + out
-        #                 out += '<div class="uk-ap-title" style="font-size: smaller; color:#888; line-height:100%;">' + titletxt + '</div>'
-
-        #                 entries.append(out)
-        #                 logger.debug('    %s: %.f / %.f points', article_key, netto, brutto)
-        # =======
-        # >>>>>>> WIP
-
         ros = '{awards}'
 
-        suspended = ''
-        if self.suspended_since is not None:
-            suspended = ', ' + _('suspended since') + ' %s' % self.suspended_since.strftime(_('%A, %H:%M'))
-        userprefix = self.contest().sites.homesite.namespaces[2]
-        out = '=== %s [[%s:%s|%s]] (%.f p%s) ===\n' % (ros, userprefix, self.name, self.name,
-                                                       self.contributions.sum(), suspended)
-        if len(entries) == 0:
-            out += "''" + _('No qualifying contributions registered yet') + "''"
+        if 'columns' in self.contest().config['templates']:
+            column_template = '{{%s}}' % self.contest().config['templates']['columns']
         else:
-            out += '%s, {{formatnum:%.2f}} kB\n' % (_('articles') % {'articlecount': len(entries)}, self.bytes / 1000.)
+            column_template = '<div class="uk-columns"></div>'
+
+        suspended = '{{subst:ns:0}}'
+        if self.suspended_since is not None:
+            suspended = ', ' + i18n('bot-suspended-since', i18n('bot-date-time-format', self.suspended_since.strftime('%Y-%m-%dT%H:%M:%S')))
+        out = '=== %s %s ===\n' % (ros, i18n('bot-results-user-heading', '[[{{subst:ns:2}}:%s|%s]]'.format(self.name, self.name), self.contributinos.sum(), suspended))
+        if len(entries) == 0:
+            out += "''" + i18n('bot-no-contributions-yet') + "''"
+        else:
+            out += i18n('bot-articles-kb', len(entries), '%0.2f' % self.bytes / 1000.)
         if len(entries) > 10:
-            out += _('{{Kolonner}}\n')
+            out += column_template + '\n'
         out += '\n'.join(entries)
         out += '\n\n'
 

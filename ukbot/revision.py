@@ -9,7 +9,7 @@ import logging
 import pytz
 from mwtemplates import TemplateEditor
 from mwtextextractor import get_body_text
-from .common import _
+from .common import i18n
 
 logger = logging.getLogger(__name__)
 
@@ -129,33 +129,18 @@ class Revision(object):
                      self.revid, self.article().site().key, self.bytes, charcount, self._wordcount)
 
         if not self.new and words0 == 0 and self._wordcount > 1:
-            w = _('Revision [//%(host)s/w/index.php?diff=prev&oldid=%(revid)s %(revid)s]: The word count difference might be wrong, because no words were found in the parent revision (%(parentid)s) of size %(size)d, possibly due to unclosed tags or templates in that revision.') % {
-                'host': self.article().site().host,
-                'revid': self.revid,
-                'parentid': self.parentid,
-                'size': len(self.parenttext)
-            }
+            w = i18n('bot-count-no-words', '[//%s/w/index.php?diff=prev&oldid=%s %s]' % (self.article().site().host, self.revid, self.revid), self.parentid, len(self.parenttext))
             logger.warning(w)
             self.errors.append(w)
 
         elif self._wordcount > 10 and self._wordcount > self.bytes:
-            w = _('Revision [//%(host)s/w/index.php?diff=prev&oldid=%(revid)s %(revid)s]: The word count difference might be wrong, because the word count increase (%(words)d) is larger than the byte increase (%(bytes)d). Wrong word counts can occur for invalid wiki text.') % {
-                'host': self.article().site().host,
-                'revid': self.revid,
-                'words': self._wordcount,
-                'bytes': self.bytes
-            }
+            w = i18n('bot-word-count-incorrect', '[//%s/w/index.php?diff=prev&oldid=%s %s]' % (self.article().site().host, self.revid, self.revid), self._wordcount, self.bytes)
             logger.warning(w)
             self.errors.append(w)
 
-        #s = _('A problem encountered with revision %(revid)d may have influenced the word count for this revision: <nowiki>%(problems)s</nowiki> ')
-        #s = _('Et problem med revisjon %d kan ha påvirket ordtellingen for denne: <nowiki>%s</nowiki> ')
         del mt1
         del mt0
-        # except DanmicholoParseError as e:
-        #     log("!!!>> FAIL: %s @ %d" % (self.article().name, self.revid))
-        #     self._wordcount = 0
-        #     #raise
+
         return self._wordcount
 
     @property

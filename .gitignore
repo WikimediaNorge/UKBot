@@ -20,10 +20,6 @@ pip-log.txt
 .coverage
 .tox
 
-#Translations
-*.mo
-bot/locale
-
 #Other
 wp_private.py
 *.swp

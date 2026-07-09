@@ -1,6 +1,6 @@
 # encoding=utf-8
 # vim: fenc=utf-8 et sw=4 ts=4 sts=4 ai
-from ..common import _
+from ..common import i18n
 from ..contributions import UserContribution
 from .decorators import family
 
@@ -73,5 +73,5 @@ class BonusRule(Rule):
 
         if total >= self.limit and this_rev is True:
             yield UserContribution(rev=current_rev, points=self.points, rule=self,
-                                   description=_('bonus %(words)d words') % {'words': self.limit})
+                                   description=i18n('bot-rule-bonus-words', self.limit))
 

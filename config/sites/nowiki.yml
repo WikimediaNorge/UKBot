@@ -1,5 +1,4 @@
 _extends: default.yml
-locale: [nb_NO, no_NO]
 wiki_timezone: Europe/Berlin
 homesite: no.wikipedia.org
 othersites:
@@ -104,6 +103,7 @@ templates:
                 name: sparql  # as in {{ ukb criterion | sparql }}
                 params:
                     query: spørring    # as in {{ ukb criterion | sparql | query=... }}
+    columns: Kolonner
 awards:
     blå: { file: Article blue.svg, winner: true }
     rød: { file: Article red.svg, winner: true }
