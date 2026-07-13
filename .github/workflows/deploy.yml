@@ -1,0 +1,36 @@
+name: Deploy
+on:
+  release:
+    types: [published]
+concurrency:
+  group: deploy-production
+  cancel-in-progress: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1.2.4
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: 22
+          request_pty: true
+          script_stop: true
+          key: ${{ secrets.KEY }}
+          script: |
+            # Become the tool account
+            become ukbot
+
+            # Update from GitHub repo.
+            git pull
+
+            # Ensure the virtual environment exists and update dependencies
+            bash jobs/update-venv.sh
+
+            # Load any changes to jobs.yaml
+            toolforge-jobs load jobs.yaml
+
+            # Restart the webservice
+            webservice restart
