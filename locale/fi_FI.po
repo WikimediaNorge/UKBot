@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UKBot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-02 15:46+0200\n"
+"POT-Creation-Date: 2025-05-21 22:56+0200\n"
 "PO-Revision-Date: 2019-09-05 01:56+0200\n"
 "Last-Translator: Dan Michael O. Heggø <danmichaelo@gmail.com>\n"
 "Language-Team: \n"
@@ -72,43 +72,43 @@ msgid ""
 "Couldn't find the user %(user)s given to the {{tl|%(template)s}} template."
 msgstr "Ei löydetty käyttäjää %(user)s {{tl|%(template)s}}-mallineesta."
 
-#: ukbot/contest.py:529
+#: ukbot/contest.py:538
 msgid "Day"
 msgstr "Päivä"
 
-#: ukbot/contest.py:530
+#: ukbot/contest.py:539
 msgid "Points"
 msgstr "Pisteet"
 
-#: ukbot/contest.py:533 ukbot/contest.py:748 ukbot/contest.py:935
-#: ukbot/contest.py:936 ukbot/contest.py:937
+#: ukbot/contest.py:542 ukbot/contest.py:757 ukbot/contest.py:955
+#: ukbot/contest.py:956 ukbot/contest.py:957
 msgid "%e. %B %Y, %H:%M"
 msgstr "%e. %Bta %Y kello %H.%M"
 
-#: ukbot/contest.py:534
+#: ukbot/contest.py:543
 #, python-format
 msgid "Updated %(date)s"
 msgstr "Päivitetty %(date)s"
 
-#: ukbot/contest.py:569
+#: ukbot/contest.py:578
 #, python-format
 msgid "Weekly contest for week %(week)d"
 msgstr "Viikon %(week)d kilpailu"
 
-#: ukbot/contest.py:571
+#: ukbot/contest.py:580
 #, python-format
 msgid "Weekly contest for week %(startweek)d–%(endweek)d"
 msgstr "Viikkojen %(startweek)d–%(endweek)d kilpailu"
 
-#: ukbot/contest.py:649
+#: ukbot/contest.py:658
 msgid "Regards"
 msgstr "Terveisin"
 
-#: ukbot/contest.py:649
+#: ukbot/contest.py:658
 msgid "and"
 msgstr "ja"
 
-#: ukbot/contest.py:679
+#: ukbot/contest.py:688
 #, python-format
 msgid ""
 "Now you must check if the results look ok. If there are error messages at "
@@ -124,20 +124,20 @@ msgstr ""
 "tai valituksia. Jos kaikki näyttää olevan kunnossa, paina [%(link)s tästä] "
 "(ja tallenna), niin rusetit lähetetään melko nopeasti."
 
-#: ukbot/contest.py:680
+#: ukbot/contest.py:689
 msgid "Thanks, ~~~~"
 msgstr "Terveisin, ~~~~"
 
-#: ukbot/contest.py:691
+#: ukbot/contest.py:700
 #, python-format
 msgid "Awards have been [%(link)s sent out]."
 msgstr "Rusetit on nyt [%(link)s jaettu]."
 
-#: ukbot/contest.py:880 ukbot/ukbot.py:148 ukbot/ukbot.py:151
+#: ukbot/contest.py:889 ukbot/ukbot.py:151 ukbot/ukbot.py:154
 msgid "UKBot encountered a problem"
 msgstr "UKBot havaitsi ongelman"
 
-#: ukbot/contest.py:930
+#: ukbot/contest.py:950
 msgid ""
 "This contest is closed – thanks to everyone who participated! Awards will be "
 "sent out as soon as the contest organizer has checked the results."
@@ -145,11 +145,11 @@ msgstr ""
 "Tämä kilpailu on päättynyt – kiitos kaikille osallistuneille! Rusetit "
 "jaetaan heti kun kilpailun järjestäjä on tarkistanut tulokset."
 
-#: ukbot/contest.py:932
+#: ukbot/contest.py:952
 msgid "This contest is closed – thanks to everyone who participated!"
 msgstr "Tämä kilpailu on päättynyt – kiitos kaikille osallistuneille!"
 
-#: ukbot/contest.py:939
+#: ukbot/contest.py:959
 #, python-format
 msgid ""
 "Last updated %(lastupdate)s. The contest is open from %(startdate)s to "
@@ -158,47 +158,47 @@ msgstr ""
 "Päivitetty viimeksi %(lastupdate)s. Kilpailu on avoinna  %(startdate)s – "
 "%(enddate)s."
 
-#: ukbot/contest.py:960
+#: ukbot/contest.py:980
 #, fuzzy, python-format
 msgid "UKBot encountered the following problems with the page [[%s]]"
 msgstr "UKBot havaitsi seuraavat ongelmat artikkeliin [[:%s]] liittyen"
 
-#: ukbot/contest.py:994
+#: ukbot/contest.py:1014
 #, python-format
 msgid "Results markers %(start_marker)s and %(end_marker)s not found"
 msgstr ""
 
-#: ukbot/contest.py:1005
+#: ukbot/contest.py:1025
 #, python-format
 msgid "No \"%(section_name)s\" section found."
 msgstr ""
 
-#: ukbot/contest.py:1015
+#: ukbot/contest.py:1035
 msgid "Updating with final results, the contest is now closed."
 msgstr "Lisätään lopulliset tulokset ja merkitään kilpailu päättyneeksi."
 
-#: ukbot/contest.py:1017
+#: ukbot/contest.py:1037
 msgid "Checking results and handing out awards"
 msgstr "Tarkistetaan tulokset ja jaetaan rusetit"
 
-#: ukbot/contest.py:1019
+#: ukbot/contest.py:1039
 msgid "Updating"
 msgstr "Päivitetään"
 
-#: ukbot/contest.py:1149
+#: ukbot/contest.py:1169
 #, python-format
 msgid "The weekly contest is: %(link)s"
 msgstr "Viikon kilpailu on: %(link)s"
 
-#: ukbot/contributions.py:164 ukbot/user.py:674
+#: ukbot/contributions.py:164 ukbot/user.py:672
 msgid "suspended since"
 msgstr "suspendert siden"
 
-#: ukbot/contributions.py:164 ukbot/user.py:674
+#: ukbot/contributions.py:164 ukbot/user.py:672
 msgid "%A, %H:%M"
 msgstr "%A kello %H.%M"
 
-#: ukbot/contributions.py:178 ukbot/user.py:679
+#: ukbot/contributions.py:178 ukbot/user.py:677
 msgid "No qualifying contributions registered yet"
 msgstr "Hyväksyttyjä muokkauksia ei ole vielä rekisteröity"
 
@@ -280,8 +280,8 @@ msgstr "Jumiutunut loputtomaan luokkasilmukkaan: "
 #, fuzzy
 msgid "No byte limit (second argument) given"
 msgstr ""
-"Tavurajaa (toinen argumentti) ei ole annettu kohteeseen {{tlx|%(template)s|"
-"%(firstarg)s}}"
+"Tavurajaa (toinen argumentti) ei ole annettu kohteeseen {{tlx|%(template)s|%"
+"(firstarg)s}}"
 
 #: ukbot/filters.py:720
 #, python-format
@@ -316,22 +316,22 @@ msgstr ""
 msgid "Could not find a site matching the prefix \"%(key)s\""
 msgstr ""
 
-#: ukbot/ukbot.py:169
+#: ukbot/ukbot.py:172
 #, python-format
 msgid "#REDIRECT [[%s]]"
 msgstr "#OHJAUS [[%s]]"
 
-#: ukbot/ukbot.py:171
+#: ukbot/ukbot.py:174
 #, python-format
 msgid "Redirecting to %s"
 msgstr "Ohjaus sivulle %s"
 
-#: ukbot/user.py:681
+#: ukbot/user.py:679
 msgid "articles"
 msgstr ""
 "%(articlecount)d {{subst:PLURAL:%(articlecount)d|artikkeli|artikkelia}}"
 
-#: ukbot/user.py:683
+#: ukbot/user.py:681
 msgid "{{Kolonner}}\n"
 msgstr "{{Sarakkeet}}\n"
 
@@ -388,10 +388,10 @@ msgstr ""
 msgid "bonus %(words)d words"
 msgstr "bonus %(words)d {{subst:PLURAL:%(words)d|sana|sanaa}}"
 
-#: ukbot/rules/templateremoval.py:88
+#: ukbot/rules/templateremoval.py:95
 #, python-format
-msgid "removal of {{tl|%(template)s}}"
-msgstr "mallineen {{tl|%(template)s}} poisto"
+msgid "removal of {{tl|%(template)s%(lang)s}}"
+msgstr "mallineen {{tl|%(template)s%(lang)s}} poisto"
 
 #: ukbot/rules/wikidata.py:47
 #, python-format
@@ -427,18 +427,18 @@ msgstr "%(words).f {{subst:PLURAL:%(words).f|sana|sanaa}}"
 #~ msgstr "Tästä kilpailusta puuttuu {{tl|%(template)s}}-malline."
 
 #~ msgid ""
-#~ "Did not find %(week)s+%(year)s or %(start)s+%(end)s in {{tl|"
-#~ "%(templates)s}}."
+#~ "Did not find %(week)s+%(year)s or %(start)s+%(end)s in {{tl|%"
+#~ "(templates)s}}."
 #~ msgstr ""
-#~ "Kohteesta {{tl|%(templates)s}} ei ole löydetty %(week)s+%(year)s eikä "
-#~ "%(start)s+%(end)s."
+#~ "Kohteesta {{tl|%(templates)s}} ei ole löydetty %(week)s+%(year)s eikä %"
+#~ "(start)s+%(end)s."
 
 #~ msgid ""
-#~ "Note that the contest this week is [[%(url)s|{{%(template)s|"
-#~ "%(weekarg)s=%(week)s}}]]. Join in!"
+#~ "Note that the contest this week is [[%(url)s|{{%(template)s|%(weekarg)s=%"
+#~ "(week)s}}]]. Join in!"
 #~ msgstr ""
-#~ "Muista, että tämän viikon kilpailu on [[%(url)s|{{%(template)s|"
-#~ "%(weekarg)s=%(week)s}}]]. Onnea matkaan!"
+#~ "Muista, että tämän viikon kilpailu on [[%(url)s|{{%(template)s|%"
+#~ "(weekarg)s=%(week)s}}]]. Onnea matkaan!"
 
 #~ msgid "max"
 #~ msgstr "maks"
@@ -452,8 +452,8 @@ msgstr "%(words).f {{subst:PLURAL:%(words).f|sana|sanaa}}"
 #~ msgid ""
 #~ "No template (second argument) given to {{tlx|%(template)s|%(firstarg)s}}"
 #~ msgstr ""
-#~ "Mallineita (toinen argumentti) ei ole annettu kohteeseen {{tlx|"
-#~ "%(template)s|%(firstarg)s}}"
+#~ "Mallineita (toinen argumentti) ei ole annettu kohteeseen {{tlx|%"
+#~ "(template)s|%(firstarg)s}}"
 
 #~ msgid "No categories given to {{tlx|%(template)s|%(firstarg)s}}"
 #~ msgstr "Kohteeseen {{tlx|%(template)s|%(firstarg)s}} ei ole annettu luokkia"
@@ -465,8 +465,8 @@ msgstr "%(words).f {{subst:PLURAL:%(words).f|sana|sanaa}}"
 
 #~ msgid "Unknown argument given to {{tl|%(template)s}}: %(argument)s"
 #~ msgstr ""
-#~ "Tuntematon argumentti on annettu kohteeseen {{tl|%(template)s}}: "
-#~ "%(argument)s"
+#~ "Tuntematon argumentti on annettu kohteeseen {{tl|%(template)s}}: %"
+#~ "(argument)s"
 
 #~ msgid "Found no \"%(section)s\" sections in the page \"%(page)s\""
 #~ msgstr "Ei löydettyjä \"%(section)s\"-osioita sivulla \"%(page)s\""
