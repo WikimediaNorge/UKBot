@@ -182,11 +182,10 @@ class Contest(object):
         if config['templates']['rule']['name'] not in dp.templates:
             raise InvalidContestPage(_('There are no point rules defined for this contest. Point rules are defined by {{tl|%(template)s}}.') % {'template': config['templates']['rule']['name']})
 
-        #if not 'ukens konkurranse kriterium' in dp.templates.keys():
+        # if not 'ukens konkurranse kriterium' in dp.templates.keys():
         #    raise InvalidContestPage('Denne konkurransen har ingen bidragskriterier. Kriterier defineres med {{tl|ukens konkurranse kriterium}}.')
 
-
-        ######################## Read infobox ########################
+        # Read infobox
 
         infobox = parse_infobox(txt, self.sites.homesite.namespaces[2], self.config)
         self.start = infobox['start_time']
@@ -207,7 +206,7 @@ class Contest(object):
         self.prices = infobox['awards']
         self.prices.sort(key=lambda x: x[2], reverse=True)
 
-        ######################## Read filters ########################
+        # Read filters
 
         nfilters = 0
         # print dp.templates.keys()
@@ -258,7 +257,7 @@ class Contest(object):
                     # Prepend filter to the filters list
                     filters.insert(0, filter_inst)
 
-        ######################## Read rules ########################
+        # Read rules
 
         rule_classes_map = {
             rulecfg[rule_cls.rule_name]: rule_cls for rule_cls in rule_classes
@@ -270,7 +269,7 @@ class Contest(object):
             rule_name = rule_template.parameters[1].value.lower()
             try:
                 rule_cls = rule_classes_map[rule_name]
-            except:
+            except KeyError:
                 raise InvalidContestPage(
                     _('Unkown argument given to {{tl|%(template)s}}: %(argument)s')
                     % {'template': rulecfg['name'], 'argument': rule_name}
@@ -279,7 +278,7 @@ class Contest(object):
             rule = rule_cls(self.sites, rule_template.parameters, rulecfg)
             rules.append(rule)
 
-        ####################### Check if contest is in DB yet ##################
+        # Check if contest is in DB yet
 
         cur = self.sql.cursor()
         now = datetime.now()
@@ -294,7 +293,7 @@ class Contest(object):
         self.sql.commit()
         cur.close()
 
-        ######################## Read disqualifications ########################
+        # Read disqualifications
 
         sucfg = self.config['templates']['suspended']
         if sucfg['name'] in dp.templates:
@@ -305,17 +304,17 @@ class Contest(object):
                 except ValueError:
                     raise InvalidContestPage(_("Couldn't parse the date given to the {{tl|%(template)s}} template.") % sucfg['name'])
 
-                #print 'Suspendert bruker:',uname,sdate
+                # print 'Suspendert bruker:',uname,sdate
                 ufound = False
                 for u in self.users:
                     if u.name == uname:
-                        #print " > funnet"
+                        # print " > funnet"
                         u.suspended_since = sdate
                         ufound = True
                 if not ufound:
                     pass
                     # TODO: logging.warning
-                    #raise InvalidContestPage('Fant ikke brukeren %s gitt til {{tl|UK bruker suspendert}}-malen.' % uname)
+                    # raise InvalidContestPage('Fant ikke brukeren %s gitt til {{tl|UK bruker suspendert}}-malen.' % uname)
 
         dicfg = self.config['templates']['disqualified']
         if dicfg['name'] in dp.templates:
@@ -475,9 +474,8 @@ class Contest(object):
                 else:
                     x.append(xt[-1])
                     y.append(y[-1])
-                l = ax.plot(x, y, linewidth=1.2, label=result['name'])  # markerfacecolor='#FF8C00', markeredgecolor='#888888', label = u['name'])
-                c = l[0].get_color()
-                #ax.plot(x[1:-1], y[1:-1], marker='.', markersize=4, markerfacecolor=c, markeredgecolor=c, linewidth=0., alpha=0.5)  # markerfacecolor='#FF8C00', markeredgecolor='#888888', label = u['name'])
+                line = ax.plot(x, y, linewidth=1.2, label=result['name'])  # markerfacecolor='#FF8C00', markeredgecolor='#888888', label = u['name'])
+                # ax.plot(x[1:-1], y[1:-1], marker='.', markersize=4, markerfacecolor=c, markeredgecolor=c, linewidth=0., alpha=0.5)  # markerfacecolor='#FF8C00', markeredgecolor='#888888', label = u['name'])
                 if cnt >= 15:
                     break
 
@@ -497,7 +495,7 @@ class Contest(object):
             # Tick labels at the middle of every day
             # Just a number if ndays < 7
             ax.set_xticks(xt_mid, minor=True)
-            ax.set_xticklabels(list(range(1,ndays+1)), minor=True)
+            ax.set_xticklabels(list(range(1, ndays + 1)), minor=True)
         elif ndays == 7:
             # Tick marker every midnight
             ax.set_xticks(xt, minor=False)
@@ -531,8 +529,6 @@ class Contest(object):
         # elif ndays == 31:
         #     ax.set_xticklabels(['1', '', '', '', '5', '', '', '', '', '10', '', '', '', '', '15', '', '', '', '', '20', '', '', '', '', '25', '', '', '', '', '', '31'], minor=True)
 
-
-
         for i in range(1, ndays, 2):
             ax.axvspan(xt[i], xt[i + 1], facecolor='#000099', linewidth=0., alpha=0.03)
 
@@ -559,8 +555,8 @@ class Contest(object):
             now2 = now.astimezone(self.wiki_tz).strftime(_('%e. %B %Y, %H:%M'))
             ax_title = _('Updated %(date)s')
 
-            #print ax_title.encode('utf-8')
-            #print now2.encode('utf-8')
+            # print ax_title.encode('utf-8')
+            # print now2.encode('utf-8')
             ax_title = ax_title % {'date': now2}
             ax.set_title(ax_title)
 
@@ -613,19 +609,18 @@ class Contest(object):
         if flow_enabled:
             token = self.sites.homesite.get_token('csrf')
             self.sites.homesite.api(action='flow',
-                              submodule='new-topic',
-                              page=pagename,
-                              nttopic=topic,
-                              ntcontent=body,
-                              ntformat='wikitext',
-                              token=token)
+                                    submodule='new-topic',
+                                    page=pagename,
+                                    nttopic=topic,
+                                    ntcontent=body,
+                                    ntformat='wikitext',
+                                    token=token)
 
         else:
             page = self.sites.homesite.pages[pagename]
             page.save(text=body + ' ' + sig, bot=False, section='new', summary=topic)
 
     def deliver_prices(self, results, simulate=False):
-        config = self.config
         heading = self.format_heading()
 
         cur = self.sql.cursor()
@@ -693,7 +688,6 @@ class Contest(object):
             'title': urllib.parse.quote(self.config['awardstatus']['send'])
         }
         link = '%(prefix)s?title=%(page)s&action=edit&section=new&preload=%(page)s/Preload&preloadtitle=%(title)s' % args
-        usertalkprefix = self.sites.homesite.namespaces[3]
         awards = []
         for key, award in self.config['awards'].items():
             if 'organizer' in award:
@@ -795,15 +789,15 @@ class Contest(object):
                     heading = '== Viktig informasjon angående Ukens konkurranse uke %d ==' % self.startweek
                 else:
                     heading = '== Viktig informasjon angående Ukens konkurranse uke %d–%d ==' % (self.startweek, self.endweek)
-                #msg = 'Arrangøren av denne [[%(pagename)s|ukens konkurranse]] har registrert problemer ved noen av dine bidrag:
-                #så langt. Det er dessverre registrert problemer med enkelte av dine bidrag som medfører at vi er nødt til å informere deg om følgende:\n' % { 'pagename': self.name }
+                # msg = 'Arrangøren av denne [[%(pagename)s|ukens konkurranse]] har registrert problemer ved noen av dine bidrag:
+                # så langt. Det er dessverre registrert problemer med enkelte av dine bidrag som medfører at vi er nødt til å informere deg om følgende:\n' % { 'pagename': self.name }
 
                 msg = ''.join(['* %s\n' % m for m in msgs])
                 msg += 'Denne meldingen er generert fra anmerkninger gjort av konkurransearrangør på [[%(pagename)s|konkurransesiden]]. Du finner mer informasjon på konkurransesiden og/eller tilhørende diskusjonsside. Så lenge konkurransen ikke er avsluttet, kan problemer løses i løpet av konkurransen. Om du ønsker det, kan du fjerne denne meldingen når du har lest den. ~~~~' % {'pagename': self.name}
 
-                #print '------------------------------',u.name
-                #print msg
-                #print '------------------------------'
+                # print '------------------------------',u.name
+                # print msg
+                # print '------------------------------'
 
                 page = self.sites.homesite.pages['%s:%s' % (usertalkprefix, u.name)]
                 logger.info('Leverer advarsel til %s', page.name)
@@ -818,11 +812,7 @@ class Contest(object):
 
         if not self.page.exists:
             logger.error('Contest page [[%s]] does not exist! Exiting', self.page.name)
-            return
-
-        # Loop over users
-
-        narticles = 0
+            return        # Loop over users
 
         stats = []
 
@@ -917,7 +907,7 @@ class Contest(object):
         # Make outpage
 
         out = ''
-        #out += '[[File:Nowp Ukens konkurranse %s.svg|thumb|400px|Resultater (oppdateres normalt hver natt i halv ett-tiden, viser kun de ti med høyest poengsum)]]\n' % self.start.strftime('%Y-%W')
+        # out += '[[File:Nowp Ukens konkurranse %s.svg|thumb|400px|Resultater (oppdateres normalt hver natt i halv ett-tiden, viser kun de ti med høyest poengsum)]]\n' % self.start.strftime('%Y-%W')
 
         summary_tpl = None
         if 'status' in config['templates']:
@@ -1175,7 +1165,6 @@ class Contest(object):
                         oppslagstavle.save(txt2, summary=_('The weekly contest is: %(link)s') % {'link': tema})
 
         # Make a nice plot
-
         if 'plot' in config:
             plotdata = self.prepare_plotdata(results)
             self.plot(plotdata)
@@ -1188,7 +1177,7 @@ class Contest(object):
             logger.error('Contest page [[%s]] does not exist! Exiting', self.page.name)
             return
 
-        if not 'plot' in self.config:
+        if 'plot' not in self.config:
             return
 
         figname = self.config['plot']['figname'] % {
@@ -1240,4 +1229,3 @@ class Contest(object):
                                      comment='Bot: Updating plot',
                                      ignore=True)
                 logger.info(res)
-

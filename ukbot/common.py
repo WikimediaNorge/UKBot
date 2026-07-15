@@ -3,10 +3,8 @@ from __future__ import unicode_literals
 import sys
 import locale
 import gettext
-import yaml
 import os
 import psutil
-import pkg_resources
 import logging
 
 logger = logging.getLogger(__name__)
@@ -32,27 +30,26 @@ class Localization:
             '''prepare i18n'''
             if not isinstance(cl, list):
                 cl = [cl]
-                #['nb_NO.UTF-8', 'nb_NO.utf8', 'no_NO']:
+                # ['nb_NO.UTF-8', 'nb_NO.utf8', 'no_NO']:
             for loc in cl:
                 try:
-                    # print "Trying (", loc.encode('utf-8'), 'utf-8',")"
-                    locale.setlocale(locale.LC_ALL, (loc, 'utf-8'))
+                    # print "Trying (", loc.encode('utf-8'), 'utf-8',")"                    locale.setlocale(locale.LC_ALL, (loc, 'utf-8'))
                     logger.info('Using locale %s', loc)
-                    #logger.info('Locale set to %s' % loc)
+                    # logger.info('Locale set to %s' % loc)
                     break
                 except locale.Error:
                     try:
                         locstr = loc + '.UTF-8'
                         # print "Trying",locstr
-                        locale.setlocale(locale.LC_ALL, locstr )
+                        locale.setlocale(locale.LC_ALL, locstr)
                         logger.info('Using locale %s', loc)
                         break
                     except locale.Error:
                         pass
 
             lang, charset = locale.getlocale()
-            if lang == None:
-                raise StandardError('Failed to set locale!')
+            if lang is None:
+                raise Exception('Failed to set locale!')
 
             t = gettext.translation('messages', LOCALE_PATH, fallback=True, languages=[lang])
 
@@ -60,6 +57,7 @@ class Localization:
             self._ = t.gettext
 
     instance = None
+
     def __init__(self):
         if not Localization.instance:
             Localization.instance = Localization.__Localization()
@@ -72,6 +70,7 @@ class Localization:
 
 localization = Localization()
 
+
 def ngettext(*args, **kwargs):
     try:
         return localization.t.ngettext(*args, **kwargs)
@@ -79,11 +78,15 @@ def ngettext(*args, **kwargs):
         # During tests, Localization might not be initialized
         return args[0]
 
+
 def _(*args, **kwargs):
     return localization._(*args, **kwargs)
 
+
 logfile = sys.stdout
-def log(msg, newline = True):
+
+
+def log(msg, newline=True):
     if newline:
         msg = msg + '\n'
     logfile.write(msg.encode('utf-8'))
@@ -91,6 +94,7 @@ def log(msg, newline = True):
 
 
 process = psutil.Process(os.getpid())
+
 
 def get_mem_usage():
     """ Returns memory usage in MBs """
@@ -103,3 +107,8 @@ class InvalidContestPage(Exception):
     def __init__(self, msg):
         self.msg = msg
 
+    def __str__(self):
+        return self.msg
+
+    def __repr__(self):
+        return 'InvalidContestPage(%r)' % self.msg

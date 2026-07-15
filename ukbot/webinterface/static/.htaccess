@@ -10,4 +10,3 @@ RewriteRule ^(.*)$ /ukbot/webfront.py/$1 [L]
 #RewriteEngine On
 #RewriteCond %{REQUEST_FILENAME} !-f # Don't interfere with static files
 #RewriteRule ^(.*)$ /ukbot/application.cgi/$1 [L]
-

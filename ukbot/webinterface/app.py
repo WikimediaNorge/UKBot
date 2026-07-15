@@ -94,7 +94,7 @@ def read_status(fname):
             status = json.load(fp)
     except IOError:
         logger.error('Could not read status file: %s', fname)
-        return '<em>Could not read status</em>';
+        return '<em>Could not read status</em>'
 
     args = {
         'job_status': status.get('status'),
@@ -320,7 +320,7 @@ def update_contest():
 
         config_file = rows[0][0]
         page_name = rows[0][1]
-        last_job_id = rows[0][2]
+        # last_job_id = rows[0][2]
 
     if config_file is None:
         return redirect('contests?%s' % urllib.parse.urlencode({

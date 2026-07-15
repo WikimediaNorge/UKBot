@@ -1,33 +1,32 @@
 # encoding=utf-8
 # vim: fenc=utf-8 et sw=4 ts=4 sts=4 ai
+from .sites import init_sites
+from .contests import discover_contest_pages
+from .contest import Contest
+from .util import load_config
+from .common import get_mem_usage, Localization, _, STATE_NORMAL, InvalidContestPage
+from importlib.metadata import version
+from dotenv import load_dotenv
+import platform
+from mwtemplates import TemplateEditor
+import mwclient
+import argparse
+import os
+import json
+from datetime import datetime
+import matplotlib
+import logging
+import sys
 import time
 
 runstart_s = time.time()
 print('Loading')
 
-import sys
-import logging
-import matplotlib
-from datetime import datetime
-import pytz
-import json
-import os
-import argparse
-import mwclient
-from mwtemplates import TemplateEditor
-import platform
-from dotenv import load_dotenv
-from importlib.metadata import version
-
-from .common import get_mem_usage, Localization, _, STATE_NORMAL, InvalidContestPage
-from .util import load_config
-from .contest import Contest
-from .contests import discover_contest_pages
-from .sites import init_sites
 
 matplotlib.use('svg')
 
 __version__ = version('ukbot')
+
 
 class AppFilter(logging.Filter):
 

@@ -28,10 +28,10 @@ plot:
         |Date           = %(start)s
         |Author         = [[User:UKBot|UKBot]]
         }}
-        
+
         == {{int:license-header}} ==
         {{PD-self}}
-        
+
         [[Category:Fiks det!]]
 awards:
     blå: { file: FD-premie blå.svg, winner: true }

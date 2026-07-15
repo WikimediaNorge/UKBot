@@ -86,4 +86,3 @@ class TemplateRemovalRule(Rule):
                 template['total'] += removed
                 yield UserContribution(rev=rev, rule=self, points=removed * self.points,
                                        description=_('removal of {{tl|%(template)s}}') % {'template': template['name']})
-

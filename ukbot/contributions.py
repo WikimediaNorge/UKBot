@@ -24,7 +24,7 @@ class UserContributions(object):
         """
         Add a contribution and calculate the actual number of points given to it when
         taking point capping into account.
-        
+
         After capping, some contributions may end up with zero points, but we still store
         them so we can collect statistics like  'total number of words'.
 
@@ -133,7 +133,7 @@ class UserContributions(object):
                 for deduction in revision.point_deductions:
                     logger.debug('Subtracting %.1f points from point deduction', deduction[0])
                     points -= deduction[0]
-        
+
         return points
 
         # p = 0.
@@ -208,7 +208,7 @@ class UserContributions(object):
             article_formatted = self.summarize_article(article, revisions_formatted)
 
             articles_formatted.append(article_formatted)
-        
+
         return articles_formatted
 
     def summarize_revision(self, revision, homesite):
@@ -229,7 +229,7 @@ class UserContributions(object):
                 desc += ', ' + _('capped at max')
             contrib_points.append('%.1f p (%s)' % (contribution.points, desc))
         formatted += ' + '.join(contrib_points)
-        
+
         # Add deductions, if any
         for deduction in revision.point_deductions:
             if deduction[0] > 0:

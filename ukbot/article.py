@@ -30,6 +30,7 @@ class Article(object):
 
         self.revisions = OrderedDict()
         self.errors = []
+        self.cat_path = []  # type: ignore[assignment]
 
     def __eq__(self, other):
         if self.site() == other.site() and self.name == other.name:
@@ -82,11 +83,10 @@ class Article(object):
     @property
     def firstrev(self):
         return self.revisions[first(self.revisions)]
-    
+
     @property
     def lastrev(self):
         return self.revisions[last(self.revisions)]
-    
 
     @property
     def redirect(self):

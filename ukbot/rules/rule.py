@@ -6,8 +6,7 @@ from .decorators import family
 
 
 class Rule(object):
-
-    rule_name = None
+    rule_name: str = ""
 
     def __init__(self, sites, params, trans=None):
         self.sites = sites
@@ -74,4 +73,3 @@ class BonusRule(Rule):
         if total >= self.limit and this_rev is True:
             yield UserContribution(rev=current_rev, points=self.points, rule=self,
                                    description=_('bonus %(words)d words') % {'words': self.limit})
-
